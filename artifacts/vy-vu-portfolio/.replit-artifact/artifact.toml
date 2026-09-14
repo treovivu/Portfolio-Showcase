@@ -1,0 +1,28 @@
+kind = "web"
+previewPath = "/"
+title = "Vy Vu Portfolio"
+description = "A polished personal portfolio for Vy Vu, a data analyst and content creator, showcasing professional experience, creative work, and a technology event exhibition website project."
+version = "1.0.0"
+id = "artifacts/vy-vu-portfolio"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 18334
+
+[services.development]
+run = "pnpm --filter @workspace/vy-vu-portfolio run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/vy-vu-portfolio", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/vy-vu-portfolio/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "18334"
+BASE_PATH = "/"
