@@ -1,0 +1,130 @@
+MEDIA AND VISUAL PORTFOLIO REQUIREMENTS
+
+I want this portfolio to include real images, screenshots, certificates, presentation samples, and project visuals that I will upload later.
+
+Design the website so I can easily upload, replace, remove, and reorder images without changing the layout.
+
+Do not generate fake project images or stock photos. If I have not uploaded an image yet, use a clean neutral placeholder.
+
+HERO SECTION
+
+Create an optional area for one personal photo of me.
+
+The photo should feel integrated into the design rather than appearing like a formal ID photo.
+
+Keep the hero professional and minimal. The image should not overpower my name or headline.
+
+ABOUT SECTION
+
+Allow an optional personal or campus photo.
+
+Do not require an image for this section.
+
+SELECTED WORK
+
+Every project card should support:
+- Cover image or project thumbnail
+- Multiple project screenshots
+- Image gallery
+- PDF or document link
+- External project link
+- Optional video
+- Short captions explaining what each visual represents
+
+When a project is opened, create a clean project detail view with:
+
+Overview
+My Role
+What I Did
+Tools
+Outcome
+Gallery
+
+The gallery should support full-size image viewing.
+
+PROJECT 1: INTERACTIVE EVENT EXPERIENCE
+
+Create space for:
+- Selected slides from my 100-slide Morse Code presentation
+- Event materials
+- Screenshots of the Excel workflow or team organization system
+
+Do not show all 100 slides on the homepage.
+
+Display one strong cover image and allow visitors to open a project gallery with selected examples.
+
+PROJECT 2: STRATEGIC PARTNERSHIPS & VIMF
+
+Create space for:
+- Invitation banners I designed
+- Event promotional materials
+- Approved event photos
+- Other work samples related to partnership outreach
+
+PROJECT 3: NATIONAL STUDENT DATA CORPS
+
+Create space for:
+- Event flyers
+- Workshop photos
+- Event materials
+- Data-related activity visuals
+
+Only use images I upload.
+
+PROJECT 4: VIVU NOTES
+
+Create a more editorial visual treatment.
+
+Allow:
+- Screenshots of my Substack publication
+- Article cover images
+- Article thumbnails
+- Optional video storytelling content
+
+Show recent writing using large editorial-style image cards rather than generic project cards.
+
+DATA PROJECTS
+
+This section should be highly visual.
+
+Each future data project should support:
+- Dashboard screenshots
+- Charts
+- Data visualizations
+- Code screenshots when useful
+- Dataset preview
+- Before-and-after data cleaning examples
+
+When a user clicks a data project, show the visuals alongside the explanation of the analysis rather than displaying only text.
+
+ACHIEVEMENTS
+
+Create an elegant certificate gallery.
+
+I currently have:
+- Georgia State University President’s List certificates for three semesters
+- Academic certificates and awards from Menaul School
+
+Allow me to upload certificate images.
+
+Show only a small number of certificate previews initially and include a “View achievements” option so this section does not overwhelm the portfolio.
+
+Do not crop important certificate information.
+
+MEDIA DESIGN
+
+Use consistent image aspect ratios wherever possible.
+
+Use subtle rounded corners.
+
+Images should remain sharp and readable.
+
+Allow image captions.
+
+Use lightbox/full-screen viewing for project screenshots and certificates.
+
+On mobile, images should resize cleanly without cutting off important information.
+
+Avoid decorative stock photography.
+
+Prioritize real evidence of my work over visual decoration.
