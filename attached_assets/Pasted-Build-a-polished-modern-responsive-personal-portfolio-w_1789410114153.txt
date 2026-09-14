@@ -1,0 +1,451 @@
+Build a polished, modern, responsive personal portfolio website for me.
+
+My name is Vy Vu. I am a sophomore at Georgia State University studying Computer Information Systems with concentrations in Data Analytics and Application Development. I am also an Honors College student and have earned the President’s List for three semesters.
+
+I am building toward a career in data analytics, market data, and business technology. I am especially interested in the intersection of data, technology, and business, and I want my portfolio to show both my analytical side and my personality.
+
+This should NOT look like a generic corporate portfolio or a software engineer portfolio. I am still a student, so the website should feel ambitious, curious, thoughtful, creative, and professional without exaggerating my experience.
+
+BRAND DIRECTION
+
+Use the name:
+Vy Vu
+
+Main headline:
+Computer Information Systems Student | Data Analytics & Application Development
+
+Supporting statement:
+Building at the intersection of data, technology, and business.
+
+Overall personality:
+Curious
+Ambitious
+Thoughtful
+Approachable
+Analytical
+Creative
+Professional
+
+Visual style:
+Clean
+Minimal
+Modern
+Editorial
+Soft and polished
+Generous white space
+Subtle animation
+Rounded cards only where appropriate
+No flashy gradients
+No excessive icons
+No overly futuristic tech aesthetic
+No stock photos
+No fake statistics
+No fake testimonials
+
+Use a warm white or off-white background with charcoal text and a subtle muted blue accent.
+
+Typography should feel modern and editorial, similar to a high-quality personal publication or professional portfolio.
+
+The website should feel like a combination of:
+a student portfolio,
+a thoughtful personal website,
+and a small digital publication.
+
+SITE STRUCTURE
+
+Create a navigation bar with:
+
+Home
+About
+Work
+Writing
+Achievements
+Contact
+
+Also include a visible button:
+View Resume
+
+The website should be a smooth one-page experience, but the navigation should scroll to each section.
+
+SECTION 1: HERO
+
+Display:
+
+Vy Vu
+
+Computer Information Systems Student
+Data Analytics & Application Development
+
+Supporting text:
+
+I’m interested in how data can uncover patterns, explain behavior, and support better decisions. I’m currently building experience across data, technology, business, leadership, and storytelling.
+
+Add three CTA buttons:
+
+View My Work
+Read ViVu Notes
+Connect on LinkedIn
+
+Include a subtle visual element related to data, notes, or analytical thinking, but keep it minimal.
+
+Do not use generic illustrations of computers or people.
+
+SECTION 2: ABOUT ME
+
+Title:
+A little about me
+
+Use this copy:
+
+I’m a sophomore at Georgia State University studying Computer Information Systems with concentrations in Data Analytics and Application Development.
+
+What interests me most is the intersection of data, technology, and business. I enjoy understanding how information can uncover patterns, explain behavior, and support better decisions.
+
+Outside of my technical coursework, I enjoy organizing projects, working with people, writing, reading, and turning ideas into something useful.
+
+I’m currently strengthening my skills in Python, SQL, Excel, data analysis, and application development while building hands-on projects and exploring opportunities in data analytics and market data.
+
+Beside the text, create a small visual summary with:
+
+Georgia State University
+Computer Information Systems
+Honors College
+President’s List, 3 semesters
+
+Do not make this section look like a resume.
+
+SECTION 3: WHAT I’M BUILDING
+
+Title:
+What I’m Building
+
+Create three visually consistent cards.
+
+Card 1
+
+Title:
+Data & Analytics
+
+Text:
+Developing skills in Python, SQL, Excel, data analysis, and visualization while learning how to turn raw information into useful insights.
+
+Card 2
+
+Title:
+Business & Leadership
+
+Text:
+Building experience in project coordination, event operations, stakeholder communication, partnerships, and team collaboration.
+
+Card 3
+
+Title:
+Writing & Storytelling
+
+Text:
+Exploring how writing, books, personal experiences, and data can be used to communicate ideas clearly and meaningfully.
+
+SECTION 4: SELECTED WORK
+
+Title:
+Selected Work
+
+Create project cards that can later support images, documents, links, videos, dashboards, and case studies.
+
+PROJECT 1
+
+Title:
+Interactive Event Experience
+
+Role:
+Event Leader
+
+Organization:
+Trường MN - TiH - THCS - THPT Việt Anh
+
+Description:
+Coordinated an interactive Morse Code game for approximately 100 participants and created a 100-slide PowerPoint experience. Organized assignments and progress tracking for a 30-member team using Excel.
+
+Skills:
+Microsoft Excel
+Event Planning
+Leadership
+Team Coordination
+Presentation Design
+
+Add a placeholder button:
+View Project
+
+I may later upload selected slides from the presentation.
+
+PROJECT 2
+
+Title:
+Strategic Partnerships & VIMF
+
+Role:
+Strategic Partnerships Intern
+
+Organization:
+OMG Events Management Co Ltd
+
+Description:
+Researched and conducted outreach to more than 50 industrial and manufacturing companies to support partnership, sponsorship, and event participation opportunities. Worked with the event manager to support relationships with business leaders, media partners, and key stakeholders involved with the Vietnam Industrial & Manufacturing Fair.
+
+Skills:
+Strategic Partnerships
+Stakeholder Management
+Business Development
+Communication
+Event Management
+
+PROJECT 3
+
+Title:
+National Student Data Corps
+
+Role:
+Event Coordinator
+
+Organization:
+National Student Data Corps at Georgia State University
+
+Description:
+Plan and coordinate workshops, networking events, and general body meetings related to data analytics, visualization, data cleaning, and emerging AI tools. Collaborate with student leaders and advisors on logistics, scheduling, communication, and member engagement.
+
+Skills:
+Event Coordination
+Data Analytics
+Leadership
+Project Management
+Communication
+
+PROJECT 4
+
+Title:
+ViVu Notes
+
+Type:
+Personal Writing and Storytelling Project
+
+Description:
+ViVu Notes is my personal publication where I write about books, lessons from studying abroad, personal growth, data, and ideas I am learning along the way.
+
+Tagline:
+Notes on books, data, and becoming.
+
+Add a button:
+Read ViVu Notes
+
+Leave a place for my Substack URL.
+
+Make ViVu Notes visually different from the other project cards, with a more editorial or publication-inspired appearance.
+
+SECTION 5: DATA PROJECTS
+
+Create a section titled:
+
+Data Projects
+
+Add a short introduction:
+
+This is where I document projects that show how I approach questions, work with data, and communicate insights.
+
+Create three empty project placeholders that I can update later.
+
+Placeholder 1:
+Content Performance Analysis
+
+Description:
+Analyzing performance data from my own writing and content to understand audience behavior, engagement, and content trends.
+
+Placeholder 2:
+Personal Analytics Project
+
+Description:
+Using data from everyday life to explore patterns, behaviors, and decision-making.
+
+Placeholder 3:
+SQL / Python Project
+
+Description:
+A future technical project demonstrating data cleaning, analysis, querying, and visualization.
+
+Each project card should eventually support:
+
+Problem
+Dataset
+Tools
+Process
+Insights
+Visualization
+Outcome
+
+Do not fabricate results or statistics.
+
+SECTION 6: WRITING
+
+Title:
+Writing & Ideas
+
+Feature ViVu Notes prominently.
+
+Use this text:
+
+I started ViVu Notes as a place to document what I am learning through books, college, data, and life as an international student.
+
+Instead of simply reviewing what I read or experience, I want to understand what it teaches me and how I can apply those ideas to my own growth.
+
+Tagline:
+Notes on books, data, and becoming.
+
+Add a button:
+Visit ViVu Notes
+
+Also create space for three recent article cards with:
+Article title
+Short description
+Date
+Read article button
+
+These should be easy for me to update manually later.
+
+SECTION 7: ACHIEVEMENTS
+
+Title:
+A few milestones
+
+Display these in an elegant and understated way:
+
+Georgia State University Honors College
+
+President’s List
+3 semesters
+
+Computer Information Systems
+
+Concentrations:
+Data Analytics
+Application Development
+
+Do not make this section overly flashy.
+
+Create optional space where I can upload academic certificates later.
+
+SECTION 8: SKILLS
+
+Title:
+Tools & Skills I’m Building
+
+Organize the skills into categories.
+
+Data:
+Python
+SQL
+Microsoft Excel
+Data Analysis
+Data Visualization
+
+Technology:
+Application Development
+Information Systems
+
+Business:
+Business Analysis
+Stakeholder Management
+Strategic Partnerships
+Project Coordination
+
+Communication:
+Storytelling
+Presentation
+Writing
+Team Collaboration
+
+Make it clear that I am still developing many of these skills. Do not present me as an expert.
+
+SECTION 9: CURRENTLY
+
+Create a small personal section titled:
+
+Currently
+
+Include:
+
+Learning:
+SQL, Python, and data analysis
+
+Building:
+My data portfolio and ViVu Notes
+
+Exploring:
+Data analytics, market data, and business technology
+
+Reading:
+Allow me to manually add my current book later
+
+This section should add personality to the site.
+
+SECTION 10: CONTACT
+
+Title:
+Let’s Connect
+
+Use this text:
+
+I’m always happy to connect with students, professionals, mentors, and people working across data, technology, and business.
+
+I’m currently interested in internship opportunities where I can continue learning, contribute to meaningful work, and gain hands-on experience.
+
+Include buttons or links for:
+
+LinkedIn
+Email
+ViVu Notes
+Resume
+
+Do not display my email publicly until I add it.
+
+FOOTER
+
+Keep it simple.
+
+Vy Vu
+Georgia State University
+Computer Information Systems
+
+Add:
+Built with curiosity and always evolving.
+
+FUNCTIONAL REQUIREMENTS
+
+Make the entire website responsive for desktop, tablet, and mobile.
+
+Create reusable components for project cards and article cards so I can easily add new work later.
+
+Allow me to edit all text, URLs, images, projects, skills, and achievements without changing the overall layout.
+
+Create placeholders for:
+LinkedIn URL
+ViVu Notes URL
+Email
+Resume PDF
+Profile photo
+
+Include subtle hover animations and smooth scrolling.
+
+Do not overuse animations.
+
+Do not use progress bars showing skill percentages.
+
+Do not use star ratings for skills.
+
+Do not add fake companies, fake testimonials, fake clients, fake project results, or fake data.
+
+Do not describe me as an expert, professional data analyst, or software engineer.
+
+The final website should make a recruiter think:
+
+“She is still early in her career, but she has a clear direction, strong curiosity, good communication skills, leadership experience, and is actively building real work around data and technology.”
+
+Most importantly, make the website feel personal to Vy rather than like a generic portfolio template.

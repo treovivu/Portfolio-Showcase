@@ -96,20 +96,20 @@
   --popover: 42 36% 97%;
   --popover-foreground: 224 28% 16%;
   --popover-border: 220 16% 78%;
-  --primary: 8 78% 58%;
+  --primary: 207 42% 45%;
   --primary-foreground: 42 36% 97%;
   --secondary: 195 32% 82%;
   --secondary-foreground: 224 28% 16%;
   --muted: 42 18% 86%;
   --muted-foreground: 224 12% 43%;
-  --accent: 195 55% 48%;
+  --accent: 195 38% 48%;
   --accent-foreground: 224 28% 16%;
   --destructive: 0 63% 48%;
   --destructive-foreground: 42 36% 97%;
   --input: 220 16% 78%;
   --ring: 8 78% 58%;
-  --chart-1: 8 78% 58%;
-  --chart-2: 195 55% 48%;
+  --chart-1: 207 42% 45%;
+  --chart-2: 195 38% 48%;
   --chart-3: 224 28% 16%;
   --chart-4: 35 70% 55%;
   --chart-5: 160 35% 44%;
@@ -217,13 +217,13 @@
   --popover: 224 24% 16%;
   --popover-foreground: 42 36% 97%;
   --popover-border: 224 18% 27%;
-  --primary: 8 78% 62%;
+  --primary: 207 42% 58%;
   --primary-foreground: 224 28% 12%;
   --secondary: 195 24% 26%;
   --secondary-foreground: 42 36% 97%;
   --muted: 224 18% 23%;
   --muted-foreground: 42 18% 72%;
-  --accent: 195 55% 55%;
+  --accent: 195 38% 55%;
   --accent-foreground: 224 28% 12%;
   --destructive: 0 63% 56%;
   --destructive-foreground: 42 36% 97%;
@@ -231,8 +231,8 @@
   /* Used as the border around inputs. Dark mode: Should be a border that is light enough to have high contrast when rendered on a --card background. More contrast than standard --border */
   --input: 224 18% 27%;
   --ring: 8 78% 62%;
-  --chart-1: 8 78% 62%;
-  --chart-2: 195 55% 55%;
+  --chart-1: 207 42% 58%;
+  --chart-2: 195 38% 55%;
   --chart-3: 42 36% 97%;
   --chart-4: 35 70% 60%;
   --chart-5: 160 35% 52%;
@@ -396,9 +396,7 @@ body {
 .portfolio-shell {
   position: relative;
   isolation: isolate;
-  background:
-    radial-gradient(circle at 75% 8%, hsl(195 32% 82% / 0.38), transparent 25rem),
-    hsl(var(--background));
+  background: hsl(var(--background));
 }
 
 .portfolio-shell::before {
@@ -463,7 +461,7 @@ body {
 .project-visual {
   background: #17202f;
   background-image:
-    linear-gradient(125deg, transparent 20%, hsl(8 78% 58% / 0.1) 20%, transparent 45%),
+    linear-gradient(125deg, transparent 20%, hsl(207 42% 58% / 0.1) 20%, transparent 45%),
     radial-gradient(circle at 74% 42%, hsl(195 55% 55% / 0.3), transparent 14rem),
     linear-gradient(145deg, #17202f 0%, #263b4c 100%);
 }
