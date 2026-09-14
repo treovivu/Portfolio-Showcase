@@ -16,6 +16,7 @@ import {
   Sparkles,
   X,
 } from 'lucide-react';
+import personalPhoto from '@assets/IMG_4981_1789411105954.JPG';
 
 const links = {
   linkedin: '',
@@ -458,7 +459,7 @@ function App() {
             <p className="font-mono text-[10px] uppercase tracking-[0.17em] text-primary">02 / about me</p>
             <h2 className="mt-6 max-w-[420px] text-5xl leading-[.92] tracking-[-0.055em] md:text-7xl">A little about me.</h2>
             <MediaPlaceholder
-              item={{ id: 'about-photo', label: 'Personal or campus photo', caption: 'Optional. Upload a photo that adds context without taking over the section.', alt: 'Personal or campus photo placeholder' }}
+              item={{ id: 'about-photo', label: 'Vy Vu', caption: 'A personal moment from Atlanta, Georgia.', alt: 'Vy Vu standing outdoors in Atlanta at night', src: personalPhoto }}
               className="mt-10 max-w-[350px]"
               onOpen={setLightboxItem}
             />
