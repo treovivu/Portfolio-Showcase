@@ -10,6 +10,7 @@ import {
   FileText,
   Linkedin,
   Mail,
+  Maximize2,
   Menu,
   MoveUpRight,
   Sparkles,
@@ -21,6 +22,25 @@ const links = {
   notes: '',
   email: '',
   resume: '',
+};
+
+type MediaItem = {
+  id: string;
+  label: string;
+  caption: string;
+  alt: string;
+  src?: string;
+};
+
+type ProjectDetail = {
+  number: string;
+  title: string;
+  role: string;
+  organization: string;
+  description: string;
+  skills: string[];
+  tone: 'blue' | 'paper' | 'ink';
+  media: MediaItem[];
 };
 
 const navItems = [
@@ -53,7 +73,7 @@ const building = [
   },
 ];
 
-const work = [
+const work: ProjectDetail[] = [
   {
     number: '01',
     title: 'Interactive Event Experience',
@@ -63,6 +83,12 @@ const work = [
       'Coordinated an interactive Morse Code game for approximately 100 participants and created a 100-slide PowerPoint experience. Organized assignments and progress tracking for a 30-member team using Excel.',
     skills: ['Microsoft Excel', 'Event Planning', 'Leadership', 'Team Coordination', 'Presentation Design'],
     tone: 'blue',
+    media: [
+      { id: 'event-cover', label: 'Cover image', caption: 'Upload one strong cover image for this project.', alt: 'Interactive Event Experience cover placeholder' },
+      { id: 'event-slides', label: 'Presentation slides', caption: 'Selected examples from the Morse Code presentation.', alt: 'Morse Code presentation slides placeholder' },
+      { id: 'event-materials', label: 'Event materials', caption: 'Upload event materials or activity visuals.', alt: 'Interactive event materials placeholder' },
+      { id: 'event-excel', label: 'Excel workflow', caption: 'Upload a readable screenshot of the team organization system.', alt: 'Excel team organization workflow placeholder' },
+    ],
   },
   {
     number: '02',
@@ -73,6 +99,12 @@ const work = [
       'Researched and conducted outreach to more than 50 industrial and manufacturing companies to support partnership, sponsorship, and event participation opportunities. Worked with the event manager to support relationships with business leaders, media partners, and key stakeholders involved with the Vietnam Industrial & Manufacturing Fair.',
     skills: ['Strategic Partnerships', 'Stakeholder Management', 'Business Development', 'Communication', 'Event Management'],
     tone: 'paper',
+    media: [
+      { id: 'vimf-cover', label: 'Cover image', caption: 'Upload an approved event or invitation image.', alt: 'Strategic Partnerships and VIMF cover placeholder' },
+      { id: 'vimf-banner', label: 'Invitation banners', caption: 'Upload invitation banners or promotional materials.', alt: 'VIMF invitation banner placeholder' },
+      { id: 'vimf-event', label: 'Event photos', caption: 'Only upload approved event photos here.', alt: 'VIMF event photo placeholder' },
+      { id: 'vimf-outreach', label: 'Outreach sample', caption: 'Upload an approved partnership outreach sample.', alt: 'Partnership outreach sample placeholder' },
+    ],
   },
   {
     number: '03',
@@ -83,25 +115,66 @@ const work = [
       'Plan and coordinate workshops, networking events, and general body meetings related to data analytics, visualization, data cleaning, and emerging AI tools. Collaborate with student leaders and advisors on logistics, scheduling, communication, and member engagement.',
     skills: ['Event Coordination', 'Data Analytics', 'Leadership', 'Project Management', 'Communication'],
     tone: 'ink',
+    media: [
+      { id: 'nsc-cover', label: 'Cover image', caption: 'Upload a workshop or event cover image.', alt: 'National Student Data Corps cover placeholder' },
+      { id: 'nsc-flyer', label: 'Event flyers', caption: 'Upload flyers for workshops or general body meetings.', alt: 'National Student Data Corps flyer placeholder' },
+      { id: 'nsc-workshop', label: 'Workshop photos', caption: 'Upload approved workshop photos or event materials.', alt: 'National Student Data Corps workshop placeholder' },
+      { id: 'nsc-data', label: 'Data activity', caption: 'Upload a data-related activity visual.', alt: 'National Student Data Corps data activity placeholder' },
+    ],
   },
 ];
 
-const dataProjects = [
+const dataProjects: ProjectDetail[] = [
   {
+    number: '01',
     title: 'Content Performance Analysis',
+    role: 'Future data project',
+    organization: 'Personal writing and content',
     description:
       'Analyzing performance data from my own writing and content to understand audience behavior, engagement, and content trends.',
+    skills: ['Dataset', 'SQL / Python', 'Visualization'],
+    tone: 'paper',
+    media: [
+      { id: 'content-dashboard', label: 'Dashboard screenshots', caption: 'Upload dashboard screenshots when this project is ready.', alt: 'Content Performance Analysis dashboard placeholder' },
+      { id: 'content-chart', label: 'Charts and visualizations', caption: 'Upload charts or a dataset preview.', alt: 'Content Performance Analysis chart placeholder' },
+    ],
   },
   {
+    number: '02',
     title: 'Personal Analytics Project',
+    role: 'Future data project',
+    organization: 'Everyday life and decision-making',
     description:
       'Using data from everyday life to explore patterns, behaviors, and decision-making.',
+    skills: ['Dataset', 'Process', 'Insights'],
+    tone: 'paper',
+    media: [
+      { id: 'personal-dashboard', label: 'Data visualizations', caption: 'Upload a visualization or dashboard screenshot.', alt: 'Personal Analytics Project visualization placeholder' },
+      { id: 'personal-cleaning', label: 'Before and after', caption: 'Upload a before-and-after data cleaning example.', alt: 'Personal Analytics Project data cleaning placeholder' },
+    ],
   },
   {
+    number: '03',
     title: 'SQL / Python Project',
+    role: 'Future data project',
+    organization: 'Technical analysis',
     description:
       'A future technical project demonstrating data cleaning, analysis, querying, and visualization.',
+    skills: ['SQL', 'Python', 'Data Cleaning'],
+    tone: 'paper',
+    media: [
+      { id: 'sql-code', label: 'Code screenshot', caption: 'Upload a useful SQL or Python code screenshot.', alt: 'SQL and Python project code placeholder' },
+      { id: 'sql-output', label: 'Analysis output', caption: 'Upload the final chart, dashboard, or dataset preview.', alt: 'SQL and Python project output placeholder' },
+    ],
   },
+];
+
+const certificates: MediaItem[] = [
+  { id: 'presidents-list-1', label: 'President’s List certificate · semester 1', caption: 'Upload the first Georgia State University President’s List certificate.', alt: 'Georgia State University President’s List certificate placeholder' },
+  { id: 'presidents-list-2', label: 'President’s List certificate · semester 2', caption: 'Upload the second Georgia State University President’s List certificate.', alt: 'Georgia State University President’s List certificate placeholder' },
+  { id: 'presidents-list-3', label: 'President’s List certificate · semester 3', caption: 'Upload the third Georgia State University President’s List certificate.', alt: 'Georgia State University President’s List certificate placeholder' },
+  { id: 'menaul-1', label: 'Menaul School certificate', caption: 'Upload an academic certificate or award from Menaul School.', alt: 'Menaul School certificate placeholder' },
+  { id: 'menaul-2', label: 'Menaul School award', caption: 'Upload another approved Menaul School certificate or award.', alt: 'Menaul School award placeholder' },
 ];
 
 const skills = [
@@ -129,6 +202,46 @@ const articles = [
   },
 ];
 
+function MediaPlaceholder({
+  item,
+  onOpen,
+  className = '',
+}: {
+  item: MediaItem;
+  onOpen?: (item: MediaItem) => void;
+  className?: string;
+}) {
+  if (item.src) {
+    return (
+      <button
+        type="button"
+        className={`group relative block aspect-[4/3] w-full overflow-hidden rounded-[3px] border border-foreground/15 bg-card text-left ${className}`}
+        onClick={() => onOpen?.(item)}
+        data-testid={`media-${item.id}`}
+      >
+        <img src={item.src} alt={item.alt} className="h-full w-full object-contain transition-transform duration-500 group-hover:scale-[1.02]" />
+        <span className="absolute bottom-3 right-3 flex items-center gap-2 bg-foreground/85 px-2.5 py-1.5 font-mono text-[9px] uppercase tracking-[0.1em] text-background">
+          <Maximize2 size={12} /> View full size
+        </span>
+      </button>
+    );
+  }
+
+  return (
+    <div className={`media-placeholder relative flex aspect-[4/3] w-full flex-col justify-between overflow-hidden rounded-[3px] border border-dashed border-foreground/25 bg-background p-4 ${className}`} data-testid={`media-${item.id}`}>
+      <div className="media-placeholder-grid absolute inset-0 opacity-70" />
+      <div className="relative flex items-start justify-between">
+        <span className="font-mono text-[9px] uppercase tracking-[0.13em] text-foreground/45">Visual slot</span>
+        <span className="font-mono text-[9px] uppercase tracking-[0.13em] text-primary">Upload later</span>
+      </div>
+      <div className="relative">
+        <p className="max-w-[230px] text-lg leading-[1] tracking-[-0.03em] text-foreground/70">{item.label}</p>
+        <p className="mt-2 max-w-[300px] text-xs leading-[1.5] text-foreground/50">{item.caption}</p>
+      </div>
+    </div>
+  );
+}
+
 function linkTarget(url: string, fallback = '#contact') {
   return url || fallback;
 }
@@ -136,6 +249,9 @@ function linkTarget(url: string, fallback = '#contact') {
 function App() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [copied, setCopied] = useState(false);
+  const [activeProject, setActiveProject] = useState<ProjectDetail | null>(null);
+  const [lightboxItem, setLightboxItem] = useState<MediaItem | null>(null);
+  const [showAchievements, setShowAchievements] = useState(false);
 
   useEffect(() => {
     const elements = document.querySelectorAll<HTMLElement>('.reveal');
@@ -153,6 +269,21 @@ function App() {
     elements.forEach((element) => observer.observe(element));
     return () => observer.disconnect();
   }, []);
+
+  useEffect(() => {
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        setLightboxItem(null);
+        setActiveProject(null);
+      }
+    };
+    window.addEventListener('keydown', onKeyDown);
+    document.body.style.overflow = activeProject || lightboxItem ? 'hidden' : '';
+    return () => {
+      window.removeEventListener('keydown', onKeyDown);
+      document.body.style.overflow = '';
+    };
+  }, [activeProject, lightboxItem]);
 
   const copyPlaceholder = async () => {
     if (!links.email) {
@@ -326,12 +457,11 @@ function App() {
           <div className="reveal">
             <p className="font-mono text-[10px] uppercase tracking-[0.17em] text-primary">02 / about me</p>
             <h2 className="mt-6 max-w-[420px] text-5xl leading-[.92] tracking-[-0.055em] md:text-7xl">A little about me.</h2>
-            <div className="mt-10 flex aspect-[1.2] max-w-[290px] items-end border border-foreground/15 bg-secondary/40 p-5">
-              <div>
-                <p className="font-mono text-[9px] uppercase tracking-[0.16em] text-foreground/50">Profile photo</p>
-                <p className="mt-2 font-display text-3xl italic text-foreground/70">coming soon</p>
-              </div>
-            </div>
+            <MediaPlaceholder
+              item={{ id: 'about-photo', label: 'Personal or campus photo', caption: 'Optional. Upload a photo that adds context without taking over the section.', alt: 'Personal or campus photo placeholder' }}
+              className="mt-10 max-w-[350px]"
+              onOpen={setLightboxItem}
+            />
           </div>
           <div className="reveal reveal-delay-1">
             <p className="max-w-[760px] text-2xl leading-[1.15] tracking-[-0.03em] md:text-[2.65rem] md:leading-[1.08]">
@@ -415,6 +545,7 @@ function App() {
                   <MoveUpRight size={18} className="text-primary md:mt-10" />
                 </div>
                 <div>
+                  <MediaPlaceholder item={project.media[0]} className="mb-6" onOpen={setLightboxItem} />
                   <p className={`font-mono text-[9px] uppercase tracking-[0.15em] ${project.tone === 'ink' ? 'text-background/55' : 'text-foreground/50'}`}>{project.role}</p>
                   <h3 className="mt-4 max-w-[420px] text-3xl leading-[.96] tracking-[-0.045em] md:text-5xl">{project.title}</h3>
                   <p className={`mt-5 text-sm leading-[1.5] ${project.tone === 'ink' ? 'text-background/60' : 'text-foreground/60'}`}>{project.organization}</p>
@@ -426,9 +557,9 @@ function App() {
                       <span key={skill} className={`border px-2.5 py-1 font-mono text-[9px] uppercase tracking-[0.06em] ${project.tone === 'ink' ? 'border-background/20 text-background/65' : 'border-foreground/15 text-foreground/55'}`}>{skill}</span>
                     ))}
                   </div>
-                  <a href="#contact" className="mt-7 inline-flex items-center gap-2 self-start font-mono text-[10px] uppercase tracking-[0.13em] text-primary" data-testid={`link-project-${project.number}`}>
+                  <button type="button" onClick={() => setActiveProject(project)} className="mt-7 inline-flex items-center gap-2 self-start font-mono text-[10px] uppercase tracking-[0.13em] text-primary" data-testid={`button-project-${project.number}`}>
                     View project <ArrowUpRight size={14} />
-                  </a>
+                  </button>
                 </div>
               </article>
             ))}
@@ -439,6 +570,11 @@ function App() {
               <p className="font-mono text-[9px] uppercase tracking-[0.15em] text-primary-foreground/65">04 / personal publication</p>
               <h3 className="mt-5 font-display text-5xl italic leading-[.9] md:text-7xl">ViVu Notes</h3>
               <p className="mt-4 font-mono text-[10px] uppercase tracking-[0.13em] text-primary-foreground/72">Notes on books, data, and becoming.</p>
+              <MediaPlaceholder
+                item={{ id: 'vivu-notes-cover', label: 'Publication cover', caption: 'Upload a Substack screenshot or article cover image.', alt: 'ViVu Notes cover placeholder' }}
+                className="mt-8 max-w-[360px]"
+                onOpen={setLightboxItem}
+              />
             </div>
             <div className="flex flex-col justify-between">
               <p className="max-w-[560px] text-xl leading-[1.2] tracking-[-0.02em]">
@@ -461,15 +597,21 @@ function App() {
           </div>
           <div className="mt-14 grid gap-4 md:grid-cols-3">
             {dataProjects.map((project, index) => (
-              <article key={project.title} className={`reveal reveal-delay-${index + 1} flex min-h-[275px] flex-col justify-between border border-dashed border-foreground/25 bg-background p-7 md:p-8`} data-testid={`card-data-project-${index + 1}`}>
+              <article key={project.title} className={`reveal reveal-delay-${index + 1} flex min-h-[430px] flex-col justify-between border border-dashed border-foreground/25 bg-background p-5 md:p-6`} data-testid={`card-data-project-${index + 1}`}>
                 <div>
                   <span className="font-mono text-[9px] uppercase tracking-[0.14em] text-primary">Future case study / 0{index + 1}</span>
+                  <MediaPlaceholder item={project.media[0]} className="mt-5" onOpen={setLightboxItem} />
                   <h3 className="mt-8 text-2xl leading-[1] tracking-[-0.035em]">{project.title}</h3>
                   <p className="mt-4 text-sm leading-[1.6] text-foreground/60">{project.description}</p>
                 </div>
-                <div className="mt-8 flex items-center justify-between border-t border-foreground/15 pt-4 font-mono text-[9px] uppercase tracking-[0.1em] text-foreground/45">
-                  <span>Problem · dataset · tools</span>
-                  <span>To be documented</span>
+                <div className="mt-8">
+                  <div className="flex items-center justify-between border-t border-foreground/15 pt-4 font-mono text-[9px] uppercase tracking-[0.1em] text-foreground/45">
+                    <span>Problem · dataset · tools</span>
+                    <span>To be documented</span>
+                  </div>
+                  <button type="button" onClick={() => setActiveProject(project)} className="mt-5 inline-flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.13em] text-primary" data-testid={`button-data-project-${index + 1}`}>
+                    Open project <ArrowUpRight size={14} />
+                  </button>
                 </div>
               </article>
             ))}
@@ -546,8 +688,18 @@ function App() {
                   ))}
                 </div>
               </div>
-              <div className="mt-7 flex items-center gap-3 font-mono text-[9px] uppercase tracking-[0.14em] text-background/45">
-                <FileText size={15} className="text-primary" /> Academic certificates can be added here later
+              <div className="mt-7">
+                <div className="flex items-center gap-3 font-mono text-[9px] uppercase tracking-[0.14em] text-background/45">
+                  <FileText size={15} className="text-primary" /> Certificates and awards
+                </div>
+                <div className="mt-5 grid gap-3 sm:grid-cols-3">
+                  {certificates.slice(0, showAchievements ? certificates.length : 3).map((certificate) => (
+                    <MediaPlaceholder key={certificate.id} item={certificate} className="bg-background" onOpen={setLightboxItem} />
+                  ))}
+                </div>
+                <button type="button" onClick={() => setShowAchievements((visible) => !visible)} className="mt-5 inline-flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.13em] text-primary transition-colors hover:text-background" data-testid="button-view-achievements">
+                  {showAchievements ? 'Show fewer achievements' : 'View achievements'} <ArrowDownRight size={14} />
+                </button>
               </div>
             </div>
           </div>
@@ -635,6 +787,106 @@ function App() {
           <a href="#contact" className="transition-colors hover:text-primary" data-testid="link-footer-contact">Connect</a>
         </div>
       </footer>
+
+      {activeProject && (
+        <div
+          className="fixed inset-0 z-50 overflow-y-auto bg-foreground/75 p-4 backdrop-blur-sm md:p-8"
+          role="dialog"
+          aria-modal="true"
+          aria-label={`${activeProject.title} project details`}
+          onClick={() => setActiveProject(null)}
+          data-testid="project-detail-overlay"
+        >
+          <div className="mx-auto min-h-full max-w-6xl" onClick={(event) => event.stopPropagation()}>
+            <div className="border border-foreground/15 bg-background p-5 shadow-2xl md:p-10">
+              <div className="flex items-start justify-between gap-6 border-b border-foreground/15 pb-6">
+                <div>
+                  <p className="font-mono text-[9px] uppercase tracking-[0.16em] text-primary">Project detail / {activeProject.number}</p>
+                  <h2 className="mt-4 max-w-[760px] text-4xl leading-[.92] tracking-[-0.05em] md:text-7xl">{activeProject.title}</h2>
+                  <p className="mt-4 text-sm text-foreground/55">{activeProject.organization}</p>
+                </div>
+                <button type="button" onClick={() => setActiveProject(null)} className="flex h-10 w-10 shrink-0 items-center justify-center border border-foreground/20 transition-colors hover:border-primary hover:bg-primary hover:text-primary-foreground" aria-label="Close project details" data-testid="button-close-project">
+                  <X size={18} />
+                </button>
+              </div>
+
+              <div className="mt-8 grid gap-8 lg:grid-cols-[.75fr_1.25fr]">
+                <div className="space-y-6">
+                  <div>
+                    <p className="font-mono text-[9px] uppercase tracking-[0.15em] text-primary">Overview</p>
+                    <p className="mt-3 text-sm leading-[1.7] text-foreground/70">{activeProject.description}</p>
+                  </div>
+                  <div className="grid gap-5 border-y border-foreground/15 py-5 sm:grid-cols-2 lg:grid-cols-1">
+                    <div>
+                      <p className="font-mono text-[9px] uppercase tracking-[0.15em] text-foreground/45">My role</p>
+                      <p className="mt-2 text-base">{activeProject.role}</p>
+                    </div>
+                    <div>
+                      <p className="font-mono text-[9px] uppercase tracking-[0.15em] text-foreground/45">What I did</p>
+                      <p className="mt-2 text-sm leading-[1.6] text-foreground/70">{activeProject.description}</p>
+                    </div>
+                    <div>
+                      <p className="font-mono text-[9px] uppercase tracking-[0.15em] text-foreground/45">Tools</p>
+                      <div className="mt-3 flex flex-wrap gap-2">
+                        {activeProject.skills.map((skill) => <span key={skill} className="border border-foreground/15 px-2.5 py-1 font-mono text-[9px] uppercase tracking-[0.06em] text-foreground/60">{skill}</span>)}
+                      </div>
+                    </div>
+                    <div>
+                      <p className="font-mono text-[9px] uppercase tracking-[0.15em] text-foreground/45">Outcome</p>
+                      <p className="mt-2 text-sm leading-[1.6] text-foreground/70">Add the final outcome or reflection when this project is documented.</p>
+                    </div>
+                  </div>
+                </div>
+
+                <div>
+                  <div className="mb-4 flex items-center justify-between">
+                    <p className="font-mono text-[9px] uppercase tracking-[0.15em] text-primary">Gallery</p>
+                    <p className="font-mono text-[9px] uppercase tracking-[0.13em] text-foreground/40">Full-size viewing available for uploaded images</p>
+                  </div>
+                  <div className="grid gap-4 sm:grid-cols-2">
+                    {activeProject.media.map((item) => <MediaPlaceholder key={item.id} item={item} onOpen={setLightboxItem} />)}
+                  </div>
+                  <div className="mt-7 border-t border-foreground/15 pt-5">
+                    <p className="font-mono text-[9px] uppercase tracking-[0.15em] text-primary">Files & links</p>
+                    <div className="mt-4 grid gap-3 sm:grid-cols-3">
+                      {[
+                        ['PDF / document', 'Selected slides or supporting document'],
+                        ['External project', 'Live website or published case study'],
+                        ['Optional video', 'Approved video or storytelling sample'],
+                      ].map(([label, detail]) => (
+                        <div key={label} className="border border-dashed border-foreground/25 bg-secondary/15 p-4">
+                          <p className="font-mono text-[9px] uppercase tracking-[0.1em] text-foreground/50">{label}</p>
+                          <p className="mt-3 text-sm leading-[1.35] text-foreground/65">{detail}</p>
+                          <p className="mt-4 font-mono text-[9px] uppercase tracking-[0.1em] text-primary">Add later</p>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {lightboxItem?.src && (
+        <div
+          className="fixed inset-0 z-[60] flex items-center justify-center bg-foreground/90 p-4 md:p-10"
+          role="dialog"
+          aria-modal="true"
+          aria-label={lightboxItem.alt}
+          onClick={() => setLightboxItem(null)}
+          data-testid="media-lightbox"
+        >
+          <button type="button" onClick={() => setLightboxItem(null)} className="absolute right-5 top-5 flex h-10 w-10 items-center justify-center border border-background/30 text-background transition-colors hover:bg-background hover:text-foreground" aria-label="Close full-size image">
+            <X size={18} />
+          </button>
+          <figure className="max-h-full max-w-6xl" onClick={(event) => event.stopPropagation()}>
+            <img src={lightboxItem.src} alt={lightboxItem.alt} className="max-h-[82vh] w-auto max-w-full object-contain" />
+            <figcaption className="mt-4 text-center font-mono text-[10px] uppercase tracking-[0.13em] text-background/70">{lightboxItem.caption}</figcaption>
+          </figure>
+        </div>
+      )}
     </main>
   );
 }

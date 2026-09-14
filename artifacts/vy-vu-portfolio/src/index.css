@@ -475,6 +475,14 @@ body {
   mask-image: linear-gradient(to bottom right, black, transparent 78%);
 }
 
+.media-placeholder-grid {
+  background-image:
+    linear-gradient(hsl(var(--foreground) / 0.06) 1px, transparent 1px),
+    linear-gradient(90deg, hsl(var(--foreground) / 0.06) 1px, transparent 1px);
+  background-size: 22px 22px;
+  mask-image: linear-gradient(to bottom right, black, transparent 78%);
+}
+
 .orbit {
   animation: orbit 16s linear infinite;
   transform-origin: center;
