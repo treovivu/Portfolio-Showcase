@@ -17,6 +17,9 @@ import {
   X,
 } from 'lucide-react';
 import personalPhoto from '@assets/IMG_4981_1789411105954.JPG';
+import presidentsListSpring2026 from '@assets/presidents-list-spring-2026.png';
+import presidentsListFall2025 from '@assets/presidents-list-fall-2025.png';
+import presidentsListSpring2025 from '@assets/presidents-list-spring-2025.png';
 
 const links = {
   linkedin: '',
@@ -171,9 +174,9 @@ const dataProjects: ProjectDetail[] = [
 ];
 
 const certificates: MediaItem[] = [
-  { id: 'presidents-list-1', label: 'President’s List certificate · semester 1', caption: 'Upload the first Georgia State University President’s List certificate.', alt: 'Georgia State University President’s List certificate placeholder' },
-  { id: 'presidents-list-2', label: 'President’s List certificate · semester 2', caption: 'Upload the second Georgia State University President’s List certificate.', alt: 'Georgia State University President’s List certificate placeholder' },
-  { id: 'presidents-list-3', label: 'President’s List certificate · semester 3', caption: 'Upload the third Georgia State University President’s List certificate.', alt: 'Georgia State University President’s List certificate placeholder' },
+  { id: 'presidents-list-1', label: 'President’s List · Spring 2026', caption: 'Georgia State University President’s List certificate.', alt: 'Vy Vu Georgia State University President’s List certificate for Spring 2026', src: presidentsListSpring2026 },
+  { id: 'presidents-list-2', label: 'President’s List · Fall 2025', caption: 'Georgia State University President’s List certificate.', alt: 'Vy Vu Georgia State University President’s List certificate for Fall 2025', src: presidentsListFall2025 },
+  { id: 'presidents-list-3', label: 'President’s List · Spring 2025', caption: 'Georgia State University President’s List certificate.', alt: 'Vy Vu Georgia State University President’s List certificate for Spring 2025', src: presidentsListSpring2025 },
   { id: 'menaul-1', label: 'Menaul School certificate', caption: 'Upload an academic certificate or award from Menaul School.', alt: 'Menaul School certificate placeholder' },
   { id: 'menaul-2', label: 'Menaul School award', caption: 'Upload another approved Menaul School certificate or award.', alt: 'Menaul School award placeholder' },
 ];
