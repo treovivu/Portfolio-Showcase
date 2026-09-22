@@ -20,7 +20,11 @@ import personalPhoto from '@assets/IMG_4981_1789411105954.JPG';
 import presidentsListSpring2026 from '@assets/presidents-list-spring-2026.png';
 import presidentsListFall2025 from '@assets/presidents-list-fall-2025.png';
 import presidentsListSpring2025 from '@assets/presidents-list-spring-2025.png';
-import herBuddyLinkPreview from '@assets/image_1790094638238.png';
+import herBuddyCover from '@assets/Screenshot_2026-09-22_at_1.26.18_PM_1790097984255.png';
+import herBuddyContributions from '@assets/IMG_6188_1790098101201.JPG';
+import herBuddyBuddyMatch from '@assets/Screenshot_2026-09-22_at_1.28.46_PM_1790098128879.png';
+import herBuddyCampusMap from '@assets/Screenshot_2026-09-22_at_1.29.02_PM_1790098146026.png';
+import herBuddyWellness from '@assets/Screenshot_2026-09-22_at_1.29.16_PM_1790098159020.png';
 
 const links = {
   linkedin: '',
@@ -94,12 +98,14 @@ const work: ProjectDetail[] = [
     tone: 'blue',
     featured: true,
     award: 'MLH Best Use of Auth0',
-    liveDemo: '',
-    github: '',
+    liveDemo: 'https://her-buddy.vercel.app',
+    github: 'https://github.com/1Cazarez/HerBuddy',
     media: [
-      { id: 'herbuddy-cover', label: 'Project screenshot', caption: 'Upload a strong HerBuddy interface screenshot here when ready.', alt: 'HerBuddy project screenshot placeholder' },
-      { id: 'herbuddy-links', label: 'Provided link preview', caption: 'Reference image supplied for the project links.', alt: 'HerBuddy Live Demo and GitHub link preview', src: herBuddyLinkPreview },
-      { id: 'herbuddy-detail', label: 'Feature detail', caption: 'Add a screenshot of peer matching, safety zones, or voice support.', alt: 'HerBuddy feature screenshot placeholder' },
+      { id: 'herbuddy-cover', label: 'Project screenshot', caption: 'HerBuddy campus support dashboard with safety and wellness tools.', alt: 'HerBuddy campus support dashboard showing route matching, wellness summary, and safety check-in', src: herBuddyCover },
+      { id: 'herbuddy-contributions', label: 'Contributions photos', caption: 'The HerBuddy team during HackHERS 2026.', alt: 'Vy Vu with three HerBuddy teammates at HackHERS 2026', src: herBuddyContributions },
+      { id: 'herbuddy-buddy-match', label: 'Feature detail · Buddy Match', caption: 'Peer matching for walking, studying, and campus activities.', alt: 'HerBuddy Buddy Match screen showing a verified student profile and match percentage', src: herBuddyBuddyMatch },
+      { id: 'herbuddy-campus-map', label: 'Feature detail · Campus Map', caption: 'Campus safety zones, lit walkways, and live group routes.', alt: 'HerBuddy Campus Map screen showing a secure zone, active groups, and walk routes', src: herBuddyCampusMap },
+      { id: 'herbuddy-wellness', label: 'Feature detail · Wellness Dashboard', caption: 'Student health, activity goals, and campus support resources.', alt: 'HerBuddy Wellness Dashboard showing activity goals, peer support, and emergency contact', src: herBuddyWellness },
     ],
   },
   {
@@ -925,36 +931,22 @@ function App() {
                         {activeProject.skills.map((skill) => <span key={skill} className="border border-foreground/15 px-2.5 py-1 font-mono text-[9px] uppercase tracking-[0.06em] text-foreground/60">{skill}</span>)}
                       </div>
                     </div>
-                    <div>
-                      <p className="font-mono text-[9px] uppercase tracking-[0.15em] text-foreground/45">Outcome</p>
-                      <p className="mt-2 text-sm leading-[1.6] text-foreground/70">Add the final outcome or reflection when this project is documented.</p>
-                    </div>
+                    {activeProject.award && (
+                      <div>
+                        <p className="font-mono text-[9px] uppercase tracking-[0.15em] text-foreground/45">Award</p>
+                        <p className="mt-2 text-sm leading-[1.6] text-foreground/70">{activeProject.award}</p>
+                      </div>
+                    )}
                   </div>
                 </div>
 
                 <div>
                   <div className="mb-4 flex items-center justify-between">
                     <p className="font-mono text-[9px] uppercase tracking-[0.15em] text-primary">Gallery</p>
-                    <p className="font-mono text-[9px] uppercase tracking-[0.13em] text-foreground/40">Full-size viewing available for uploaded images</p>
+                    <p className="font-mono text-[9px] uppercase tracking-[0.13em] text-foreground/40">Contributions photos</p>
                   </div>
                   <div className="grid gap-4 sm:grid-cols-2">
                     {activeProject.media.map((item) => <MediaPlaceholder key={item.id} item={item} onOpen={setLightboxItem} />)}
-                  </div>
-                  <div className="mt-7 border-t border-foreground/15 pt-5">
-                    <p className="font-mono text-[9px] uppercase tracking-[0.15em] text-primary">Files & links</p>
-                    <div className="mt-4 grid gap-3 sm:grid-cols-3">
-                      {[
-                        ['PDF / document', 'Selected slides or supporting document'],
-                        ['External project', 'Live website or published case study'],
-                        ['Optional video', 'Approved video or storytelling sample'],
-                      ].map(([label, detail]) => (
-                        <div key={label} className="border border-dashed border-foreground/25 bg-secondary/15 p-4">
-                          <p className="font-mono text-[9px] uppercase tracking-[0.1em] text-foreground/50">{label}</p>
-                          <p className="mt-3 text-sm leading-[1.35] text-foreground/65">{detail}</p>
-                          <p className="mt-4 font-mono text-[9px] uppercase tracking-[0.1em] text-primary">Add later</p>
-                        </div>
-                      ))}
-                    </div>
                   </div>
                 </div>
               </div>
