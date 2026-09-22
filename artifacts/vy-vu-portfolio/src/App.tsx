@@ -20,6 +20,7 @@ import personalPhoto from '@assets/IMG_4981_1789411105954.JPG';
 import presidentsListSpring2026 from '@assets/presidents-list-spring-2026.png';
 import presidentsListFall2025 from '@assets/presidents-list-fall-2025.png';
 import presidentsListSpring2025 from '@assets/presidents-list-spring-2025.png';
+import herBuddyLinkPreview from '@assets/image_1790094638238.png';
 
 const links = {
   linkedin: '',
@@ -45,6 +46,10 @@ type ProjectDetail = {
   skills: string[];
   tone: 'blue' | 'paper' | 'ink';
   media: MediaItem[];
+  featured?: boolean;
+  award?: string;
+  liveDemo?: string;
+  github?: string;
 };
 
 const navItems = [
@@ -80,6 +85,25 @@ const building = [
 const work: ProjectDetail[] = [
   {
     number: '01',
+    title: 'HerBuddy — HackHERS 2026',
+    role: 'Hackathon project',
+    organization: 'HackHERS 2026',
+    description:
+      'HerBuddy is a campus mental health and student support platform with peer matching, location-based safety zones, and AI-powered voice support.',
+    skills: ['Auth0', 'Google Maps API', 'ElevenLabs', 'HTML/CSS', 'JavaScript'],
+    tone: 'blue',
+    featured: true,
+    award: 'MLH Best Use of Auth0',
+    liveDemo: '',
+    github: '',
+    media: [
+      { id: 'herbuddy-cover', label: 'Project screenshot', caption: 'Upload a strong HerBuddy interface screenshot here when ready.', alt: 'HerBuddy project screenshot placeholder' },
+      { id: 'herbuddy-links', label: 'Provided link preview', caption: 'Reference image supplied for the project links.', alt: 'HerBuddy Live Demo and GitHub link preview', src: herBuddyLinkPreview },
+      { id: 'herbuddy-detail', label: 'Feature detail', caption: 'Add a screenshot of peer matching, safety zones, or voice support.', alt: 'HerBuddy feature screenshot placeholder' },
+    ],
+  },
+  {
+    number: '02',
     title: 'Interactive Event Experience',
     role: 'Event Leader',
     organization: 'Trường MN - TiH - THCS - THPT Việt Anh',
@@ -95,7 +119,7 @@ const work: ProjectDetail[] = [
     ],
   },
   {
-    number: '02',
+    number: '03',
     title: 'Strategic Partnerships & VIMF',
     role: 'Strategic Partnerships Intern',
     organization: 'OMG Events Management Co Ltd',
@@ -111,7 +135,7 @@ const work: ProjectDetail[] = [
     ],
   },
   {
-    number: '03',
+    number: '04',
     title: 'National Student Data Corps',
     role: 'Event Coordinator',
     organization: 'National Student Data Corps at Georgia State University',
@@ -248,6 +272,45 @@ function MediaPlaceholder({
 
 function linkTarget(url: string, fallback = '#contact') {
   return url || fallback;
+}
+
+function ProjectAction({
+  label,
+  url,
+  className = '',
+}: {
+  label: string;
+  url?: string;
+  className?: string;
+}) {
+  const sharedClassName = `inline-flex items-center gap-2 border px-3 py-2 font-mono text-[10px] uppercase tracking-[0.11em] transition-colors ${className}`;
+
+  if (url) {
+    return (
+      <a
+        href={url}
+        target="_blank"
+        rel="noreferrer"
+        className={`${sharedClassName} border-foreground/20 hover:border-primary hover:bg-primary hover:text-primary-foreground`}
+        data-testid={`link-project-${label.toLowerCase().replaceAll(' ', '-')}`}
+      >
+        {label} <ArrowUpRight size={13} />
+      </a>
+    );
+  }
+
+  return (
+    <button
+      type="button"
+      disabled
+      title={`${label} link coming soon`}
+      aria-label={`${label} link coming soon`}
+      className={`${sharedClassName} cursor-not-allowed border-foreground/15 text-foreground/45`}
+      data-testid={`button-project-${label.toLowerCase().replaceAll(' ', '-')}-placeholder`}
+    >
+      {label} <ArrowUpRight size={13} />
+    </button>
+  );
 }
 
 function App() {
@@ -541,9 +604,14 @@ function App() {
             {work.map((project, index) => (
               <article
                 key={project.number}
-                className={`reveal reveal-delay-${(index % 3) + 1} group grid gap-8 border border-foreground/15 p-6 transition-transform duration-500 hover:-translate-y-1 md:grid-cols-[100px_1fr_1.05fr] md:gap-10 md:p-9 ${project.tone === 'ink' ? 'bg-foreground text-background' : project.tone === 'blue' ? 'bg-[#d7e4eb]' : 'bg-card'}`}
+                className={`reveal reveal-delay-${(index % 3) + 1} group relative grid gap-8 border p-6 transition-transform duration-500 hover:-translate-y-1 md:grid-cols-[100px_1fr_1.05fr] md:gap-10 md:p-9 ${project.tone === 'ink' ? 'border-foreground/15 bg-foreground text-background' : project.tone === 'blue' ? 'border-foreground/15 bg-[#d7e4eb]' : 'border-foreground/15 bg-card'} ${project.featured ? 'border-primary/60 shadow-[6px_6px_0_hsl(var(--primary)/.16)]' : ''}`}
                 data-testid={`card-project-${project.number}`}
               >
+                {project.featured && (
+                  <div className="absolute right-5 top-5 flex items-center gap-2 bg-primary px-2.5 py-1.5 font-mono text-[9px] uppercase tracking-[0.12em] text-primary-foreground md:right-9 md:top-9" data-testid="badge-featured-project">
+                    <Sparkles size={11} /> Featured project
+                  </div>
+                )}
                 <div className="flex items-start justify-between md:block">
                   <span className={`font-mono text-[10px] ${project.tone === 'ink' ? 'text-primary' : 'text-primary'}`}>{project.number}</span>
                   <MoveUpRight size={18} className="text-primary md:mt-10" />
@@ -552,6 +620,11 @@ function App() {
                   <MediaPlaceholder item={project.media[0]} className="mb-6" onOpen={setLightboxItem} />
                   <p className={`font-mono text-[9px] uppercase tracking-[0.15em] ${project.tone === 'ink' ? 'text-background/55' : 'text-foreground/50'}`}>{project.role}</p>
                   <h3 className="mt-4 max-w-[420px] text-3xl leading-[.96] tracking-[-0.045em] md:text-5xl">{project.title}</h3>
+                  {project.award && (
+                    <div className="mt-5 inline-flex items-center gap-2 border border-primary/45 bg-primary/10 px-3 py-2 font-mono text-[9px] uppercase tracking-[0.1em] text-primary" data-testid="text-project-award">
+                      <Sparkles size={12} /> {project.award}
+                    </div>
+                  )}
                   <p className={`mt-5 text-sm leading-[1.5] ${project.tone === 'ink' ? 'text-background/60' : 'text-foreground/60'}`}>{project.organization}</p>
                 </div>
                 <div className="flex flex-col justify-between">
@@ -561,6 +634,12 @@ function App() {
                       <span key={skill} className={`border px-2.5 py-1 font-mono text-[9px] uppercase tracking-[0.06em] ${project.tone === 'ink' ? 'border-background/20 text-background/65' : 'border-foreground/15 text-foreground/55'}`}>{skill}</span>
                     ))}
                   </div>
+                  {project.featured && (
+                    <div className="mt-7 flex flex-wrap gap-2" data-testid="project-actions">
+                      <ProjectAction label="Live Demo" url={project.liveDemo} />
+                      <ProjectAction label="GitHub" url={project.github} />
+                    </div>
+                  )}
                   <button type="button" onClick={() => setActiveProject(project)} className="mt-7 inline-flex items-center gap-2 self-start font-mono text-[10px] uppercase tracking-[0.13em] text-primary" data-testid={`button-project-${project.number}`}>
                     View project <ArrowUpRight size={14} />
                   </button>
@@ -808,6 +887,11 @@ function App() {
                   <p className="font-mono text-[9px] uppercase tracking-[0.16em] text-primary">Project detail / {activeProject.number}</p>
                   <h2 className="mt-4 max-w-[760px] text-4xl leading-[.92] tracking-[-0.05em] md:text-7xl">{activeProject.title}</h2>
                   <p className="mt-4 text-sm text-foreground/55">{activeProject.organization}</p>
+                   {activeProject.award && (
+                     <div className="mt-5 inline-flex items-center gap-2 border border-primary/45 bg-primary/10 px-3 py-2 font-mono text-[9px] uppercase tracking-[0.1em] text-primary" data-testid="detail-project-award">
+                       <Sparkles size={12} /> {activeProject.award}
+                     </div>
+                   )}
                 </div>
                 <button type="button" onClick={() => setActiveProject(null)} className="flex h-10 w-10 shrink-0 items-center justify-center border border-foreground/20 transition-colors hover:border-primary hover:bg-primary hover:text-primary-foreground" aria-label="Close project details" data-testid="button-close-project">
                   <X size={18} />
@@ -820,6 +904,12 @@ function App() {
                     <p className="font-mono text-[9px] uppercase tracking-[0.15em] text-primary">Overview</p>
                     <p className="mt-3 text-sm leading-[1.7] text-foreground/70">{activeProject.description}</p>
                   </div>
+                  {(activeProject.liveDemo !== undefined || activeProject.github !== undefined) && (
+                    <div className="flex flex-wrap gap-2">
+                      <ProjectAction label="Live Demo" url={activeProject.liveDemo} />
+                      <ProjectAction label="GitHub" url={activeProject.github} />
+                    </div>
+                  )}
                   <div className="grid gap-5 border-y border-foreground/15 py-5 sm:grid-cols-2 lg:grid-cols-1">
                     <div>
                       <p className="font-mono text-[9px] uppercase tracking-[0.15em] text-foreground/45">My role</p>
