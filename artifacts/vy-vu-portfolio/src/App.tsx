@@ -25,6 +25,7 @@ import herBuddyContributions from '@assets/IMG_6188_1790098101201.JPG';
 import herBuddyBuddyMatch from '@assets/Screenshot_2026-09-22_at_1.28.46_PM_1790098128879.png';
 import herBuddyCampusMap from '@assets/Screenshot_2026-09-22_at_1.29.02_PM_1790098146026.png';
 import herBuddyWellness from '@assets/Screenshot_2026-09-22_at_1.29.16_PM_1790098159020.png';
+import vimfCover from '@assets/image_1790100671213.png';
 
 const links = {
   linkedin: '',
@@ -134,7 +135,7 @@ const work: ProjectDetail[] = [
     skills: ['Strategic Partnerships', 'Stakeholder Management', 'Business Development', 'Communication', 'Event Management'],
     tone: 'paper',
     media: [
-      { id: 'vimf-cover', label: 'Cover image', caption: 'Upload an approved event or invitation image.', alt: 'Strategic Partnerships and VIMF cover placeholder' },
+      { id: 'vimf-cover', label: 'VIMF cover image', caption: 'Vietnam Industrial & Manufacturing Fair promotional banner.', alt: 'Vietnam Industrial and Manufacturing Fair promotional banner with manufacturing event dates and robotics imagery', src: vimfCover },
       { id: 'vimf-banner', label: 'Invitation banners', caption: 'Upload invitation banners or promotional materials.', alt: 'VIMF invitation banner placeholder' },
       { id: 'vimf-event', label: 'Event photos', caption: 'Only upload approved event photos here.', alt: 'VIMF event photo placeholder' },
       { id: 'vimf-outreach', label: 'Outreach sample', caption: 'Upload an approved partnership outreach sample.', alt: 'Partnership outreach sample placeholder' },
