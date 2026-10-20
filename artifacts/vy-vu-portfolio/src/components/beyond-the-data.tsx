@@ -37,34 +37,37 @@ function DanceArt() {
   );
 }
 
-// A guitar neck whose six strings strum low-to-high while the card is active.
-function GuitarArt() {
+// A small keyboard: while the card is active, a short phrase is played one key at a time.
+const whiteKeys = range(10);
+const blackKeys = [0, 1, 3, 4, 5, 7, 8]; // sits after these white keys, like C D · F G A · C D
+const phrase = [2, 4, 5, 7, 5]; // white keys pressed in order; each gets its own beat
+
+function PianoArt() {
   return (
     <svg viewBox="0 0 240 150" className="h-full w-full" aria-hidden="true">
-      <circle cx="236" cy="75" r="46" fill="hsl(var(--cocoa))" />
-      <circle cx="236" cy="75" r="22" fill="hsl(var(--mint) / .9)" />
-      <rect x="10" y="44" width="200" height="62" rx="4" fill="hsl(var(--cocoa) / .9)" />
-      {[46, 82, 118, 154, 190].map((x) => (
-        <line key={x} x1={x} x2={x} y1="44" y2="106" stroke="hsl(var(--cream) / .28)" strokeWidth="2" />
+      <rect x="14" y="36" width="212" height="94" rx="7" fill="hsl(var(--cocoa) / .92)" />
+      <rect x="20" y="46" width="200" height="3" rx="1.5" fill="hsl(var(--coral) / .8)" />
+      {whiteKeys.map((k) => {
+        const beat = phrase.indexOf(k);
+        return (
+          <rect
+            key={k}
+            x={20 + k * 20}
+            y="52"
+            width="19"
+            height="70"
+            rx="2.5"
+            fill="hsl(var(--paper))"
+            className={beat >= 0 ? 'piano-key' : undefined}
+            style={beat >= 0 ? { animationDelay: `${beat * 300}ms` } : undefined}
+          />
+        );
+      })}
+      {blackKeys.map((k) => (
+        <rect key={k} x={20 + k * 20 + 14} y="52" width="12" height="42" rx="2" fill="hsl(var(--cocoa))" />
       ))}
-      {[64, 136].map((x) => (
-        <circle key={x} cx={x} cy="75" r="3.5" fill="hsl(var(--cream) / .35)" />
-      ))}
-      {range(6).map((s) => (
-        <line
-          key={s}
-          x1="0"
-          x2="240"
-          y1={50 + s * 10}
-          y2={50 + s * 10}
-          stroke="hsl(var(--cream) / .9)"
-          strokeWidth={2.2 - s * 0.25}
-          className="guitar-string"
-          style={{ animationDelay: `${s * 45}ms` }}
-        />
-      ))}
-      {['♪', '♫'].map((note, i) => (
-        <text key={note} x={150 + i * 34} y="34" fontSize="16" fill="hsl(var(--coral-deep))" className="float-note" style={{ animationDelay: `${i * 380}ms` }}>
+      {['♪', '♩', '♫'].map((note, i) => (
+        <text key={note} x={70 + i * 46} y="28" fontSize="15" fill="hsl(var(--coral-deep))" className="float-note" style={{ animationDelay: `${i * 300 + 100}ms` }}>
           {note}
         </text>
       ))}
@@ -119,11 +122,11 @@ const hobbies: { number: string; title: string; theme: string; line: string; tin
   },
   {
     number: '02',
-    title: 'Guitar',
-    theme: 'Melody & Creativity',
-    line: 'Chords, strumming patterns, and slowly learning new songs.',
+    title: 'Piano',
+    theme: 'Learning & Melody',
+    line: 'Learning piano one note at a time, and enjoying the rhythm, patience, and beauty in the process.',
     tint: 'hsl(var(--mint) / .55)',
-    art: <GuitarArt />,
+    art: <PianoArt />,
   },
   {
     number: '03',
@@ -186,7 +189,7 @@ export function BeyondTheData() {
     <section id="beyond" className="mx-auto max-w-[1280px] scroll-mt-24 px-5 pb-28 md:px-10 md:pb-36">
       <div className="reveal grid gap-6 md:grid-cols-[1fr_minmax(0,380px)] md:items-end">
         <div>
-          <p className="font-mono text-[10px] uppercase tracking-[0.17em] text-primary">03 / beyond the data</p>
+          <p className="font-mono text-[10px] uppercase tracking-[0.17em] text-primary">08 / beyond the data</p>
           <h2 className="mt-5 text-5xl leading-[.92] tracking-[-0.055em] md:text-7xl">
             There&apos;s more to
             <br />
@@ -194,7 +197,7 @@ export function BeyondTheData() {
           </h2>
         </div>
         <p className="text-[15px] leading-[1.65] text-foreground/68 md:pb-2">
-          When I&apos;m not exploring data or building with AI, you&apos;ll probably find me learning K-pop choreography, playing guitar, or singing along to my favorite songs. Music keeps me creative, curious, and always moving.
+          When I&apos;m not exploring data or building with AI, you&apos;ll probably find me learning K-pop choreography, practicing piano, or singing along to my favorite songs. Music keeps me creative, curious, and always moving.
         </p>
       </div>
 

@@ -3,6 +3,7 @@ import { LazyMotion, MotionConfig, domAnimation } from 'framer-motion';
 
 import App from './App';
 import { ErrorBoundary } from '@/components/error-boundary';
+import { SoundtrackProvider } from '@/components/soundtrack';
 
 import './index.css';
 
@@ -16,7 +17,9 @@ createRoot(document.getElementById('root')!, {
     {/* domAnimation keeps the motion bundle small; reducedMotion="user" honours prefers-reduced-motion. */}
     <LazyMotion features={domAnimation} strict>
       <MotionConfig reducedMotion="user">
-        <App />
+        <SoundtrackProvider>
+          <App />
+        </SoundtrackProvider>
       </MotionConfig>
     </LazyMotion>
   </ErrorBoundary>,

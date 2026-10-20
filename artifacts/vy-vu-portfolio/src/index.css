@@ -585,18 +585,48 @@ body {
   animation-delay: calc(var(--i) * 14ms + 500ms);
 }
 
-/* Hovering or focusing a hero CTA "presses play": the waveform breathes until you leave.
-   It animates the separate `scale` property and keeps bar-in in the list, so leaving
+/* The waveform breathes only while the soundtrack is actually playing.
+   It animates the separate `scale` property and keeps bar-in in the list, so pausing
    doesn't restart the entrance animation. */
-.now-playing[data-hot] .np-bar {
+.now-playing[data-playing] .np-bar {
   animation:
     bar-in 900ms cubic-bezier(0.22, 1, 0.36, 1) backwards,
     np-breathe 700ms ease-in-out infinite alternate;
   animation-delay: calc(var(--i) * 14ms + 500ms), calc(var(--i) * -37ms);
 }
 
-.now-playing[data-hot] .eq-icon {
+.now-playing[data-playing] .eq-icon,
+.track-dock[data-playing] .eq-icon {
   animation: eq-dance 520ms ease-in-out infinite alternate;
+}
+
+/* ---------- Soundtrack player ---------- */
+
+.track-button {
+  transform: translate(var(--lx, 0), var(--ly, 0));
+  transition: transform 260ms cubic-bezier(0.22, 1, 0.36, 1), box-shadow 300ms ease;
+  box-shadow: 0 6px 14px -8px hsl(var(--cocoa) / 0.6);
+  -webkit-tap-highlight-color: transparent;
+}
+
+.track-button:not(:disabled):hover {
+  box-shadow: 0 0 0 4px hsl(var(--peach) / 0.7), 0 10px 18px -10px hsl(var(--cocoa) / 0.6);
+}
+
+.track-button:not(:disabled):active { transform: translate(var(--lx, 0), var(--ly, 0)) scale(0.94); }
+
+/* Always animating but paused, so the record keeps its angle between plays. */
+.track-vinyl {
+  animation: vinyl-spin 3.6s linear infinite paused;
+}
+
+.track-vinyl[data-playing] { animation-play-state: running; }
+
+.track-loading { animation: track-loading 800ms ease-in-out infinite alternate; }
+
+@keyframes track-loading {
+  from { opacity: 0.3; transform: scale(0.7); }
+  to { opacity: 1; transform: scale(1); }
 }
 
 @keyframes bar-in {
@@ -706,16 +736,17 @@ body {
   75% { transform: translate(calc(var(--dx) * -1), -4px) rotate(calc(var(--r) * -1)); }
 }
 
-/* Each strum vibrates briefly, then the strings rest until the next one. */
-.hobby-card[data-active] .guitar-string { animation: string-strum 1.5s linear infinite; }
+/* One phrase per bar: each key dips and warms, then rests until its next beat. */
+.piano-key {
+  transform-box: fill-box;
+  transform-origin: 50% 0;
+}
 
-@keyframes string-strum {
-  0%, 36%, 100% { transform: translateY(0); }
-  6% { transform: translateY(1.8px); }
-  12% { transform: translateY(-1.6px); }
-  18% { transform: translateY(1.1px); }
-  24% { transform: translateY(-0.7px); }
-  30% { transform: translateY(0.3px); }
+.hobby-card[data-active] .piano-key { animation: key-press 1.8s ease-in-out infinite; }
+
+@keyframes key-press {
+  0%, 22%, 100% { transform: scaleY(1); fill: hsl(var(--paper)); }
+  5%, 13% { transform: scaleY(0.965); fill: hsl(var(--peach)); }
 }
 
 .float-note { opacity: 0; }
@@ -739,6 +770,179 @@ body {
 
 .status-dot { box-shadow: 0 0 0 3px hsl(var(--mint-deep) / 0.18); }
 
+/* ---------- Flourishes: glow, stickers, buttons ---------- */
+
+.cursor-glow {
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 4;
+  width: 520px;
+  height: 520px;
+  border-radius: 50%;
+  pointer-events: none;
+  background: radial-gradient(circle, hsl(var(--peach) / 0.55), hsl(var(--lavender) / 0.18) 45%, transparent 68%);
+  mix-blend-mode: multiply;
+  opacity: 0;
+  transition: opacity 600ms ease;
+  will-change: transform;
+}
+
+.cursor-glow[data-on] { opacity: 1; }
+
+/* Stickers bob gently on a slow loop, like something pinned to a corkboard in a draft. */
+.sticker {
+  rotate: var(--rot, 0deg);
+  animation: sticker-float 6s ease-in-out infinite;
+  filter: drop-shadow(0 1px 0 hsl(var(--cocoa) / 0.12));
+}
+
+.sticker.sticker-still { animation: none; }
+
+@keyframes sticker-float {
+  0%, 100% { transform: translateY(0) scale(1); }
+  50% { transform: translateY(-5px) scale(1.05); }
+}
+
+/* Buttons and links that act like buttons: a small lift, a firm press, and a nudge for the icon. */
+.press {
+  transition: transform 200ms cubic-bezier(0.22, 1, 0.36, 1), background-color 200ms ease, border-color 200ms ease, color 200ms ease;
+}
+
+.press:hover { transform: translateY(-2px); }
+.press:active { transform: translateY(0) scale(0.97); }
+.press svg { transition: transform 260ms cubic-bezier(0.22, 1, 0.36, 1); }
+.press:hover svg,
+.press:focus-visible svg { transform: translate(2px, -2px) rotate(-6deg); }
+
+/* ---------- About: chapters ---------- */
+
+.chapter {
+  transition: background-color 400ms ease;
+}
+
+.chapter-mark {
+  transition: transform 450ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.chapter:hover { background-color: hsl(var(--peach) / 0.28); }
+.chapter:hover .chapter-mark { transform: translateY(-3px) rotate(-12deg) scale(1.12); }
+
+.about-photo::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(circle at var(--mx, 50%) var(--my, 50%), hsl(var(--paper) / 0.35), transparent 55%);
+  mix-blend-mode: soft-light;
+  opacity: 0;
+  transition: opacity 400ms ease;
+}
+
+.about-photo:hover::after { opacity: 1; }
+
+/* ---------- How I think ---------- */
+
+.think-card {
+  transition: transform 450ms cubic-bezier(0.22, 1, 0.36, 1), box-shadow 450ms ease, border-color 450ms ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* A soft light under the cursor; Tilt writes --mx/--my. */
+.think-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(260px circle at var(--mx, 50%) var(--my, 30%), hsl(var(--peach) / 0.35), transparent 70%);
+  opacity: 0;
+  transition: opacity 400ms ease;
+}
+
+.think-card[data-active] {
+  transform: translateY(-4px);
+  border-color: hsl(var(--foreground) / 0.22);
+  box-shadow: 0 22px 40px -28px hsl(var(--cocoa) / 0.55);
+}
+
+.think-card[data-active]::after { opacity: 1; }
+
+/* The thread's three nodes pulse in turn: one, two, three, rest. */
+.think-beat::after {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border-radius: 50%;
+  border: 1.5px solid currentColor;
+  color: hsl(var(--foreground) / 0.35);
+  opacity: 0;
+  animation: beat-ring 2.4s ease-out infinite;
+  animation-delay: inherit;
+}
+
+@keyframes beat-ring {
+  0% { transform: scale(1); opacity: 0.9; }
+  30%, 100% { transform: scale(2.4); opacity: 0; }
+}
+
+.think-ripple,
+.think-node,
+.think-gather,
+.think-spark,
+.think-twinkle {
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+.think-ripple { opacity: 0; }
+.think-card[data-active] .think-ripple { animation: think-ripple 1.6s ease-out infinite; }
+
+@keyframes think-ripple {
+  0% { transform: scale(1); opacity: 0.8; }
+  100% { transform: scale(1.9); opacity: 0; }
+}
+
+.think-card[data-active] .think-blink { animation: think-blink 1.2s ease-in-out infinite; }
+
+@keyframes think-blink {
+  0%, 60%, 100% { opacity: 0.35; }
+  30% { opacity: 1; }
+}
+
+/* Edges rest fully drawn; on hover they re-draw in sequence, then the nodes answer. */
+.think-edge { stroke-dasharray: 1; stroke-dashoffset: 0; }
+.think-card[data-active] .think-edge { animation: think-draw 1.8s cubic-bezier(0.65, 0, 0.35, 1) infinite; }
+.think-card[data-active] .think-node { animation: think-pop 1.8s ease-out infinite; }
+
+@keyframes think-draw {
+  0% { stroke-dashoffset: 1; }
+  45%, 100% { stroke-dashoffset: 0; }
+}
+
+@keyframes think-pop {
+  0%, 30%, 100% { transform: scale(1); }
+  15% { transform: scale(1.35); }
+}
+
+.think-card[data-active] .think-gather { animation: think-gather 1.8s cubic-bezier(0.65, 0, 0.35, 1) infinite; }
+.think-card[data-active] .think-spark { animation: think-spark 1.8s cubic-bezier(0.22, 1, 0.36, 1) infinite; }
+.think-card[data-active] .think-twinkle { animation: think-twinkle 1.8s ease-in-out infinite; }
+
+@keyframes think-gather {
+  0%, 100% { transform: translate(0, 0); opacity: 1; }
+  45% { transform: translate(var(--dx), var(--dy)); opacity: 0.25; }
+}
+
+@keyframes think-spark {
+  0%, 35%, 100% { transform: scale(1) rotate(0deg); }
+  55% { transform: scale(1.14) rotate(12deg); }
+}
+
+@keyframes think-twinkle {
+  0%, 100% { opacity: 0.8; transform: scale(1); }
+  60% { opacity: 0.3; transform: scale(0.6); }
+}
+
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   *, *::before, *::after {
@@ -750,12 +954,30 @@ body {
   .vinyl-spin,
   .np-bar,
   .eq-icon,
-  .now-playing[data-hot] .np-bar,
+  .now-playing[data-playing] .np-bar,
+  .track-vinyl,
+  .track-loading,
   .hobby-card .dancer,
-  .hobby-card .guitar-string,
+  .hobby-card .piano-key,
+  .sticker,
+  .think-beat::after,
+  .think-card .think-ripple,
+  .think-card .think-blink,
+  .think-card .think-edge,
+  .think-card .think-node,
+  .think-card .think-gather,
+  .think-card .think-spark,
+  .think-card .think-twinkle,
   .hobby-card .float-note,
   .hobby-card .sing-bar { animation: none !important; }
-  .hobby-card[data-active] { transform: none; }
+  .hobby-card[data-active],
+  .think-card[data-active],
+  .press:hover,
+  .press:active,
+  .press:hover svg,
+  .track-button,
+  .chapter:hover .chapter-mark { transform: none; }
+  .cursor-glow { display: none; }
   .album:hover .vinyl-slot,
   .project-row:hover .project-media-inner { transform: none; }
 }

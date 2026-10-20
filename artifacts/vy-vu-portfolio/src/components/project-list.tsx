@@ -1,8 +1,8 @@
 import type { ReactNode } from 'react';
 import { m } from 'framer-motion';
-import { ArrowUpRight, BookOpen, Sparkles, Trophy } from 'lucide-react';
+import { ArrowUpRight, Sparkles, Trophy } from 'lucide-react';
 import { enter } from '@/lib/motion';
-import { external, links } from '@/lib/site';
+import { external } from '@/lib/site';
 import type { CoverArt, MediaItem, ProjectDetail } from '@/lib/types';
 
 export function ProjectAction({ label, url }: { label: string; url: string }) {
@@ -129,7 +129,7 @@ export function ProjectList({
       <div className="mx-auto max-w-[1280px] px-5 py-28 md:px-10 md:py-36">
         <div className="reveal flex flex-col justify-between gap-6 md:flex-row md:items-end">
           <div>
-            <p className="font-mono text-[10px] uppercase tracking-[0.17em] text-primary">05 / selected work</p>
+            <p className="font-mono text-[10px] uppercase tracking-[0.17em] text-primary">04 / what I&apos;ve built</p>
             <h2 className="mt-5 text-5xl leading-[.9] tracking-[-0.055em] md:text-8xl">
               Selected
               <br />
@@ -242,36 +242,6 @@ export function ProjectList({
           ))}
         </ol>
 
-        <m.article
-          {...reveal(0)}
-          className="mt-10 grid gap-8 overflow-hidden rounded-[6px] bg-[hsl(var(--coral))] p-7 text-[hsl(var(--cocoa))] md:grid-cols-[200px_1fr] md:p-10"
-          data-testid="card-project-vivu-notes"
-        >
-          <div className="relative aspect-square w-[160px] -rotate-3 bg-[hsl(var(--paper))] p-4 shadow-[0_14px_26px_-16px_hsl(var(--cocoa)/.7)] md:w-full" aria-hidden="true">
-            {range(7).map((i) => (
-              <span key={i} className="mt-[11%] block h-px bg-[hsl(var(--cocoa)/.15)] first:mt-[18%]" />
-            ))}
-            <span className="absolute left-4 top-4 font-display text-xl italic">ViVu Notes</span>
-          </div>
-          <div className="flex flex-col justify-between">
-            <div>
-              <p className="font-mono text-[9px] uppercase tracking-[0.15em] text-[hsl(var(--cocoa)/.7)]">06 / personal publication</p>
-              <h3 className="mt-4 font-display text-5xl italic leading-[.9] md:text-6xl">ViVu Notes</h3>
-              <p className="mt-3 font-mono text-[10px] uppercase tracking-[0.13em] text-[hsl(var(--cocoa)/.75)]">Notes on books, data, and becoming.</p>
-              <p className="mt-6 max-w-[560px] text-xl leading-[1.3] tracking-[-0.02em]">
-                My personal publication where I write about books, lessons from studying abroad, personal growth, data, and ideas I&apos;m learning along the way.
-              </p>
-            </div>
-            <a
-              href={links.notes}
-              {...external}
-              className="mt-8 inline-flex items-center gap-3 self-start rounded-full bg-[hsl(var(--cocoa))] px-5 py-3 font-mono text-[10px] uppercase tracking-[0.13em] text-[hsl(var(--cream))] transition-colors hover:bg-[hsl(var(--paper))] hover:text-[hsl(var(--cocoa))]"
-              data-testid="link-vivu-notes-work"
-            >
-              <BookOpen size={14} /> Read ViVu Notes <ArrowUpRight size={14} />
-            </a>
-          </div>
-        </m.article>
       </div>
     </section>
   );

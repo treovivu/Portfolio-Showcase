@@ -4,14 +4,12 @@ import {
   BookOpen,
   Check,
   ChevronDown,
-  Database,
   FileText,
   Github,
   Linkedin,
   Mail,
   Maximize2,
   Menu,
-  Sparkles,
   Trophy,
   X,
 } from 'lucide-react';
@@ -33,6 +31,8 @@ import nsdcWorkshop from '@assets/nsdc-workshop.png';
 import nsdcKickoff from '@assets/nsdc-kickoff-2026.png';
 import nsdcCocaColaVisit from '@assets/nsdc-coca-cola-visit.png';
 import { BeyondTheData } from '@/components/beyond-the-data';
+import { CursorGlow, Sticker, Tilt } from '@/components/flourish';
+import { HowIThink } from '@/components/how-i-think';
 import { Monogram } from '@/components/monogram';
 import { ProjectAction, ProjectList } from '@/components/project-list';
 import { HeroStage } from '@/components/hero-stage';
@@ -40,34 +40,51 @@ import { external, links } from '@/lib/site';
 import type { MediaItem, ProjectDetail } from '@/lib/types';
 
 const navItems = [
-  { label: 'Home', href: '#top' },
   { label: 'About', href: '#about' },
-  { label: 'Beyond', href: '#beyond' },
+  { label: 'How I Think', href: '#approach' },
   { label: 'Work', href: '#work' },
-  { label: 'Writing', href: '#writing' },
-  { label: 'Achievements', href: '#achievements' },
+  { label: 'Learning', href: '#achievements' },
+  { label: 'Beyond', href: '#beyond' },
   { label: 'Contact', href: '#contact' },
 ];
 
-const building = [
+// Four short chapters instead of one long paragraph. Each one points at something Vy has
+// actually done, so the personality claims have evidence behind them.
+const chapters = [
   {
     number: '01',
-    title: 'Data & Analytics',
-    body: 'Developing skills in Python, SQL, Excel, data analysis, and visualization while learning how to turn raw information into useful insights.',
-    icon: Database,
+    title: 'Who I Am',
+    body: 'Originally from Vietnam, I now study Computer Information Systems at Georgia State University in Atlanta, where I’m a sophomore in the Honors College concentrating in Artificial Intelligence Analytics and Application Development.',
+    mark: 'star',
+    tone: '--coral-deep',
   },
   {
     number: '02',
-    title: 'Business & Leadership',
-    body: 'Building experience in project coordination, event operations, stakeholder communication, partnerships, and team collaboration.',
-    icon: Sparkles,
+    title: 'What Drives Me',
+    body: 'I like understanding why things happen. Data helps me see patterns, explain behavior, and support better decisions, and AI makes me curious about what becomes possible when that understanding is built into tools people use. That’s why I’m pursuing Data Analyst and Business Data Analyst roles.',
+    mark: 'sparkle',
+    tone: '--mint-deep',
   },
   {
     number: '03',
-    title: 'Writing & Storytelling',
-    body: 'Exploring how writing, books, personal experiences, and data can be used to communicate ideas clearly and meaningfully.',
-    icon: BookOpen,
+    title: 'How I Work',
+    body: 'Structure and creativity, together. I’ve led a 30-member event team with an Excel tracker I built, structured an exhibition website around how exhibitors make decisions, and helped turn hackathon ideas into working apps, one of them in 36 hours.',
+    mark: 'note',
+    tone: '--lavender-deep',
   },
+  {
+    number: '04',
+    title: 'Who I Build For',
+    body: 'People. At hackathons, I’ve worked on a campus safety app for students and a concert experience for Deaf and hard-of-hearing fans. Technology that makes someone’s day safer, easier, or more joyful is the kind of work I want to keep doing.',
+    mark: 'heart-note',
+    tone: '--coral-deep',
+  },
+] as const;
+
+const glance = [
+  { label: 'Studying', value: 'CIS · Georgia State University, Honors College' },
+  { label: 'Based in', value: 'Atlanta, GA · originally from Vietnam' },
+  { label: 'Exploring', value: 'Data Analyst & Business Analytics internships', accent: true },
 ];
 
 const work: ProjectDetail[] = [
@@ -291,7 +308,7 @@ function App() {
                 key={item.href}
                 href={item.href}
                 className="font-mono text-[10px] uppercase tracking-[0.15em] text-foreground/65 transition-colors hover:text-primary"
-                data-testid={`link-nav-${item.label.toLowerCase()}`}
+                data-testid={`link-nav-${item.label.toLowerCase().replaceAll(' ', '-')}`}
               >
                 {item.label}
               </a>
@@ -301,7 +318,7 @@ function App() {
           <a
             href={links.resume}
             {...external}
-            className="hidden items-center gap-2 border border-foreground/20 px-4 py-2 font-mono text-[10px] uppercase tracking-[0.14em] transition-colors hover:border-primary hover:bg-primary hover:text-primary-foreground sm:flex"
+            className="press hidden items-center gap-2 border border-foreground/20 px-4 py-2 font-mono text-[10px] uppercase tracking-[0.14em] transition-colors hover:border-primary hover:bg-primary hover:text-primary-foreground sm:flex"
             data-testid="link-nav-resume"
           >
             View resume <ArrowUpRight size={13} />
@@ -326,7 +343,7 @@ function App() {
                 href={item.href}
                 onClick={() => setMenuOpen(false)}
                 className="flex items-center justify-between border-b border-foreground/10 py-4 font-mono text-xs uppercase tracking-[0.14em]"
-                data-testid={`link-mobile-${item.label.toLowerCase()}`}
+                data-testid={`link-mobile-${item.label.toLowerCase().replaceAll(' ', '-')}`}
               >
                 {item.label} <ArrowUpRight size={14} className="text-primary" />
               </a>
@@ -344,142 +361,93 @@ function App() {
         )}
       </nav>
 
+      <CursorGlow />
       <HeroStage />
 
       <div className="mx-auto max-w-[1280px] px-5 md:px-10">
         <div className="section-rule flex items-center justify-between py-5 font-mono text-[10px] uppercase tracking-[0.16em] text-foreground/50">
-          <span>01 — the short version</span>
-          <span className="hidden md:block">scroll to read between the lines <ChevronDown size={13} className="ml-2 inline text-primary" /></span>
+          <span>01 — hello</span>
+          <span className="hidden md:block">scroll to get to know me <ChevronDown size={13} className="ml-2 inline text-primary" /></span>
           <span>© 2026</span>
         </div>
       </div>
 
-      <section id="about" className="mx-auto max-w-[1280px] scroll-mt-24 px-5 py-28 md:px-10 md:py-40">
-        <div className="grid gap-12 lg:grid-cols-[.72fr_1.28fr] lg:gap-24">
-          <div className="reveal">
-            <p className="font-mono text-[10px] uppercase tracking-[0.17em] text-primary">02 / about me</p>
+      <section id="about" className="mx-auto max-w-[1280px] scroll-mt-24 px-5 py-28 md:px-10 md:py-36">
+        <div className="grid gap-12 lg:grid-cols-[.78fr_1.22fr] lg:gap-20">
+          <div className="reveal lg:sticky lg:top-28 lg:self-start">
+            <p className="font-mono text-[10px] uppercase tracking-[0.17em] text-primary">02 / who I am</p>
             <h2 className="mt-6 max-w-[420px] text-5xl leading-[.92] tracking-[-0.055em] md:text-7xl">
               A little
               <br />
               <span className="font-display font-normal italic">about me.</span>
+              <Sticker kind="heart-note" inline className="ml-2 mt-1 h-7 w-7 md:h-9 md:w-9" rotate={10} />
             </h2>
-            <div className="relative mt-10 max-w-[350px] -rotate-[1.5deg] transition-transform duration-500 hover:rotate-0">
-              <span aria-hidden="true" className="scrap-tape absolute -top-3 left-1/2 z-10 h-7 w-24 -translate-x-1/2 rotate-[3deg]" />
-              <MediaPlaceholder
-                item={{ id: 'about-photo', label: 'Vy Vu', caption: 'A personal moment from Atlanta, Georgia.', alt: 'Vy Vu standing outdoors in Atlanta at night', src: personalPhoto }}
-                onOpen={setLightboxItem}
-              />
-            </div>
+            <Tilt className="relative mt-10 max-w-[340px]" max={4}>
+              <div className="relative -rotate-[1.5deg] transition-transform duration-500 hover:rotate-0">
+                <span aria-hidden="true" className="scrap-tape absolute -top-3 left-1/2 z-10 h-7 w-24 -translate-x-1/2 rotate-[3deg]" />
+                <div className="about-photo relative">
+                  <MediaPlaceholder
+                    item={{ id: 'about-photo', label: 'Vy Vu', caption: 'A personal moment from Atlanta, Georgia.', alt: 'Vy Vu standing outdoors in Atlanta at night', src: personalPhoto }}
+                    onOpen={setLightboxItem}
+                  />
+                </div>
+              </div>
+            </Tilt>
           </div>
-          <div className="reveal reveal-delay-1">
-            <p className="max-w-[760px] text-2xl leading-[1.15] tracking-[-0.03em] md:text-[2.65rem] md:leading-[1.08]">
-              Originally from Vietnam, I&apos;m now a sophomore at Georgia State University studying Computer Information Systems, with concentrations in Artificial Intelligence Analytics and Application Development.
+
+          <div>
+            <p className="reveal reveal-delay-1 max-w-[640px] text-2xl leading-[1.25] tracking-[-0.03em] md:text-[2rem] md:leading-[1.2]">
+              The short version: I&apos;m curious about how information becomes{' '}
+              <span className="font-display italic text-primary">something meaningful</span>, and I like to find out by asking questions, building, and writing.
             </p>
-            <div className="mt-10 grid gap-8 border-t border-foreground/15 pt-7 sm:grid-cols-2">
-              <p className="text-sm leading-[1.7] text-foreground/65">
-                What interests me most is the intersection of data, technology, and business. I enjoy understanding how information can uncover patterns, explain behavior, and support better decisions, which is why I&apos;m pursuing <span className="text-foreground">Data Analyst and Business Data Analyst</span> roles.
-              </p>
-              <p className="text-sm leading-[1.7] text-foreground/65">
-                Outside of my technical coursework, I enjoy organizing projects, working with people, writing, reading, and turning ideas into something useful.
-              </p>
-            </div>
-            <p className="mt-8 max-w-[730px] text-sm leading-[1.7] text-foreground/65">
-              I&apos;m currently strengthening my skills in Python, SQL, Excel, data analysis, and application development while building hands-on projects and exploring opportunities in data analytics and market data.
-            </p>
-            <div className="mt-12 grid gap-4 border-t border-foreground/15 pt-6 sm:grid-cols-2">
-              {[
-                { label: 'Georgia State University', title: 'Computer Information Systems', detail: 'Honors College' },
-                { label: 'Academic milestone', title: 'President’s List', detail: '3 semesters · GPA 4.05' },
-                { label: 'Based in', title: 'Atlanta, GA', detail: 'Originally from Vietnam' },
-                { label: 'Exploring', title: 'Data & Business Analytics internships', detail: 'Data Analyst and Business Data Analyst roles', accent: true },
-              ].map((fact) => (
-                <div
-                  key={fact.label}
-                  className={`border p-5 transition-transform duration-300 hover:-translate-y-1 ${fact.accent ? 'border-[hsl(var(--jade)/.45)] bg-[hsl(var(--jade)/.07)]' : 'border-foreground/15 bg-card'}`}
-                  data-testid={`card-about-${fact.label.toLowerCase().replace(/[^a-z]+/g, '-')}`}
+
+            <ol className="mt-10 border-t border-foreground/15">
+              {chapters.map((chapter, index) => (
+                <li
+                  key={chapter.number}
+                  className={`chapter reveal reveal-delay-${Math.min(index + 1, 3)} grid gap-3 border-b border-foreground/15 px-1 py-7 sm:grid-cols-[200px_1fr] sm:gap-8 sm:px-4`}
+                  data-testid={`about-chapter-${chapter.number}`}
                 >
-                  <p className={`font-mono text-[9px] uppercase tracking-[0.15em] ${fact.accent ? 'text-[hsl(var(--jade))]' : 'text-primary'}`}>{fact.label}</p>
-                  <p className="mt-3 text-lg tracking-[-0.02em]">{fact.title}</p>
-                  <p className="mt-2 text-sm text-foreground/55">{fact.detail}</p>
+                  <div className="flex items-start gap-3">
+                    <span className="chapter-mark relative mt-[3px] block h-5 w-5 shrink-0">
+                      <Sticker kind={chapter.mark} className="inset-0 h-5 w-5" tone={chapter.tone} still />
+                    </span>
+                    <div>
+                      <p className="font-mono text-[10px] text-primary">{chapter.number}</p>
+                      <h3 className="mt-1 font-display text-2xl leading-[1.05] tracking-[-0.02em]">{chapter.title}</h3>
+                    </div>
+                  </div>
+                  <p className="text-[15px] leading-[1.7] text-foreground/70">{chapter.body}</p>
+                </li>
+              ))}
+            </ol>
+
+            <p className="reveal mt-7 flex max-w-[640px] items-start gap-3 text-sm leading-[1.65] text-foreground/62">
+              <span className="status-dot mt-[7px] block h-2 w-2 shrink-0 rounded-full bg-[hsl(var(--mint-deep))]" aria-hidden="true" />
+              <span><span className="font-mono text-[10px] uppercase tracking-[0.14em] text-foreground/80">Right now · </span>strengthening Python, SQL, Excel, data analysis, and application development through hands-on projects.</span>
+            </p>
+
+            <dl className="reveal mt-8 grid gap-px overflow-hidden rounded-[6px] border border-foreground/15 bg-foreground/15 sm:grid-cols-3" data-testid="about-glance">
+              {glance.map((item) => (
+                <div key={item.label} className={`p-4 ${'accent' in item ? 'bg-[hsl(var(--jade)/.08)]' : 'bg-card'}`}>
+                  <dt className={`font-mono text-[9px] uppercase tracking-[0.15em] ${'accent' in item ? 'text-[hsl(var(--jade))]' : 'text-primary'}`}>{item.label}</dt>
+                  <dd className="mt-2 text-sm leading-[1.45] text-foreground/80">{item.value}</dd>
                 </div>
               ))}
-            </div>
+            </dl>
           </div>
         </div>
       </section>
 
-      <BeyondTheData />
-
-      <section id="approach" className="border-y border-foreground/15 bg-secondary/20 scroll-mt-24">
-        <div className="mx-auto max-w-[1280px] px-5 py-24 md:px-10 md:py-32">
-          <div className="reveal flex flex-col justify-between gap-6 md:flex-row md:items-end">
-            <div>
-              <p className="font-mono text-[10px] uppercase tracking-[0.17em] text-primary">04 / what I&apos;m building</p>
-              <h2 className="mt-5 max-w-[660px] text-5xl leading-[.9] tracking-[-0.055em] md:text-8xl">What I&apos;m<br /><span className="font-display font-normal italic">building.</span></h2>
-            </div>
-            <p className="max-w-[270px] text-sm leading-[1.5] text-foreground/60 md:pb-2">I&apos;m developing the skills, experiences, and point of view to do meaningful work with data and technology.</p>
-          </div>
-          <div className="mt-16 grid gap-4 md:grid-cols-3">
-            {building.map((item, index) => {
-              const Icon = item.icon;
-              return (
-                <article key={item.number} className={`reveal reveal-delay-${index + 1} border border-foreground/15 bg-card p-7 transition-transform duration-500 hover:-translate-y-1 md:min-h-[295px] md:p-8`} data-testid={`card-building-${item.number}`}>
-                  <div className="flex items-start justify-between">
-                    <span className="font-mono text-[10px] text-primary">{item.number}</span>
-                    <Icon size={20} strokeWidth={1.4} className="text-foreground/45" />
-                  </div>
-                  <div className="mt-16">
-                    <h3 className="text-2xl tracking-[-0.035em]">{item.title}</h3>
-                    <p className="mt-4 text-sm leading-[1.65] text-foreground/62">{item.body}</p>
-                  </div>
-                </article>
-              );
-            })}
-          </div>
-        </div>
-      </section>
+      <HowIThink />
 
       <ProjectList work={work} onOpenProject={setActiveProject} onOpenMedia={setLightboxItem} />
-
-      <section id="writing" className="mx-auto max-w-[1280px] scroll-mt-24 px-5 py-28 md:px-10 md:py-40">
-        <div className="grid gap-14 lg:grid-cols-[.82fr_1.18fr] lg:gap-24">
-          <div className="reveal">
-            <p className="font-mono text-[10px] uppercase tracking-[0.17em] text-primary">06 / writing & ideas</p>
-            <h2 className="mt-5 text-5xl leading-[.9] tracking-[-0.055em] md:text-7xl">A place to<br /><span className="font-display font-normal italic">think out loud.</span></h2>
-            <p className="mt-8 max-w-[430px] text-lg leading-[1.6] text-foreground/65">
-              I started ViVu Notes as a place to document what I am learning through books, college, data, and life as an international student.
-            </p>
-            <p className="mt-5 max-w-[430px] text-sm leading-[1.7] text-foreground/60">
-              Instead of simply reviewing what I read or experience, I want to understand what it teaches me and how I can apply those ideas to my own growth.
-            </p>
-            <a href={links.notes} {...external} className="mt-8 inline-flex items-center gap-3 bg-foreground px-5 py-3.5 font-mono text-[10px] uppercase tracking-[0.13em] text-background transition-colors hover:bg-primary" data-testid="link-writing-notes">
-              Visit ViVu Notes <ArrowUpRight size={14} />
-            </a>
-          </div>
-          <div className="reveal reveal-delay-1">
-            <div className="mb-6 flex items-center justify-between border-b border-foreground/15 pb-4">
-              <span className="font-mono text-[10px] uppercase tracking-[0.16em] text-foreground/50">On Substack</span>
-              <BookOpen size={17} className="text-primary" />
-            </div>
-            <a href={links.notes} {...external} className="group block border-b border-foreground/15 py-7 pt-2" data-testid="link-writing-substack">
-              <div className="flex items-start justify-between gap-6">
-                <div>
-                  <p className="font-mono text-[9px] uppercase tracking-[0.13em] text-primary">vivunote.substack.com</p>
-                  <h3 className="mt-3 max-w-[450px] text-2xl leading-[1] tracking-[-0.035em] transition-colors group-hover:text-primary">Books, college, data, and life as an international student.</h3>
-                  <p className="mt-3 max-w-[470px] text-sm leading-[1.6] text-foreground/60">Every note is published on Substack. Subscribe there to get new ones as they come out.</p>
-                </div>
-                <ArrowUpRight size={18} className="mt-1 shrink-0 text-foreground/35 transition-transform group-hover:-translate-y-1 group-hover:translate-x-1 group-hover:text-primary" />
-              </div>
-            </a>
-          </div>
-        </div>
-      </section>
 
       <section id="achievements" className="border-y border-foreground/15 bg-foreground text-background scroll-mt-24">
         <div className="mx-auto max-w-[1280px] px-5 py-24 md:px-10 md:py-32">
           <div className="grid gap-12 lg:grid-cols-[.8fr_1.2fr] lg:gap-24">
             <div className="reveal">
-              <p className="font-mono text-[10px] uppercase tracking-[0.17em] text-primary">07 / a few milestones</p>
+              <p className="font-mono text-[10px] uppercase tracking-[0.17em] text-primary">05 / what I&apos;ve learned</p>
               <h2 className="mt-5 text-5xl leading-[.9] tracking-[-0.055em] md:text-7xl">Early steps,<br /><span className="font-display font-normal italic">clear direction.</span></h2>
             </div>
             <div className="reveal reveal-delay-1">
@@ -532,8 +500,8 @@ function App() {
       <section id="skills" className="mx-auto max-w-[1280px] scroll-mt-24 px-5 py-28 md:px-10 md:py-36">
         <div className="reveal flex flex-col justify-between gap-6 md:flex-row md:items-end">
           <div>
-            <p className="font-mono text-[10px] uppercase tracking-[0.17em] text-primary">08 / tools & skills</p>
-            <h2 className="mt-5 text-5xl leading-[.9] tracking-[-0.055em] md:text-8xl">Still<br /><span className="font-display font-normal italic">building.</span></h2>
+            <p className="font-mono text-[10px] uppercase tracking-[0.17em] text-primary">06 / toolkit</p>
+            <h2 className="mt-5 text-5xl leading-[.9] tracking-[-0.055em] md:text-8xl">Tools I&apos;ve<br /><span className="font-display font-normal italic">practiced.</span></h2>
           </div>
           <p className="max-w-[300px] text-sm leading-[1.6] text-foreground/60 md:pb-2">Tools I&apos;ve used in coursework, hackathons, and work, and keep sharpening.</p>
         </div>
@@ -549,34 +517,48 @@ function App() {
         </div>
       </section>
 
-      <section className="border-y border-foreground/15 bg-secondary/20">
-        <div className="mx-auto grid max-w-[1280px] gap-10 px-5 py-24 md:px-10 md:py-28 lg:grid-cols-[.75fr_1.25fr] lg:items-center">
+      <section id="writing" className="mx-auto max-w-[1280px] scroll-mt-24 px-5 py-28 md:px-10 md:py-40">
+        <div className="grid gap-14 lg:grid-cols-[.82fr_1.18fr] lg:gap-24">
           <div className="reveal">
-            <p className="font-mono text-[10px] uppercase tracking-[0.17em] text-primary">09 / currently</p>
-            <h2 className="mt-5 text-5xl leading-[.9] tracking-[-0.055em] md:text-7xl">A living<br /><span className="font-display font-normal italic">list.</span></h2>
+            <p className="font-mono text-[10px] uppercase tracking-[0.17em] text-primary">07 / writing & reflection</p>
+            <h2 className="mt-5 text-5xl leading-[.9] tracking-[-0.055em] md:text-7xl">A place to<br /><span className="font-display font-normal italic">think out loud.</span></h2>
+            <p className="mt-8 max-w-[430px] text-lg leading-[1.6] text-foreground/65">
+              I started ViVu Notes as a place to document what I am learning through books, college, data, and life as an international student.
+            </p>
+            <p className="mt-5 max-w-[430px] text-sm leading-[1.7] text-foreground/60">
+              Instead of simply reviewing what I read or experience, I want to understand what it teaches me and how I can apply those ideas to my own growth.
+            </p>
+            <a href={links.notes} {...external} className="press mt-8 inline-flex items-center gap-3 bg-foreground px-5 py-3.5 font-mono text-[10px] uppercase tracking-[0.13em] text-background transition-colors hover:bg-primary" data-testid="link-writing-notes">
+              Visit ViVu Notes <ArrowUpRight size={14} />
+            </a>
           </div>
-          <div className="reveal reveal-delay-1 grid gap-0 border-t border-foreground/15 sm:grid-cols-2">
-            {[
-              ['Learning', 'SQL, Python, and data analysis'],
-              ['Building', 'AI-powered apps and ViVu Notes'],
-              ['Exploring', 'Business analytics and application development'],
-              ['Working toward', 'AI product engineering'],
-            ].map(([label, value]) => (
-              <div key={label} className="border-b border-foreground/15 py-5 sm:px-6 first:sm:pl-0 even:sm:border-l">
-                <p className="font-mono text-[9px] uppercase tracking-[0.14em] text-primary">{label}</p>
-                <p className="mt-2 text-lg leading-[1.25] tracking-[-0.02em] text-foreground/75">{value}</p>
+          <div className="reveal reveal-delay-1">
+            <div className="mb-6 flex items-center justify-between border-b border-foreground/15 pb-4">
+              <span className="font-mono text-[10px] uppercase tracking-[0.16em] text-foreground/50">On Substack</span>
+              <BookOpen size={17} className="text-primary" />
+            </div>
+            <a href={links.notes} {...external} className="group block border-b border-foreground/15 py-7 pt-2" data-testid="link-writing-substack">
+              <div className="flex items-start justify-between gap-6">
+                <div>
+                  <p className="font-mono text-[9px] uppercase tracking-[0.13em] text-primary">vivunote.substack.com</p>
+                  <h3 className="mt-3 max-w-[450px] text-2xl leading-[1] tracking-[-0.035em] transition-colors group-hover:text-primary">Books, college, data, and life as an international student.</h3>
+                  <p className="mt-3 max-w-[470px] text-sm leading-[1.6] text-foreground/60">Every note is published on Substack. Subscribe there to get new ones as they come out.</p>
+                </div>
+                <ArrowUpRight size={18} className="mt-1 shrink-0 text-foreground/35 transition-transform group-hover:-translate-y-1 group-hover:translate-x-1 group-hover:text-primary" />
               </div>
-            ))}
+            </a>
           </div>
         </div>
       </section>
 
+      <BeyondTheData />
+
       <section id="contact" className="mx-auto max-w-[1280px] scroll-mt-24 px-5 py-28 md:px-10 md:py-40">
         <div className="reveal relative overflow-hidden border border-foreground/15 bg-card px-6 py-16 md:px-16 md:py-24">
-          <div className="absolute -right-10 -top-24 h-80 w-80 rounded-full border border-primary/25 md:h-[480px] md:w-[480px]" />
-          <div className="absolute -right-2 -top-16 h-64 w-64 rounded-full border border-primary/15 md:h-[380px] md:w-[380px]" />
-          <div className="relative max-w-[760px]">
-            <p className="font-mono text-[10px] uppercase tracking-[0.17em] text-primary">10 / let&apos;s connect</p>
+          <div className="absolute -right-10 -top-24 hidden h-[480px] w-[480px] rounded-full border border-primary/25 xl:block" aria-hidden="true" />
+          <div className="absolute -right-2 -top-16 hidden h-[380px] w-[380px] rounded-full border border-primary/15 xl:block" aria-hidden="true" />
+          <div className="relative max-w-[640px]">
+            <p className="font-mono text-[10px] uppercase tracking-[0.17em] text-primary">09 / let&apos;s connect</p>
             <h2 className="mt-6 text-6xl leading-[.85] tracking-[-0.065em] md:text-8xl">Keep the<br /><span className="font-display font-normal italic">conversation going.</span></h2>
             <p className="mt-8 max-w-[590px] text-base leading-[1.65] text-foreground/65">
               I&apos;m always happy to connect with students, professionals, mentors, and people working across data, technology, and business.
@@ -585,19 +567,19 @@ function App() {
               I&apos;m currently interested in internship opportunities where I can continue learning, contribute to meaningful work, and gain hands-on experience.
             </p>
             <div className="mt-10 flex flex-wrap gap-3">
-              <a href={links.linkedin} {...external} className="inline-flex items-center gap-2 border border-foreground/20 px-4 py-3 font-mono text-[10px] uppercase tracking-[0.12em] transition-colors hover:border-primary hover:bg-primary hover:text-primary-foreground" data-testid="link-contact-linkedin">
+              <a href={links.linkedin} {...external} className="press inline-flex items-center gap-2 border border-foreground/20 px-4 py-3 font-mono text-[10px] uppercase tracking-[0.12em] transition-colors hover:border-primary hover:bg-primary hover:text-primary-foreground" data-testid="link-contact-linkedin">
                 <Linkedin size={14} /> LinkedIn
               </a>
-              <a href={links.github} {...external} className="inline-flex items-center gap-2 border border-foreground/20 px-4 py-3 font-mono text-[10px] uppercase tracking-[0.12em] transition-colors hover:border-primary hover:bg-primary hover:text-primary-foreground" data-testid="link-contact-github">
+              <a href={links.github} {...external} className="press inline-flex items-center gap-2 border border-foreground/20 px-4 py-3 font-mono text-[10px] uppercase tracking-[0.12em] transition-colors hover:border-primary hover:bg-primary hover:text-primary-foreground" data-testid="link-contact-github">
                 <Github size={14} /> GitHub
               </a>
-              <button type="button" onClick={copyEmail} className="inline-flex items-center gap-2 border border-foreground/20 px-4 py-3 font-mono text-[10px] uppercase tracking-[0.12em] transition-colors hover:border-primary hover:bg-primary hover:text-primary-foreground" data-testid="button-contact-email">
+              <button type="button" onClick={copyEmail} className="press inline-flex items-center gap-2 border border-foreground/20 px-4 py-3 font-mono text-[10px] uppercase tracking-[0.12em] transition-colors hover:border-primary hover:bg-primary hover:text-primary-foreground" data-testid="button-contact-email">
                 {copied ? <Check size={14} /> : <Mail size={14} />} {copied ? 'Email copied' : 'Copy email'}
               </button>
-              <a href={links.notes} {...external} className="inline-flex items-center gap-2 border border-foreground/20 px-4 py-3 font-mono text-[10px] uppercase tracking-[0.12em] transition-colors hover:border-primary hover:bg-primary hover:text-primary-foreground" data-testid="link-contact-notes">
+              <a href={links.notes} {...external} className="press inline-flex items-center gap-2 border border-foreground/20 px-4 py-3 font-mono text-[10px] uppercase tracking-[0.12em] transition-colors hover:border-primary hover:bg-primary hover:text-primary-foreground" data-testid="link-contact-notes">
                 <BookOpen size={14} /> ViVu Notes
               </a>
-              <a href={links.resume} {...external} className="inline-flex items-center gap-2 border border-foreground/20 px-4 py-3 font-mono text-[10px] uppercase tracking-[0.12em] transition-colors hover:border-primary hover:bg-primary hover:text-primary-foreground" data-testid="link-contact-resume">
+              <a href={links.resume} {...external} className="press inline-flex items-center gap-2 border border-foreground/20 px-4 py-3 font-mono text-[10px] uppercase tracking-[0.12em] transition-colors hover:border-primary hover:bg-primary hover:text-primary-foreground" data-testid="link-contact-resume">
                 <FileText size={14} /> Resume
               </a>
             </div>

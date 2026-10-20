@@ -4,7 +4,8 @@ import { ArrowUpRight, Linkedin, Play } from 'lucide-react';
 import portrait from '@assets/vy-vu-portrait-hero.jpg';
 import { Monogram } from '@/components/monogram';
 import { enter, spring } from '@/lib/motion';
-import { external, links } from '@/lib/site';
+import { VinylButton, useSoundtrack } from '@/components/soundtrack';
+import { external, links, soundtrack } from '@/lib/site';
 
 /* ------------------------------ Album cover ------------------------------ */
 
@@ -79,9 +80,9 @@ function AlbumCover() {
           <span className="mt-[0.8cqw] font-display text-[3.4cqw] italic leading-[1.05]">SQL · Python<br />Excel</span>
         </div>
 
-        <figcaption className="absolute bottom-[6%] left-[6%] max-w-[40cqw]">
+        <figcaption className="absolute bottom-[6%] left-[6%] max-w-[35cqw]">
           <span className="block font-display text-[11.5cqw] font-normal italic leading-[.9] text-[hsl(var(--cocoa))]">Vy Vu</span>
-          <span className="mt-[1.4cqw] block max-w-[40cqw] text-[3.6cqw] font-bold uppercase leading-[1.05] tracking-[0.02em] text-[hsl(var(--coral-deep))]">Aspiring Data Analyst</span>
+          <span className="mt-[1.4cqw] block max-w-[35cqw] text-[3.6cqw] font-bold uppercase leading-[1.05] tracking-[0.02em] text-[hsl(var(--coral-deep))]">Aspiring Data Analyst</span>
           <span className="mt-[1.4cqw] block font-mono text-[2.1cqw] uppercase tracking-[0.14em] text-[hsl(var(--cocoa)/.75)]">Data · AI · Creativity</span>
         </figcaption>
 
@@ -100,8 +101,20 @@ function AlbumCover() {
 const BAR_COUNT = 56;
 const bars = Array.from({ length: BAR_COUNT }, (_, i) => 0.22 + 0.7 * Math.abs(Math.sin(i * 0.55) * Math.cos(i * 0.21 + 1)));
 
-function NowPlaying({ hot }: { hot: boolean }) {
+function NowPlaying() {
   const barsRef = useRef<HTMLSpanElement[]>([]);
+  const cardRef = useRef<HTMLDivElement>(null);
+  const { enabled, status, playing, setHeroInView } = useSoundtrack();
+  const unavailable = status === 'unavailable';
+
+  // Lets the soundtrack dock appear only once this card has scrolled away.
+  useEffect(() => {
+    const node = cardRef.current;
+    if (!node) return;
+    const observer = new IntersectionObserver(([entry]) => setHeroInView(entry.isIntersecting), { threshold: 0 });
+    observer.observe(node);
+    return () => observer.disconnect();
+  }, [setHeroInView]);
   const { scrollYProgress } = useScroll();
   // The playhead tracks how far down the page the visitor is.
   const playhead = useTransform(scrollYProgress, (value) => `${value * 100}%`);
@@ -119,14 +132,37 @@ function NowPlaying({ hot }: { hot: boolean }) {
   const reset = () => barsRef.current.forEach((bar, i) => bar.style.setProperty('--s', bars[i].toFixed(3)));
 
   return (
-    <div className="now-playing mt-9 max-w-[560px] rounded-2xl border border-foreground/12 bg-[hsl(var(--paper)/.7)] px-4 py-3.5" data-hot={hot || undefined} aria-hidden="true">
-      <div className="flex items-center justify-between gap-4 font-mono text-[9px] uppercase tracking-[0.16em]">
-        <span className="flex items-center gap-2 text-primary">
-          <span className="eq-icon" /> Now exploring
-        </span>
-        <span className="truncate text-foreground/55">Data analytics · AI · Building</span>
-      </div>
-      <div className="relative mt-3" onPointerMove={follow} onPointerLeave={reset}>
+    <div
+      ref={cardRef}
+      className="now-playing mt-9 max-w-[560px] rounded-2xl border border-foreground/12 bg-[hsl(var(--paper)/.7)] px-4 py-3.5"
+      data-playing={playing || undefined}
+      data-testid="soundtrack-player"
+    >
+      {enabled ? (
+        <div className="flex items-center gap-3">
+          <VinylButton />
+          <div className="min-w-0 flex-1">
+            <p className="flex items-center gap-2 font-mono text-[9px] uppercase tracking-[0.16em] text-primary">
+              <span className="eq-icon" aria-hidden="true" /> {playing ? 'Now playing' : 'Portfolio soundtrack'}
+            </p>
+            <p className="mt-1 truncate text-[13px] font-medium tracking-[-0.01em] text-foreground/80">
+              {soundtrack.title}
+              {soundtrack.artist && <span className="font-normal text-foreground/55"> · {soundtrack.artist}</span>}
+            </p>
+          </div>
+          <span className="hidden truncate font-mono text-[9px] uppercase tracking-[0.16em] text-foreground/45 sm:block">
+            {unavailable ? (import.meta.env.DEV && !soundtrack.src ? 'Add a track · SOUNDTRACK.md' : 'Unavailable') : playing ? 'Tap to pause' : 'Press play'}
+          </span>
+        </div>
+      ) : (
+        <div className="flex items-center justify-between gap-4 font-mono text-[9px] uppercase tracking-[0.16em]" aria-hidden="true">
+          <span className="flex items-center gap-2 text-primary">
+            <span className="eq-icon" /> Now exploring
+          </span>
+          <span className="truncate text-foreground/55">Data analytics · AI · Building</span>
+        </div>
+      )}
+      <div className="relative mt-3" onPointerMove={follow} onPointerLeave={reset} aria-hidden="true">
         <div className="flex h-10 items-center gap-[2px]">
           {bars.map((base, i) => (
             <span
@@ -146,6 +182,9 @@ function NowPlaying({ hot }: { hot: boolean }) {
           <span className="absolute left-0 top-0 -ml-[5px] h-[10px] w-[10px] rounded-full border-2 border-[hsl(var(--paper))] bg-[hsl(var(--coral-deep))]" />
         </m.div>
       </div>
+      {enabled && soundtrack.credit && (
+        <p className="mt-3 font-mono text-[8px] uppercase tracking-[0.14em] text-foreground/45" data-testid="text-soundtrack-credit">Music · {soundtrack.credit}</p>
+      )}
     </div>
   );
 }
@@ -154,7 +193,6 @@ function NowPlaying({ hot }: { hot: boolean }) {
 
 export function HeroStage() {
   const reduceMotion = useReducedMotion();
-  const [hot, setHot] = useState(false);
   const [dataBeat, setDataBeat] = useState(0);
   const lastBeat = useRef(0);
 
@@ -172,12 +210,6 @@ export function HeroStage() {
   }, [reduceMotion]);
 
   const rise = (delay: number) => ({ initial: { opacity: 0, y: 18 }, animate: { opacity: 1, y: 0 }, transition: enter(delay) });
-  const heat = {
-    onPointerEnter: () => setHot(true),
-    onPointerLeave: () => setHot(false),
-    onFocus: () => setHot(true),
-    onBlur: () => setHot(false),
-  };
 
   return (
     <section id="top" className="hero-stage relative overflow-hidden">
@@ -211,23 +243,22 @@ export function HeroStage() {
                 Analyst
               </m.span>
               <m.span {...rise(0.16)} className="mt-3 block font-display text-[clamp(1.25rem,2.1vw,1.75rem)] font-light italic text-foreground/75">
-                (feat. <span className="text-[hsl(var(--mint-deep))]">AI Enthusiast</span> &amp; <span className="text-[hsl(var(--lavender-deep))]">Creative Mind</span>)
+                (feat. <span className="text-[hsl(var(--mint-deep))]">AI Enthusiast</span> &amp; <span className="text-[hsl(var(--lavender-deep))]">Creative Builder</span>)
               </m.span>
             </h1>
 
-            <m.div {...rise(0.26)} className="mt-6 max-w-[580px] space-y-3 leading-[1.6] text-foreground/75">
-              <p className="text-lg">
-                I&apos;m Vy, a Computer Information Systems student at Georgia State University who loves exploring the stories hidden in data.
+            <m.div {...rise(0.26)} className="mt-6 max-w-[560px] space-y-3 leading-[1.6] text-foreground/75">
+              <p className="font-display text-[1.35rem] italic leading-[1.3] text-foreground">
+                An analytical thinker with a creative builder&apos;s mindset.
               </p>
-              <p className="text-[15px] text-foreground/68">
-                I&apos;m especially curious about how AI and thoughtful analysis can turn complex information into meaningful insights. Whether I&apos;m exploring a dataset, building a digital experience, or learning something new, I enjoy connecting ideas and bringing them to life.
+              <p className="text-[15px] text-foreground/70">
+                Hi, I&apos;m Vy, a Computer Information Systems student at Georgia State University. I love noticing patterns, asking better questions of information, and building AI-powered experiences that feel thoughtful and human.
               </p>
             </m.div>
 
             <m.div {...rise(0.34)} className="mt-7 flex flex-wrap items-center gap-3">
               <a
                 href="#work"
-                {...heat}
                 className="btn-play group/cta inline-flex items-center gap-3 rounded-full bg-foreground py-2 pl-2 pr-5 font-mono text-[11px] uppercase tracking-[0.13em] text-background transition-colors hover:bg-primary"
                 data-testid="link-hero-work"
               >
@@ -239,7 +270,6 @@ export function HeroStage() {
               <a
                 href={links.resume}
                 {...external}
-                {...heat}
                 className="inline-flex items-center gap-2 rounded-full border border-foreground/25 px-5 py-3.5 font-mono text-[11px] uppercase tracking-[0.13em] transition-colors hover:border-primary hover:bg-primary hover:text-primary-foreground"
                 data-testid="link-hero-resume"
               >
@@ -248,7 +278,6 @@ export function HeroStage() {
               <a
                 href={links.linkedin}
                 {...external}
-                {...heat}
                 className="inline-flex items-center gap-2 rounded-full px-3 py-3.5 font-mono text-[11px] uppercase tracking-[0.13em] text-foreground/75 transition-colors hover:text-primary"
                 data-testid="link-hero-linkedin"
               >
@@ -256,13 +285,13 @@ export function HeroStage() {
               </a>
             </m.div>
 
-            <m.p {...rise(0.4)} className="mt-4 inline-flex items-center gap-2 rounded-full bg-[hsl(var(--mint)/.35)] px-3 py-1.5 text-[13px] text-[hsl(var(--mint-deep))]" data-testid="text-hero-status">
-              <span className="status-dot h-1.5 w-1.5 rounded-full bg-[hsl(var(--mint-deep))]" aria-hidden="true" />
-              Exploring Data Analytics &amp; Business Analytics Internship Opportunities
+            <m.p {...rise(0.4)} className="mt-5 flex items-center gap-2 text-[13px] text-foreground/60" data-testid="text-hero-status">
+              <span className="status-dot h-1.5 w-1.5 shrink-0 rounded-full bg-[hsl(var(--mint-deep))]" aria-hidden="true" />
+              Open to Data Analyst &amp; Business Analytics internships
             </m.p>
 
             <m.div {...rise(0.46)}>
-              <NowPlaying hot={hot} />
+              <NowPlaying />
             </m.div>
           </div>
 
