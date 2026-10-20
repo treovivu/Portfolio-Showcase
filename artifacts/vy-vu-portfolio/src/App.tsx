@@ -32,9 +32,9 @@ import nsdcScavengerHunt from '@assets/nsdc-sql-scavenger-hunt.png';
 import nsdcWorkshop from '@assets/nsdc-workshop.png';
 import nsdcKickoff from '@assets/nsdc-kickoff-2026.png';
 import nsdcCocaColaVisit from '@assets/nsdc-coca-cola-visit.png';
-import { CreativeSide } from '@/components/creative-side';
+import { BeyondTheData } from '@/components/beyond-the-data';
 import { Monogram } from '@/components/monogram';
-import { ProjectAction, Tracklist } from '@/components/tracklist';
+import { ProjectAction, ProjectList } from '@/components/project-list';
 import { HeroStage } from '@/components/hero-stage';
 import { external, links } from '@/lib/site';
 import type { MediaItem, ProjectDetail } from '@/lib/types';
@@ -42,7 +42,7 @@ import type { MediaItem, ProjectDetail } from '@/lib/types';
 const navItems = [
   { label: 'Home', href: '#top' },
   { label: 'About', href: '#about' },
-  { label: 'Creative', href: '#creative' },
+  { label: 'Beyond', href: '#beyond' },
   { label: 'Work', href: '#work' },
   { label: 'Writing', href: '#writing' },
   { label: 'Achievements', href: '#achievements' },
@@ -143,7 +143,7 @@ const work: ProjectDetail[] = [
       'Conducted outreach to approximately 10 prospective speakers, documenting company information, presentation topics, and business interests to support exhibition planning.',
     ],
     skills: ['Squarespace', 'Web Design', 'Video Production', 'Stakeholder Outreach', 'Presentation'],
-    cover: 'vimf',
+    cover: 'photo',
     links: [{ label: 'Website', url: 'https://porpoise-star-y6kf.squarespace.com/' }],
     media: [
       { id: 'vimf-cover', label: 'VIMF cover image', caption: 'Vietnam Industrial & Manufacturing Fair promotional banner.', alt: 'Vietnam Industrial and Manufacturing Fair promotional banner with manufacturing event dates and robotics imagery', src: vimfCover },
@@ -178,7 +178,7 @@ const work: ProjectDetail[] = [
       'Developed an Excel-based event tracker and coordinated room reservation requests, event logistics, and student-facing communications.',
     ],
     skills: ['Event Coordination', 'Microsoft Excel', 'Communication', 'Logistics'],
-    cover: 'nsdc',
+    cover: 'photo',
     media: [
       { id: 'nsdc-scavenger-hunt', label: 'SQL Scavenger Hunt', caption: '“Where is NSDC Trophy??” — a SQL scavenger hunt event.', alt: 'Group photo of NSDC members in front of a screen reading “Where is NSDC Trophy?? SQL Scavenger Hunt”', src: nsdcScavengerHunt },
       { id: 'nsdc-workshop', label: 'Workshop', caption: 'Students working through a hands-on NSDC session.', alt: 'Students working on laptops at classroom tables during an NSDC session', src: nsdcWorkshop },
@@ -359,9 +359,9 @@ function App() {
           <div className="reveal">
             <p className="font-mono text-[10px] uppercase tracking-[0.17em] text-primary">02 / about me</p>
             <h2 className="mt-6 max-w-[420px] text-5xl leading-[.92] tracking-[-0.055em] md:text-7xl">
-              From Vietnam
+              A little
               <br />
-              <span className="font-display font-normal italic">to Atlanta.</span>
+              <span className="font-display font-normal italic">about me.</span>
             </h2>
             <div className="relative mt-10 max-w-[350px] -rotate-[1.5deg] transition-transform duration-500 hover:rotate-0">
               <span aria-hidden="true" className="scrap-tape absolute -top-3 left-1/2 z-10 h-7 w-24 -translate-x-1/2 rotate-[3deg]" />
@@ -370,21 +370,17 @@ function App() {
                 onOpen={setLightboxItem}
               />
             </div>
-            <p className="mt-6 max-w-[350px] text-sm text-foreground/60" data-testid="text-about-greeting">
-              <span className="font-viet text-lg italic text-primary" lang="vi">Rất vui được gặp bạn</span>
-              <span className="block font-mono text-[9px] uppercase tracking-[0.15em] text-foreground/45">nice to meet you</span>
-            </p>
           </div>
           <div className="reveal reveal-delay-1">
             <p className="max-w-[760px] text-2xl leading-[1.15] tracking-[-0.03em] md:text-[2.65rem] md:leading-[1.08]">
-              I&apos;m a sophomore at Georgia State University from Vietnam, studying Computer Information Systems with concentrations in Artificial Intelligence Analytics and Application Development.
+              Originally from Vietnam, I&apos;m now a sophomore at Georgia State University studying Computer Information Systems, with concentrations in Artificial Intelligence Analytics and Application Development.
             </p>
             <div className="mt-10 grid gap-8 border-t border-foreground/15 pt-7 sm:grid-cols-2">
               <p className="text-sm leading-[1.7] text-foreground/65">
                 What interests me most is the intersection of data, technology, and business. I enjoy understanding how information can uncover patterns, explain behavior, and support better decisions, which is why I&apos;m pursuing <span className="text-foreground">Data Analyst and Business Data Analyst</span> roles.
               </p>
               <p className="text-sm leading-[1.7] text-foreground/65">
-                Outside of my technical coursework, I enjoy organizing projects, working with people, writing, reading, and turning ideas into something useful. Off the clock, you&apos;ll find me learning K-pop choreography, playing guitar, or singing.
+                Outside of my technical coursework, I enjoy organizing projects, working with people, writing, reading, and turning ideas into something useful.
               </p>
             </div>
             <p className="mt-8 max-w-[730px] text-sm leading-[1.7] text-foreground/65">
@@ -394,8 +390,8 @@ function App() {
               {[
                 { label: 'Georgia State University', title: 'Computer Information Systems', detail: 'Honors College' },
                 { label: 'Academic milestone', title: 'President’s List', detail: '3 semesters · GPA 4.05' },
-                { label: 'Home → home base', title: 'Vietnam → Atlanta, GA', detail: 'International student' },
-                { label: 'Seeking', title: 'Data Analyst internships', detail: 'Including Business Data Analyst roles', accent: true },
+                { label: 'Based in', title: 'Atlanta, GA', detail: 'Originally from Vietnam' },
+                { label: 'Exploring', title: 'Data & Business Analytics internships', detail: 'Data Analyst and Business Data Analyst roles', accent: true },
               ].map((fact) => (
                 <div
                   key={fact.label}
@@ -412,7 +408,7 @@ function App() {
         </div>
       </section>
 
-      <CreativeSide />
+      <BeyondTheData />
 
       <section id="approach" className="border-y border-foreground/15 bg-secondary/20 scroll-mt-24">
         <div className="mx-auto max-w-[1280px] px-5 py-24 md:px-10 md:py-32">
@@ -443,7 +439,7 @@ function App() {
         </div>
       </section>
 
-      <Tracklist work={work} onOpenProject={setActiveProject} onOpenMedia={setLightboxItem} />
+      <ProjectList work={work} onOpenProject={setActiveProject} onOpenMedia={setLightboxItem} />
 
       <section id="writing" className="mx-auto max-w-[1280px] scroll-mt-24 px-5 py-28 md:px-10 md:py-40">
         <div className="grid gap-14 lg:grid-cols-[.82fr_1.18fr] lg:gap-24">

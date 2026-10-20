@@ -11,7 +11,8 @@ export type ProjectLink = {
   url: string;
 };
 
-export type CoverArt = 'aurabeat' | 'herbuddy' | 'vimf' | 'halloween' | 'nsdc';
+// Illustrated covers explain projects without screenshots; 'photo' uses the project's first media item.
+export type CoverArt = 'aurabeat' | 'herbuddy' | 'halloween' | 'photo';
 
 export type ProjectDetail = {
   number: string;

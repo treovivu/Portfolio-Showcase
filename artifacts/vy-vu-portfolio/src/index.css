@@ -136,7 +136,6 @@
   /* Fraunces doubles as the album-cover display face and covers Vietnamese diacritics. */
   --app-font-serif: 'Fraunces', Georgia, serif;
   --app-font-mono: 'DM Mono', monospace;
-  --app-font-viet: var(--app-font-serif);
   --radius: 0.35rem;
   --shadow-2xs: 0px 2px 0px 0px hsl(202.8169 89.1213% 53.1373% / 0); /*replace with H S L */
   --shadow-xs: 0px 2px 0px 0px hsl(202.8169 89.1213% 53.1373% / 0); /*replace with H S L */
@@ -490,11 +489,6 @@ body {
 
 /* ---------- Nhịp: shared details ---------- */
 
-.font-viet {
-  font-family: var(--app-font-viet);
-  font-variation-settings: 'SOFT' 100;
-}
-
 :focus-visible {
   outline: 2px solid hsl(var(--ring));
   outline-offset: 3px;
@@ -601,9 +595,7 @@ body {
   animation-delay: calc(var(--i) * 14ms + 500ms), calc(var(--i) * -37ms);
 }
 
-.now-playing[data-hot] .eq-icon,
-.track:hover .eq-icon,
-.track:focus-within .eq-icon {
+.now-playing[data-hot] .eq-icon {
   animation: eq-dance 520ms ease-in-out infinite alternate;
 }
 
@@ -621,50 +613,53 @@ body {
   to { background-size: 3px 90%, 3px 40%, 3px 100%; }
 }
 
-/* ---------- Projects: tracklist ---------- */
+/* ---------- Projects ---------- */
 
-.track::before {
+/* Hover and focus effects stay inside each element's own grid cell:
+   the media zooms within its clipped frame and the row only changes color. */
+.project-row::before {
   content: '';
   position: absolute;
-  inset: 0 -20px;
+  inset: 0;
   z-index: -1;
-  background: linear-gradient(90deg, hsl(var(--peach) / 0.5), hsl(var(--peach) / 0.15) 70%, transparent);
+  background: linear-gradient(90deg, hsl(var(--peach) / 0.45), hsl(var(--peach) / 0.12) 70%, transparent);
   opacity: 0;
   transition: opacity 400ms ease;
 }
 
-.track-cover,
-.track-vinyl,
-.track-title {
-  transition: transform 650ms cubic-bezier(0.22, 1, 0.36, 1);
+.project-media {
+  transition: box-shadow 500ms ease;
 }
 
-.track-wave {
+.project-media-inner {
+  transition: transform 700ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.row-wave {
   transform: scaleX(0);
   transition: transform 700ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-.track:hover::before,
-.track:focus-within::before { opacity: 1; }
-.track:hover .track-cover,
-.track:focus-within .track-cover { transform: translateY(-6px) rotate(-2deg); }
-.track:hover .track-vinyl,
-.track:focus-within .track-vinyl { transform: translateX(14%) rotate(140deg); }
-.track:hover .track-title,
-.track:focus-within .track-title { transform: translateX(6px); }
-.track:hover .track-wave,
-.track:focus-within .track-wave { transform: scaleX(1); }
+.project-row:hover::before,
+.project-row:focus-within::before { opacity: 1; }
+.project-row:hover .project-media,
+.project-row:focus-within .project-media { box-shadow: 0 18px 34px -22px hsl(var(--cocoa) / 0.55); }
+.project-row:hover .project-media-inner,
+.project-row:focus-within .project-media-inner { transform: scale(1.04); }
+.project-row:hover .row-wave,
+.project-row:focus-within .row-wave { transform: scaleX(1); }
+.project-row:hover .eq-icon,
+.project-row:focus-within .eq-icon { animation: eq-dance 520ms ease-in-out infinite alternate; }
 
-.liner-thumb img { transition: transform 400ms ease; }
-.liner-thumb:hover img,
-.liner-thumb:focus-visible img { transform: scale(1.08); }
+.photo-thumb img { transition: transform 400ms ease; }
+.photo-thumb:hover img,
+.photo-thumb:focus-visible img { transform: scale(1.08); }
 
 /* Cover motifs: each plays once per hover, then rests. */
-.cover-bar, .cover-ring, .cover-tile, .cover-slide, .cover-column, .cover-gear, .cover-lens, .cover-beam {
+.cover-bar, .cover-ring, .cover-slide, .cover-beam {
   transform-box: fill-box;
   transform-origin: center;
 }
-.cover-column { transform-origin: bottom; }
 
 .cover-traveler {
   offset-path: path('M40 140 C 75 140, 70 92, 104 92 S 140 46, 162 46');
@@ -673,38 +668,76 @@ body {
   opacity: 0;
 }
 
-.track:hover .cover-bar, .track:focus-within .cover-bar { animation: cover-bounce 480ms ease-in-out 2 alternate; }
-.track:hover .cover-ring, .track:focus-within .cover-ring { animation: cover-pulse 900ms ease-out 2; }
-.track:hover .cover-beam, .track:focus-within .cover-beam { animation: cover-flash 900ms ease-in-out; }
-.track:hover .cover-traveler, .track:focus-within .cover-traveler { animation: cover-travel 1400ms cubic-bezier(0.65, 0, 0.35, 1) forwards; }
-.track:hover .cover-tile, .track:focus-within .cover-tile { animation: cover-pop 500ms ease-out; }
-.track:hover .cover-gear, .track:focus-within .cover-gear { animation: cover-turn 1200ms cubic-bezier(0.22, 1, 0.36, 1); }
-.track:hover .cover-slide, .track:focus-within .cover-slide { animation: cover-deal 600ms cubic-bezier(0.22, 1, 0.36, 1) backwards; }
-.track:hover .cover-column, .track:focus-within .cover-column { animation: cover-grow 700ms cubic-bezier(0.22, 1, 0.36, 1) backwards; }
-.track:hover .cover-lens, .track:focus-within .cover-lens { animation: cover-scan 1200ms ease-in-out; }
+.project-row:hover .cover-bar, .project-row:focus-within .cover-bar { animation: cover-bounce 480ms ease-in-out 2 alternate; }
+.project-row:hover .cover-ring, .project-row:focus-within .cover-ring { animation: cover-pulse 900ms ease-out 2; }
+.project-row:hover .cover-beam, .project-row:focus-within .cover-beam { animation: cover-flash 900ms ease-in-out; }
+.project-row:hover .cover-traveler, .project-row:focus-within .cover-traveler { animation: cover-travel 1400ms cubic-bezier(0.65, 0, 0.35, 1) forwards; }
+.project-row:hover .cover-slide, .project-row:focus-within .cover-slide { animation: cover-deal 600ms cubic-bezier(0.22, 1, 0.36, 1) backwards; }
 
 @keyframes cover-bounce { to { transform: scaleY(1.45); } }
 @keyframes cover-pulse { from { transform: scale(0.6); opacity: 0; } }
 @keyframes cover-flash { 50% { opacity: 0.35; } }
 @keyframes cover-travel { 10% { opacity: 1; } 100% { offset-distance: 100%; opacity: 1; } }
-@keyframes cover-pop { 50% { transform: scale(0.82); } }
-@keyframes cover-turn { to { transform: rotate(180deg); } }
 @keyframes cover-deal { from { transform: translate(-14px, -14px) rotate(-6deg); opacity: 0; } }
-@keyframes cover-grow { from { transform: scaleY(0.2); } }
-@keyframes cover-scan { 50% { transform: translateX(-60px); } }
 
-/* ---------- Creative side ---------- */
+/* ---------- Beyond the data ---------- */
 
-.mode-stage {
-  aspect-ratio: 20 / 13;
-  overflow: hidden;
-  border: 1px solid hsl(var(--ink));
-  background:
-    radial-gradient(ellipse 60% 55% at 50% -10%, hsl(var(--cream) / 0.1), transparent 70%),
-    hsl(var(--ink));
-  color: hsl(var(--cream));
+.hobby-card {
+  transition: transform 450ms cubic-bezier(0.22, 1, 0.36, 1), box-shadow 450ms ease;
   -webkit-tap-highlight-color: transparent;
 }
+
+.hobby-card[data-active] {
+  transform: translateY(-4px);
+  box-shadow: 0 22px 40px -28px hsl(var(--cocoa) / 0.55);
+}
+
+.dancer {
+  transform-box: fill-box;
+  transform-origin: 50% 100%;
+}
+
+.hobby-card[data-active] .dancer { animation: dance-step 1.6s ease-in-out infinite; }
+
+@keyframes dance-step {
+  0%, 100% { transform: translate(0, 0) rotate(0deg); }
+  25% { transform: translate(var(--dx), -4px) rotate(var(--r)); }
+  50% { transform: translate(0, -9px) rotate(0deg); }
+  75% { transform: translate(calc(var(--dx) * -1), -4px) rotate(calc(var(--r) * -1)); }
+}
+
+/* Each strum vibrates briefly, then the strings rest until the next one. */
+.hobby-card[data-active] .guitar-string { animation: string-strum 1.5s linear infinite; }
+
+@keyframes string-strum {
+  0%, 36%, 100% { transform: translateY(0); }
+  6% { transform: translateY(1.8px); }
+  12% { transform: translateY(-1.6px); }
+  18% { transform: translateY(1.1px); }
+  24% { transform: translateY(-0.7px); }
+  30% { transform: translateY(0.3px); }
+}
+
+.float-note { opacity: 0; }
+.hobby-card[data-active] .float-note { animation: float-note 1.5s ease-out infinite; }
+
+@keyframes float-note {
+  0% { opacity: 0; transform: translateY(8px); }
+  30% { opacity: 1; }
+  100% { opacity: 0; transform: translateY(-12px); }
+}
+
+.sing-bar {
+  transform: scaleY(var(--s, 0.4));
+  transition: transform 220ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.hobby-card[data-active] .sing-bar {
+  animation: np-breathe 650ms ease-in-out infinite alternate;
+  animation-delay: calc(var(--i) * -41ms);
+}
+
+.status-dot { box-shadow: 0 0 0 3px hsl(var(--mint-deep) / 0.18); }
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
@@ -717,8 +750,12 @@ body {
   .vinyl-spin,
   .np-bar,
   .eq-icon,
-  .now-playing[data-hot] .np-bar { animation: none !important; }
+  .now-playing[data-hot] .np-bar,
+  .hobby-card .dancer,
+  .hobby-card .guitar-string,
+  .hobby-card .float-note,
+  .hobby-card .sing-bar { animation: none !important; }
+  .hobby-card[data-active] { transform: none; }
   .album:hover .vinyl-slot,
-  .track:hover .track-vinyl,
-  .track:hover .track-cover { transform: none; }
+  .project-row:hover .project-media-inner { transform: none; }
 }

@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState, type CSSProperties, type PointerEvent as ReactPointerEvent } from 'react';
 import { m, useReducedMotion, useScroll, useSpring, useTransform } from 'framer-motion';
-import { ArrowUpRight, Play } from 'lucide-react';
+import { ArrowUpRight, Linkedin, Play } from 'lucide-react';
 import portrait from '@assets/vy-vu-portrait-hero.jpg';
 import { Monogram } from '@/components/monogram';
 import { enter, spring } from '@/lib/motion';
@@ -70,19 +70,19 @@ function AlbumCover() {
 
         <div className="absolute left-[6%] top-[6%] flex items-center gap-[2cqw]">
           <Monogram className="h-[8cqw] w-[8cqw]" />
-          <span className="font-mono text-[2.3cqw] uppercase tracking-[0.18em] text-[hsl(var(--cocoa)/.75)]">Vy Vu</span>
+          <span className="font-mono text-[2.3cqw] uppercase tracking-[0.18em] text-[hsl(var(--cocoa)/.75)]">Portfolio</span>
         </div>
-        <span className="absolute right-[19%] top-[6.5%] font-mono text-[2.3cqw] uppercase tracking-[0.18em] text-[hsl(var(--cocoa)/.75)]">Side A · 2026</span>
+        <span className="absolute right-[19%] top-[6.5%] font-mono text-[2.3cqw] uppercase tracking-[0.18em] text-[hsl(var(--cocoa)/.75)]">2026</span>
 
         <div className="absolute left-[7%] top-[32%] flex aspect-square w-[25cqw] -rotate-[10deg] flex-col items-center justify-center rounded-full bg-[hsl(var(--mint))] text-center text-[hsl(var(--cocoa))] shadow-[0_0.6cqw_0_hsl(var(--cocoa)/.12)]">
           <span className="font-mono text-[1.9cqw] uppercase tracking-[0.16em]">contains</span>
           <span className="mt-[0.8cqw] font-display text-[3.4cqw] italic leading-[1.05]">SQL · Python<br />Excel</span>
         </div>
 
-        <figcaption className="absolute bottom-[6%] left-[6%]">
-          <span className="block font-display text-[12cqw] font-normal italic leading-[.85] text-[hsl(var(--cocoa))]">Little</span>
-          <span className="block text-[9.2cqw] font-extrabold uppercase leading-[.9] tracking-[-0.05em] text-[hsl(var(--coral-deep))]">Rhythm</span>
-          <span className="mt-[1.6cqw] block font-mono text-[2.2cqw] uppercase tracking-[0.2em] text-[hsl(var(--cocoa)/.75)]">Data in harmony</span>
+        <figcaption className="absolute bottom-[6%] left-[6%] max-w-[40cqw]">
+          <span className="block font-display text-[11.5cqw] font-normal italic leading-[.9] text-[hsl(var(--cocoa))]">Vy Vu</span>
+          <span className="mt-[1.4cqw] block max-w-[40cqw] text-[3.6cqw] font-bold uppercase leading-[1.05] tracking-[0.02em] text-[hsl(var(--coral-deep))]">Aspiring Data Analyst</span>
+          <span className="mt-[1.4cqw] block font-mono text-[2.1cqw] uppercase tracking-[0.14em] text-[hsl(var(--cocoa)/.75)]">Data · AI · Creativity</span>
         </figcaption>
 
         <m.span
@@ -99,15 +99,12 @@ function AlbumCover() {
 
 const BAR_COUNT = 56;
 const bars = Array.from({ length: BAR_COUNT }, (_, i) => 0.22 + 0.7 * Math.abs(Math.sin(i * 0.55) * Math.cos(i * 0.21 + 1)));
-const TRACK_SECONDS = 194;
-const clock = (seconds: number) => `${Math.floor(seconds / 60)}:${String(Math.floor(seconds % 60)).padStart(2, '0')}`;
 
 function NowPlaying({ hot }: { hot: boolean }) {
   const barsRef = useRef<HTMLSpanElement[]>([]);
   const { scrollYProgress } = useScroll();
-  // The playhead tracks how far through the page (the album) the visitor is.
+  // The playhead tracks how far down the page the visitor is.
   const playhead = useTransform(scrollYProgress, (value) => `${value * 100}%`);
-  const elapsed = useTransform(scrollYProgress, (value) => clock(value * TRACK_SECONDS));
 
   const follow = (event: ReactPointerEvent<HTMLDivElement>) => {
     if (event.pointerType !== 'mouse') return;
@@ -125,12 +122,9 @@ function NowPlaying({ hot }: { hot: boolean }) {
     <div className="now-playing mt-9 max-w-[560px] rounded-2xl border border-foreground/12 bg-[hsl(var(--paper)/.7)] px-4 py-3.5" data-hot={hot || undefined} aria-hidden="true">
       <div className="flex items-center justify-between gap-4 font-mono text-[9px] uppercase tracking-[0.16em]">
         <span className="flex items-center gap-2 text-primary">
-          <span className="eq-icon" /> Now playing
+          <span className="eq-icon" /> Now exploring
         </span>
-        <span className="truncate text-foreground/55">Data in Harmony — Vy Vu</span>
-        <span className="tabular-nums text-foreground/55">
-          <m.span>{elapsed}</m.span> / {clock(TRACK_SECONDS)}
-        </span>
+        <span className="truncate text-foreground/55">Data analytics · AI · Building</span>
       </div>
       <div className="relative mt-3" onPointerMove={follow} onPointerLeave={reset}>
         <div className="flex h-10 items-center gap-[2px]">
@@ -190,16 +184,13 @@ export function HeroStage() {
       <div className="relative mx-auto max-w-[1280px] px-5 pb-20 pt-28 md:px-10 md:pt-32 lg:pb-24">
         <div className="grid items-center gap-14 lg:grid-cols-[1.02fr_.98fr] lg:gap-10">
           <div>
-            <m.p {...rise(0)} className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
-              <span className="font-display text-2xl italic text-primary" lang="vi">Xin chào,</span>
-              <span className="text-sm text-foreground/65">I&apos;m Vy Vu — a CIS student from Vietnam, based in Atlanta.</span>
-            </m.p>
-
-            <h1 className="mt-6">
-              <m.span {...rise(0.08)} className="block font-mono text-[11px] uppercase tracking-[0.22em] text-foreground/60">
-                Track 01 · Aspiring
+            <h1>
+              <m.span {...rise(0)} className="flex items-center gap-3">
+                <span className="text-[clamp(1.6rem,2.6vw,2.2rem)] font-semibold tracking-[-0.03em]">Vy Vu</span>
+                <span className="h-px w-8 bg-foreground/30" aria-hidden="true" />
+                <span className="font-mono text-[11px] uppercase tracking-[0.22em] text-foreground/60">Aspiring</span>
               </m.span>
-              <m.span {...rise(0.16)} className="mt-2 block font-display text-[clamp(3.4rem,7.2vw,6.4rem)] font-normal leading-[.9] tracking-[-0.04em]">
+              <m.span {...rise(0.08)} className="mt-3 block font-display text-[clamp(3.4rem,7vw,6.2rem)] font-normal leading-[.9] tracking-[-0.04em]">
                 <span className="kinetic-word inline-block whitespace-nowrap italic text-primary" onPointerEnter={(event) => event.pointerType === 'mouse' && replay()} onClick={replay}>
                   {[...'Data'].map((letter, i) =>
                     dataBeat === 0 ? (
@@ -219,16 +210,21 @@ export function HeroStage() {
                 </span>{' '}
                 Analyst
               </m.span>
-              <m.span {...rise(0.24)} className="mt-3 block font-display text-[clamp(1.25rem,2.2vw,1.85rem)] font-light italic text-foreground/75">
+              <m.span {...rise(0.16)} className="mt-3 block font-display text-[clamp(1.25rem,2.1vw,1.75rem)] font-light italic text-foreground/75">
                 (feat. <span className="text-[hsl(var(--mint-deep))]">AI Enthusiast</span> &amp; <span className="text-[hsl(var(--lavender-deep))]">Creative Mind</span>)
               </m.span>
             </h1>
 
-            <m.p {...rise(0.34)} className="mt-7 max-w-[560px] text-lg leading-[1.55] text-foreground/72">
-              I&apos;m looking for <strong className="font-medium text-foreground">Data Analyst and Business Data Analyst internships</strong>. I study Computer Information Systems at Georgia State, concentrating in AI Analytics and Application Development, and I like turning messy information into patterns people can act on.
-            </m.p>
+            <m.div {...rise(0.26)} className="mt-6 max-w-[580px] space-y-3 leading-[1.6] text-foreground/75">
+              <p className="text-lg">
+                I&apos;m Vy, a Computer Information Systems student at Georgia State University who loves exploring the stories hidden in data.
+              </p>
+              <p className="text-[15px] text-foreground/68">
+                I&apos;m especially curious about how AI and thoughtful analysis can turn complex information into meaningful insights. Whether I&apos;m exploring a dataset, building a digital experience, or learning something new, I enjoy connecting ideas and bringing them to life.
+              </p>
+            </m.div>
 
-            <m.div {...rise(0.42)} className="mt-8 flex flex-wrap items-center gap-3">
+            <m.div {...rise(0.34)} className="mt-7 flex flex-wrap items-center gap-3">
               <a
                 href="#work"
                 {...heat}
@@ -253,14 +249,19 @@ export function HeroStage() {
                 href={links.linkedin}
                 {...external}
                 {...heat}
-                className="signal-line ml-2 font-mono text-[11px] uppercase tracking-[0.13em] text-foreground/70 transition-colors hover:text-primary"
+                className="inline-flex items-center gap-2 rounded-full px-3 py-3.5 font-mono text-[11px] uppercase tracking-[0.13em] text-foreground/75 transition-colors hover:text-primary"
                 data-testid="link-hero-linkedin"
               >
-                Connect on LinkedIn
+                <Linkedin size={14} /> LinkedIn
               </a>
             </m.div>
 
-            <m.div {...rise(0.5)}>
+            <m.p {...rise(0.4)} className="mt-4 inline-flex items-center gap-2 rounded-full bg-[hsl(var(--mint)/.35)] px-3 py-1.5 text-[13px] text-[hsl(var(--mint-deep))]" data-testid="text-hero-status">
+              <span className="status-dot h-1.5 w-1.5 rounded-full bg-[hsl(var(--mint-deep))]" aria-hidden="true" />
+              Exploring Data Analytics &amp; Business Analytics Internship Opportunities
+            </m.p>
+
+            <m.div {...rise(0.46)}>
               <NowPlaying hot={hot} />
             </m.div>
           </div>

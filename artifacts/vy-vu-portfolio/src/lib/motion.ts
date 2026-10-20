@@ -1,7 +1,7 @@
 import type { Transition } from 'framer-motion';
 
 /**
- * Nhịp motion tokens. Everything animates transform/opacity only.
+ * Shared motion tokens. Everything animates transform/opacity only.
  * - settle: entrances; fast out, long soft landing.
  * - beat: snappy spring for direct feedback (taps, counts, plucks).
  * - sway: looser spring for things that travel across a stage.

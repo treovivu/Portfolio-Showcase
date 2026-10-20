@@ -1,5 +1,5 @@
 /**
- * The Little Rhythm mark: a record whose "VV" is drawn as one waveform zigzag.
+ * The Vy Vu mark: a record whose "VV" is drawn as one waveform zigzag.
  * The sheen sweeps around on hover/focus of the nearest `.group`, so it reads as a spin
  * without rotating the letters.
  */
