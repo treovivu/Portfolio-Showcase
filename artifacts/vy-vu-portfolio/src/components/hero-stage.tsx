@@ -1,258 +1,250 @@
-import { useEffect, useRef, useState, type CSSProperties, type PointerEvent as ReactPointerEvent, type ReactNode } from 'react';
-import { m, useMotionValue, useReducedMotion, useSpring, type TargetAndTransition } from 'framer-motion';
-import { ArrowDownRight, ArrowUpRight, Circle } from 'lucide-react';
+import { useEffect, useRef, useState, type CSSProperties, type PointerEvent as ReactPointerEvent } from 'react';
+import { m, useReducedMotion, useScroll, useSpring, useTransform } from 'framer-motion';
+import { ArrowUpRight, Play } from 'lucide-react';
+import portrait from '@assets/vy-vu-portrait-hero.jpg';
+import { Monogram } from '@/components/monogram';
 import { enter, spring } from '@/lib/motion';
 import { external, links } from '@/lib/site';
 
-type Flourish = 'sway' | 'stack';
+/* ------------------------------ Album cover ------------------------------ */
 
-const flourish: Record<Flourish, (index: number) => { initial?: TargetAndTransition; animate: TargetAndTransition }> = {
-  // A small choreography wave: each letter steps up and sways in sequence.
-  sway: (i) => ({
-    animate: {
-      y: ['0em', '-0.16em', '0.03em', '0em'],
-      rotate: [0, i % 2 ? 7 : -7, 0, 0],
-      transition: { duration: 0.6, delay: i * 0.06, ease: 'easeOut' },
-    },
-  }),
-  // Letters drop in and stack like bars on a chart.
-  stack: (i) => ({
-    initial: { y: '-0.55em', opacity: 0 },
-    animate: { y: '0em', opacity: 1, transition: { ...spring.beat, delay: i * 0.07 } },
-  }),
-};
+function AlbumCover() {
+  const reduceMotion = useReducedMotion();
+  const tiltX = useSpring(0, { stiffness: 160, damping: 18 });
+  const tiltY = useSpring(0, { stiffness: 160, damping: 18 });
+  const sheenX = useSpring(0, { stiffness: 120, damping: 20 });
+  const sheenY = useSpring(0, { stiffness: 120, damping: 20 });
 
-function KineticWord({
-  text,
-  kind,
-  beat,
-  onReplay,
-  className,
-  after,
-}: {
-  text: string;
-  kind: Flourish;
-  beat: number;
-  onReplay: () => void;
-  className: string;
-  after?: ReactNode;
-}) {
+  // The sleeve leans toward the cursor and a soft sheen follows it, like light on a glossy print.
+  const lean = (event: ReactPointerEvent<HTMLDivElement>) => {
+    if (event.pointerType !== 'mouse' || reduceMotion) return;
+    const rect = event.currentTarget.getBoundingClientRect();
+    const x = (event.clientX - rect.left) / rect.width - 0.5;
+    const y = (event.clientY - rect.top) / rect.height - 0.5;
+    tiltY.set(x * 9);
+    tiltX.set(-y * 9);
+    sheenX.set(x * rect.width);
+    sheenY.set(y * rect.height);
+  };
+
+  const settle = () => {
+    tiltX.set(0);
+    tiltY.set(0);
+    sheenX.set(0);
+    sheenY.set(0);
+  };
+
   return (
-    // nowrap keeps trailing punctuation on the same line as the word.
-    <span className="whitespace-nowrap">
-      <span
-        className={`kinetic-word relative inline-block ${className}`}
-        onPointerEnter={(event) => event.pointerType === 'mouse' && onReplay()}
-        onClick={onReplay}
+    <div className="album group relative mx-auto w-full max-w-[540px] pr-[17%]" onPointerMove={lean} onPointerLeave={settle}>
+      <div className="vinyl-slot absolute right-0 top-[3%] aspect-square w-[78%]" aria-hidden="true">
+        <div className="vinyl vinyl-spin relative h-full w-full rounded-full">
+          <div className="absolute inset-[34%] flex items-center justify-center rounded-full bg-[hsl(var(--coral))]">
+            <span className="font-mono text-[clamp(6px,1.4vw,9px)] uppercase tracking-[0.18em] text-[hsl(var(--cocoa))]">side a</span>
+          </div>
+          <div className="absolute inset-[48.5%] rounded-full bg-[hsl(var(--cream))]" />
+        </div>
+      </div>
+
+      <m.figure
+        className="album-sleeve relative aspect-square w-full overflow-hidden bg-[hsl(var(--peach))]"
+        style={{ rotateX: tiltX, rotateY: tiltY, transformPerspective: 1000 }}
       >
-        {[...text].map((letter, i) => {
-          if (beat === 0) return <span key={i} className="inline-block">{letter}</span>;
-          const { initial, animate } = flourish[kind](i);
-          return (
-            <m.span key={`${beat}-${i}`} className="inline-block" initial={initial} animate={animate}>
-              {letter}
-            </m.span>
-          );
-        })}
-      </span>
-      {after}
-    </span>
+        <span aria-hidden="true" className="absolute right-[-8%] top-[12%] aspect-square w-[64%] rounded-full bg-[hsl(var(--coral)/.75)]" />
+        <span aria-hidden="true" className="absolute right-0 top-0 aspect-square w-[16%] rounded-bl-full bg-[hsl(var(--lavender))]" />
+        <span aria-hidden="true" className="absolute left-[7%] top-[22%] flex gap-[2.2cqw]">
+          {[0, 1, 2, 3].map((i) => (
+            <span key={i} className="block aspect-square w-[2.6cqw] rounded-full bg-[hsl(var(--mint-deep))]" style={{ opacity: 1 - i * 0.2 }} />
+          ))}
+        </span>
+
+        <div className="absolute bottom-0 right-[7%] h-[74%] w-[50%] overflow-hidden rounded-t-full border-[1.2cqw] border-b-0 border-[hsl(var(--paper))] bg-[hsl(var(--cocoa))]">
+          <img
+            src={portrait}
+            alt="Vy Vu standing outdoors in Atlanta at night"
+            className="h-full w-full object-cover object-[50%_24%]"
+            fetchPriority="high"
+            width={667}
+            height={1000}
+          />
+        </div>
+
+        <div className="absolute left-[6%] top-[6%] flex items-center gap-[2cqw]">
+          <Monogram className="h-[8cqw] w-[8cqw]" />
+          <span className="font-mono text-[2.3cqw] uppercase tracking-[0.18em] text-[hsl(var(--cocoa)/.75)]">Vy Vu</span>
+        </div>
+        <span className="absolute right-[19%] top-[6.5%] font-mono text-[2.3cqw] uppercase tracking-[0.18em] text-[hsl(var(--cocoa)/.75)]">Side A · 2026</span>
+
+        <div className="absolute left-[7%] top-[32%] flex aspect-square w-[25cqw] -rotate-[10deg] flex-col items-center justify-center rounded-full bg-[hsl(var(--mint))] text-center text-[hsl(var(--cocoa))] shadow-[0_0.6cqw_0_hsl(var(--cocoa)/.12)]">
+          <span className="font-mono text-[1.9cqw] uppercase tracking-[0.16em]">contains</span>
+          <span className="mt-[0.8cqw] font-display text-[3.4cqw] italic leading-[1.05]">SQL · Python<br />Excel</span>
+        </div>
+
+        <figcaption className="absolute bottom-[6%] left-[6%]">
+          <span className="block font-display text-[12cqw] font-normal italic leading-[.85] text-[hsl(var(--cocoa))]">Little</span>
+          <span className="block text-[9.2cqw] font-extrabold uppercase leading-[.9] tracking-[-0.05em] text-[hsl(var(--coral-deep))]">Rhythm</span>
+          <span className="mt-[1.6cqw] block font-mono text-[2.2cqw] uppercase tracking-[0.2em] text-[hsl(var(--cocoa)/.75)]">Data in harmony</span>
+        </figcaption>
+
+        <m.span
+          aria-hidden="true"
+          className="album-sheen pointer-events-none absolute left-1/2 top-1/2 -ml-[45%] -mt-[45%] aspect-square w-[90%] rounded-full opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+          style={{ x: sheenX, y: sheenY }}
+        />
+      </m.figure>
+    </div>
   );
 }
 
-const barCount = 24;
-const barBase = Array.from({ length: barCount }, (_, i) => 0.24 + 0.62 * Math.abs(Math.sin(i * 0.9) * Math.cos(i * 0.37)));
-const barTone = ['--rose', '--jade', '--lilac'];
-const peakIndex = barBase.indexOf(Math.max(...barBase));
+/* ------------------------------ Now playing ------------------------------ */
 
-// A tiny chart that behaves like an equalizer: bars swell under the cursor and a readout follows.
-function RhythmChart() {
+const BAR_COUNT = 56;
+const bars = Array.from({ length: BAR_COUNT }, (_, i) => 0.22 + 0.7 * Math.abs(Math.sin(i * 0.55) * Math.cos(i * 0.21 + 1)));
+const TRACK_SECONDS = 194;
+const clock = (seconds: number) => `${Math.floor(seconds / 60)}:${String(Math.floor(seconds % 60)).padStart(2, '0')}`;
+
+function NowPlaying({ hot }: { hot: boolean }) {
   const barsRef = useRef<HTMLSpanElement[]>([]);
-  const readoutRef = useRef<HTMLSpanElement>(null);
-  const [wave, setWave] = useState(0);
-
-  const showReadout = (index: number) => {
-    const readout = readoutRef.current;
-    if (!readout) return;
-    readout.textContent = `beat ${String(index + 1).padStart(2, '0')} · ${Math.round(barBase[index] * 100)}`;
-    readout.style.transform = `translateX(calc(${((index + 0.5) / barCount) * 100}cqw - 50%))`;
-    readout.style.opacity = '1';
-  };
+  const { scrollYProgress } = useScroll();
+  // The playhead tracks how far through the page (the album) the visitor is.
+  const playhead = useTransform(scrollYProgress, (value) => `${value * 100}%`);
+  const elapsed = useTransform(scrollYProgress, (value) => clock(value * TRACK_SECONDS));
 
   const follow = (event: ReactPointerEvent<HTMLDivElement>) => {
     if (event.pointerType !== 'mouse') return;
     const rect = event.currentTarget.getBoundingClientRect();
-    const ratio = Math.min(0.999, Math.max(0, (event.clientX - rect.left) / rect.width));
+    const ratio = (event.clientX - rect.left) / rect.width;
     barsRef.current.forEach((bar, i) => {
-      const distance = i / (barCount - 1) - ratio;
-      const lift = 1 + 0.9 * Math.exp(-(distance * distance) / 0.006);
-      bar.style.setProperty('--s', Math.min(1, barBase[i] * lift).toFixed(3));
+      const distance = i / (BAR_COUNT - 1) - ratio;
+      bar.style.setProperty('--s', Math.min(1, bars[i] * (1 + 0.9 * Math.exp(-(distance * distance) / 0.004))).toFixed(3));
     });
-    showReadout(Math.floor(ratio * barCount));
   };
 
-  const reset = () => {
-    barsRef.current.forEach((bar, i) => bar.style.setProperty('--s', barBase[i].toFixed(3)));
-    if (readoutRef.current) readoutRef.current.style.opacity = '0';
-  };
+  const reset = () => barsRef.current.forEach((bar, i) => bar.style.setProperty('--s', bars[i].toFixed(3)));
 
   return (
-    <div aria-hidden="true">
-      <div className="relative h-5 [container-type:inline-size]">
-        <span
-          ref={readoutRef}
-          className="absolute left-0 top-0 whitespace-nowrap bg-[hsl(var(--cream))] px-1.5 py-0.5 font-mono text-[9px] uppercase tracking-[0.1em] text-[hsl(var(--ink))] opacity-0 transition-opacity duration-150"
-        />
+    <div className="now-playing mt-9 max-w-[560px] rounded-2xl border border-foreground/12 bg-[hsl(var(--paper)/.7)] px-4 py-3.5" data-hot={hot || undefined} aria-hidden="true">
+      <div className="flex items-center justify-between gap-4 font-mono text-[9px] uppercase tracking-[0.16em]">
+        <span className="flex items-center gap-2 text-primary">
+          <span className="eq-icon" /> Now playing
+        </span>
+        <span className="truncate text-foreground/55">Data in Harmony — Vy Vu</span>
+        <span className="tabular-nums text-foreground/55">
+          <m.span>{elapsed}</m.span> / {clock(TRACK_SECONDS)}
+        </span>
       </div>
-      <div
-        className="beat-strip relative mt-1 flex h-16 cursor-crosshair items-end gap-[3px] border-b border-[hsl(var(--cream)/.3)] md:h-20"
-        data-wave={wave === 0 ? undefined : wave % 2}
-        onPointerMove={follow}
-        onPointerLeave={reset}
-        onClick={() => {
-          setWave((count) => count + 1);
-          showReadout(peakIndex);
-        }}
-      >
-        <span className="pointer-events-none absolute inset-x-0 top-1/2 border-t border-dashed border-[hsl(var(--cream)/.14)]" />
-        {barBase.map((base, i) => (
-          <span
-            key={i}
-            ref={(node) => {
-              if (node) barsRef.current[i] = node;
-            }}
-            className="beat-bar h-full flex-1 rounded-t-[2px]"
-            style={{ '--s': base.toFixed(3), '--i': i, background: `hsl(var(${barTone[i % 3]}))` } as CSSProperties}
-          />
-        ))}
-      </div>
-      <div className="mt-2 flex justify-between font-mono text-[8px] uppercase tracking-[0.14em] text-[hsl(var(--cream)/.45)]">
-        <span>count 1</span>
-        <span>fig. 01 — a beat, as data</span>
-        <span>8</span>
+      <div className="relative mt-3" onPointerMove={follow} onPointerLeave={reset}>
+        <div className="flex h-10 items-center gap-[2px]">
+          {bars.map((base, i) => (
+            <span
+              key={i}
+              ref={(node) => {
+                if (node) barsRef.current[i] = node;
+              }}
+              className="np-bar h-full flex-1 rounded-full"
+              style={{ '--s': base.toFixed(3), '--i': i, background: `hsl(var(${i % 7 === 3 ? '--lavender-deep' : i % 2 ? '--coral' : '--mint-deep'}))` } as CSSProperties}
+            />
+          ))}
+        </div>
+        <div className="mt-2 h-[2px] bg-foreground/10">
+          <m.div className="h-full origin-left bg-[hsl(var(--coral-deep))]" style={{ scaleX: scrollYProgress }} />
+        </div>
+        <m.div className="pointer-events-none absolute inset-x-0 bottom-[-4px] h-[10px]" style={{ x: playhead }}>
+          <span className="absolute left-0 top-0 -ml-[5px] h-[10px] w-[10px] rounded-full border-2 border-[hsl(var(--paper))] bg-[hsl(var(--coral-deep))]" />
+        </m.div>
       </div>
     </div>
   );
 }
 
+/* --------------------------------- Hero ---------------------------------- */
+
 export function HeroStage() {
   const reduceMotion = useReducedMotion();
-  const sectionRef = useRef<HTMLElement>(null);
-  const [beats, setBeats] = useState<Record<Flourish, number>>({ sway: 0, stack: 0 });
-  const lastReplay = useRef<Record<Flourish, number>>({ sway: 0, stack: 0 });
-  const [canSpotlight, setCanSpotlight] = useState(false);
+  const [hot, setHot] = useState(false);
+  const [dataBeat, setDataBeat] = useState(0);
+  const lastBeat = useRef(0);
 
-  const pointerX = useMotionValue(0);
-  const pointerY = useMotionValue(0);
-  const spotX = useSpring(pointerX, { stiffness: 150, damping: 24, mass: 0.6 });
-  const spotY = useSpring(pointerY, { stiffness: 150, damping: 24, mass: 0.6 });
-  const spotOpacity = useSpring(0, { stiffness: 120, damping: 26 });
-
-  useEffect(() => {
-    const query = window.matchMedia('(hover: hover) and (pointer: fine)');
-    const update = () => setCanSpotlight(query.matches && !reduceMotion);
-    update();
-    query.addEventListener('change', update);
-    return () => query.removeEventListener('change', update);
-  }, [reduceMotion]);
-
-  const replay = (kind: Flourish) => {
+  const replay = () => {
     const now = performance.now();
-    if (now - lastReplay.current[kind] < 750) return;
-    lastReplay.current[kind] = now;
-    setBeats((current) => ({ ...current, [kind]: current[kind] + 1 }));
+    if (now - lastBeat.current < 750) return;
+    lastBeat.current = now;
+    setDataBeat((count) => count + 1);
   };
 
-  // Play each word's flourish once, in time, right after the entrance settles.
   useEffect(() => {
     if (reduceMotion) return;
-    const timers = (['sway', 'stack'] as const).map((kind, i) => window.setTimeout(() => replay(kind), 1000 + i * 420));
-    return () => timers.forEach(window.clearTimeout);
+    const timer = window.setTimeout(replay, 900);
+    return () => window.clearTimeout(timer);
   }, [reduceMotion]);
 
-  const trackSpotlight = (event: ReactPointerEvent<HTMLElement>, jump = false) => {
-    if (!canSpotlight || event.pointerType !== 'mouse' || !sectionRef.current) return;
-    const rect = sectionRef.current.getBoundingClientRect();
-    const x = event.clientX - rect.left;
-    const y = event.clientY - rect.top;
-    if (jump) {
-      spotX.jump(x);
-      spotY.jump(y);
-    }
-    pointerX.set(x);
-    pointerY.set(y);
-    spotOpacity.set(1);
+  const rise = (delay: number) => ({ initial: { opacity: 0, y: 18 }, animate: { opacity: 1, y: 0 }, transition: enter(delay) });
+  const heat = {
+    onPointerEnter: () => setHot(true),
+    onPointerLeave: () => setHot(false),
+    onFocus: () => setHot(true),
+    onBlur: () => setHot(false),
   };
 
-  const line = (delay: number) => ({ initial: { opacity: 0, y: '0.35em' }, animate: { opacity: 1, y: '0em' }, transition: enter(delay) });
-  const rise = (delay: number) => ({ initial: { opacity: 0, y: 18 }, animate: { opacity: 1, y: 0 }, transition: enter(delay) });
-
   return (
-    <section
-      id="top"
-      ref={sectionRef}
-      className="hero-stage relative overflow-hidden"
-      onPointerEnter={(event) => trackSpotlight(event, true)}
-      onPointerMove={(event) => trackSpotlight(event)}
-      onPointerLeave={() => spotOpacity.set(0)}
-    >
-      {canSpotlight && (
-        <m.div
-          aria-hidden="true"
-          className="hero-spotlight pointer-events-none absolute left-0 top-0 -ml-[360px] -mt-[360px] h-[720px] w-[720px] rounded-full"
-          style={{ x: spotX, y: spotY, opacity: spotOpacity }}
-        />
-      )}
-
-      <div className="relative mx-auto flex min-h-[760px] max-w-[1280px] items-center px-5 pb-20 pt-28 md:px-10 md:pt-32">
-        <div className="grid w-full items-center gap-16 lg:grid-cols-[1.08fr_.92fr] lg:gap-10">
+    <section id="top" className="hero-stage relative overflow-hidden">
+      <div className="relative mx-auto max-w-[1280px] px-5 pb-20 pt-28 md:px-10 md:pt-32 lg:pb-24">
+        <div className="grid items-center gap-14 lg:grid-cols-[1.02fr_.98fr] lg:gap-10">
           <div>
-            <m.div {...rise(0)} className="mb-7 flex flex-wrap items-baseline gap-x-3 gap-y-3">
-              <span className="font-viet text-2xl italic text-primary" lang="vi">Xin chào</span>
-              <span className="text-sm text-foreground/60">(hello) — I&apos;m Vy Vu, a CIS student from Vietnam, based in Atlanta.</span>
-              <span className="basis-full">
-                <span className="inline-flex items-center gap-2 border border-[hsl(var(--jade)/.45)] bg-[hsl(var(--jade)/.08)] px-3 py-1.5 font-mono text-[10px] uppercase tracking-[0.14em] text-[hsl(var(--jade))]" data-testid="text-hero-role">
-                  <span className="h-1.5 w-1.5 rounded-full bg-[hsl(var(--jade))]" /> Aspiring Data Analyst
-                </span>
-              </span>
-            </m.div>
-
-            <h1 className="max-w-[820px] text-[clamp(3rem,6.6vw,6.2rem)] leading-[.92] tracking-[-0.06em]">
-              <span className="sr-only">Finding the rhythm in data.</span>
-              <span aria-hidden="true">
-                <m.span {...line(0.1)} className="block">
-                  Finding the
-                </m.span>
-                <m.span {...line(0.2)} className="block">
-                  <KineticWord text="rhythm" kind="sway" beat={beats.sway} onReplay={() => replay('sway')} className="font-display pr-[0.06em] text-[1.08em] font-normal italic text-primary" /> in{' '}
-                  <KineticWord text="data" kind="stack" beat={beats.stack} onReplay={() => replay('stack')} className="font-semibold text-[hsl(var(--jade))]" after={<span className="text-primary">.</span>} />
-                </m.span>
-              </span>
-            </h1>
-
-            <m.p {...rise(0.4)} className="mt-8 max-w-[580px] text-lg leading-[1.55] text-foreground/70 md:text-xl">
-              I&apos;m looking for <span className="text-foreground">Data Analyst and Business Data Analyst internships</span>. I study Computer Information Systems at Georgia State, concentrating in AI Analytics and Application Development, and I like turning messy information into patterns people can act on.
+            <m.p {...rise(0)} className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
+              <span className="font-display text-2xl italic text-primary" lang="vi">Xin chào,</span>
+              <span className="text-sm text-foreground/65">I&apos;m Vy Vu — a CIS student from Vietnam, based in Atlanta.</span>
             </m.p>
 
-            <m.ul {...rise(0.48)} className="mt-5 flex flex-wrap items-center gap-x-4 gap-y-1.5 font-mono text-[10px] uppercase tracking-[0.14em] text-foreground/50" aria-label="Toolkit">
-              <li className="text-primary">Toolkit</li>
-              {['SQL', 'Python', 'Excel', 'Data analysis', 'AI-powered apps'].map((tool) => (
-                <li key={tool} className="whitespace-nowrap">{tool}</li>
-              ))}
-            </m.ul>
+            <h1 className="mt-6">
+              <m.span {...rise(0.08)} className="block font-mono text-[11px] uppercase tracking-[0.22em] text-foreground/60">
+                Track 01 · Aspiring
+              </m.span>
+              <m.span {...rise(0.16)} className="mt-2 block font-display text-[clamp(3.4rem,7.2vw,6.4rem)] font-normal leading-[.9] tracking-[-0.04em]">
+                <span className="kinetic-word inline-block whitespace-nowrap italic text-primary" onPointerEnter={(event) => event.pointerType === 'mouse' && replay()} onClick={replay}>
+                  {[...'Data'].map((letter, i) =>
+                    dataBeat === 0 ? (
+                      <span key={i} className="inline-block">{letter}</span>
+                    ) : (
+                      <m.span
+                        key={`${dataBeat}-${i}`}
+                        className="inline-block"
+                        initial={{ y: '-0.5em', opacity: 0 }}
+                        animate={{ y: '0em', opacity: 1 }}
+                        transition={{ ...spring.beat, delay: i * 0.07 }}
+                      >
+                        {letter}
+                      </m.span>
+                    ),
+                  )}
+                </span>{' '}
+                Analyst
+              </m.span>
+              <m.span {...rise(0.24)} className="mt-3 block font-display text-[clamp(1.25rem,2.2vw,1.85rem)] font-light italic text-foreground/75">
+                (feat. <span className="text-[hsl(var(--mint-deep))]">AI Enthusiast</span> &amp; <span className="text-[hsl(var(--lavender-deep))]">Creative Mind</span>)
+              </m.span>
+            </h1>
 
-            <m.div {...rise(0.56)} className="mt-8 flex flex-wrap items-center gap-3 sm:gap-5">
+            <m.p {...rise(0.34)} className="mt-7 max-w-[560px] text-lg leading-[1.55] text-foreground/72">
+              I&apos;m looking for <strong className="font-medium text-foreground">Data Analyst and Business Data Analyst internships</strong>. I study Computer Information Systems at Georgia State, concentrating in AI Analytics and Application Development, and I like turning messy information into patterns people can act on.
+            </m.p>
+
+            <m.div {...rise(0.42)} className="mt-8 flex flex-wrap items-center gap-3">
               <a
                 href="#work"
-                className="group inline-flex items-center gap-3 bg-foreground px-5 py-3.5 font-mono text-[11px] uppercase tracking-[0.13em] text-background transition-colors hover:bg-primary"
+                {...heat}
+                className="btn-play group/cta inline-flex items-center gap-3 rounded-full bg-foreground py-2 pl-2 pr-5 font-mono text-[11px] uppercase tracking-[0.13em] text-background transition-colors hover:bg-primary"
                 data-testid="link-hero-work"
               >
-                View my work <ArrowDownRight size={16} className="transition-transform group-hover:translate-x-1 group-hover:translate-y-1" />
+                <span className="flex h-8 w-8 items-center justify-center rounded-full bg-[hsl(var(--coral))] text-[hsl(var(--cocoa))] transition-transform duration-300 group-hover/cta:scale-110">
+                  <Play size={13} fill="currentColor" />
+                </span>
+                View projects
               </a>
               <a
                 href={links.resume}
                 {...external}
-                className="inline-flex items-center gap-2 border border-foreground/25 px-5 py-3.5 font-mono text-[11px] uppercase tracking-[0.13em] transition-colors hover:border-primary hover:bg-primary hover:text-primary-foreground"
+                {...heat}
+                className="inline-flex items-center gap-2 rounded-full border border-foreground/25 px-5 py-3.5 font-mono text-[11px] uppercase tracking-[0.13em] transition-colors hover:border-primary hover:bg-primary hover:text-primary-foreground"
                 data-testid="link-hero-resume"
               >
                 View resume <ArrowUpRight size={14} />
@@ -260,59 +252,21 @@ export function HeroStage() {
               <a
                 href={links.linkedin}
                 {...external}
-                className="signal-line ml-1 font-mono text-[11px] uppercase tracking-[0.13em] text-foreground/70 transition-colors hover:text-primary"
+                {...heat}
+                className="signal-line ml-2 font-mono text-[11px] uppercase tracking-[0.13em] text-foreground/70 transition-colors hover:text-primary"
                 data-testid="link-hero-linkedin"
               >
                 Connect on LinkedIn
               </a>
             </m.div>
+
+            <m.div {...rise(0.5)}>
+              <NowPlaying hot={hot} />
+            </m.div>
           </div>
 
-          <m.div {...rise(0.3)} className="relative mx-auto w-full max-w-[540px] lg:ml-auto">
-            <div className="absolute -left-7 top-5 font-mono text-[9px] uppercase tracking-[0.16em] text-foreground/45 [writing-mode:vertical-rl]">
-              curiosity / analysis / making
-            </div>
-            <span aria-hidden="true" className="scrap-tape absolute -top-3 left-10 z-10 h-7 w-24 -rotate-[5deg]" />
-            <span aria-hidden="true" className="scrap-tape absolute -right-4 top-16 z-10 h-6 w-20 rotate-[38deg]" />
-
-            <div className="relative overflow-hidden border border-foreground/15 bg-[hsl(var(--ink))] p-6 text-[hsl(var(--cream))] shadow-[14px_14px_0_hsl(var(--primary)/.18)] md:p-9">
-              <div className="stage-floor absolute inset-0" aria-hidden="true" />
-              <div className="relative flex aspect-[1/1.02] flex-col justify-between">
-                <div className="flex items-start justify-between font-mono text-[9px] uppercase tracking-[0.15em] text-[hsl(var(--cream)/.6)]">
-                  <span>VV / 2026</span>
-                  <span className="flex items-center gap-2"><Circle size={7} fill="currentColor" className="text-primary" /> building</span>
-                </div>
-
-                <div>
-                  <p className="font-display text-[clamp(2.6rem,5.2vw,4.2rem)] italic leading-[.95] tracking-[-0.02em]">
-                    Every dataset
-                    <br />
-                    has a rhythm<span className="text-primary">.</span>
-                  </p>
-                  <p className="mt-5 max-w-[340px] text-sm leading-[1.6] text-[hsl(var(--cream)/.72)]">
-                    <span className="font-viet italic text-[hsl(var(--cream))]" lang="vi">Nhịp</span> is Vietnamese for rhythm. I look for it in data, in dance practice, and in music.
-                  </p>
-                </div>
-
-                <div>
-                  <RhythmChart />
-                  <div className="mt-5 flex items-end justify-between gap-6">
-                    <p className="max-w-[230px] font-mono text-[9px] uppercase leading-[1.5] tracking-[0.12em] text-[hsl(var(--cream)/.58)]">
-                      A student portfolio about data, technology, and becoming.
-                    </p>
-                    <div className="text-right font-mono text-[9px] leading-[1.6] text-[hsl(var(--cream)/.58)]">GSU<br />ATL</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div
-              className="absolute -bottom-6 -right-2 rotate-[2deg] border border-foreground/20 bg-background px-4 py-3 shadow-[5px_5px_0_hsl(var(--foreground)/.08)] transition-transform duration-300 hover:rotate-0 md:-right-6"
-              data-testid="status-current-focus"
-            >
-              <p className="font-mono text-[9px] uppercase tracking-[0.15em] text-foreground/45">Open to</p>
-              <p className="mt-1 text-sm font-medium">Data Analyst internships</p>
-            </div>
+          <m.div initial={{ opacity: 0, scale: 0.96, rotate: -2 }} animate={{ opacity: 1, scale: 1, rotate: 0 }} transition={enter(0.2)}>
+            <AlbumCover />
           </m.div>
         </div>
       </div>

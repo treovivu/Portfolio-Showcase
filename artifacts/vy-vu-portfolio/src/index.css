@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=DM+Mono:wght@400;500&family=Fraunces:ital,opsz,wght,SOFT@1,9..144,300..500,100&family=Instrument+Serif:ital@0;1&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400&family=DM+Mono:wght@400;500&family=Fraunces:ital,opsz,wght,SOFT@0,9..144,300..600,100;1,9..144,300..600,100&display=swap');
 @import 'tailwindcss';
 @import 'tw-animate-css';
 @plugin "@tailwindcss/typography";
@@ -79,52 +79,64 @@
   --elevate-1: rgba(0, 0, 0, 0.03);
   --elevate-2: rgba(0, 0, 0, 0.08);
 
-  /* Nhịp palette: cream #F8F1E8, ink #302A32, lacquer rose #BA5261, jade #287E69, lilac #7A62B4 */
-  --cream: 34 53% 94%;
-  --ink: 285 9% 18%;
-  --rose: 351 43% 53%;
-  --jade: 165 52% 33%;
-  --lilac: 258 35% 55%;
+  /* Little Rhythm palette. Light tones (peach, coral, mint, lavender) are for fills and artwork;
+     the -deep variants carry text and controls so they meet WCAG AA on cream. */
+  --cream: 35 67% 95%;
+  --paper: 36 100% 98%;
+  --peach: 18 76% 87%;
+  --coral: 8 76% 68%;
+  --coral-deep: 6 51% 44%;
+  --mint: 155 38% 75%;
+  --mint-deep: 162 45% 30%;
+  --cocoa: 12 21% 24%;
+  --lavender: 258 48% 76%;
+  --lavender-deep: 256 32% 48%;
+
+  /* Aliases kept for earlier components (creative side, about). */
+  --ink: var(--cocoa);
+  --rose: var(--coral-deep);
+  --jade: var(--mint-deep);
+  --lilac: var(--lavender-deep);
 
   --background: var(--cream);
-  --foreground: var(--ink);
-  --border: 30 18% 80%;
-  --card: 36 60% 97%;
-  --card-foreground: var(--ink);
-  --card-border: 30 18% 80%;
-  --sidebar: var(--ink);
-  --sidebar-foreground: 36 60% 97%;
-  --sidebar-border: 285 8% 26%;
-  --sidebar-primary: var(--rose);
-  --sidebar-primary-foreground: 36 60% 97%;
-  --sidebar-accent: 285 8% 24%;
-  --sidebar-accent-foreground: 36 60% 97%;
-  --sidebar-ring: var(--rose);
-  --popover: 36 60% 97%;
-  --popover-foreground: var(--ink);
-  --popover-border: 30 18% 80%;
-  --primary: var(--rose);
-  --primary-foreground: 36 60% 97%;
-  --secondary: 258 30% 88%;
-  --secondary-foreground: var(--ink);
-  --muted: 32 28% 88%;
-  --muted-foreground: 285 6% 40%;
-  --accent: var(--jade);
-  --accent-foreground: 36 60% 97%;
+  --foreground: var(--cocoa);
+  --border: 20 25% 82%;
+  --card: var(--paper);
+  --card-foreground: var(--cocoa);
+  --card-border: 20 25% 82%;
+  --sidebar: var(--cocoa);
+  --sidebar-foreground: var(--paper);
+  --sidebar-border: 12 15% 32%;
+  --sidebar-primary: var(--coral);
+  --sidebar-primary-foreground: var(--cocoa);
+  --sidebar-accent: 12 15% 30%;
+  --sidebar-accent-foreground: var(--paper);
+  --sidebar-ring: var(--coral-deep);
+  --popover: var(--paper);
+  --popover-foreground: var(--cocoa);
+  --popover-border: 20 25% 82%;
+  --primary: var(--coral-deep);
+  --primary-foreground: var(--paper);
+  --secondary: var(--peach);
+  --secondary-foreground: var(--cocoa);
+  --muted: 30 45% 90%;
+  --muted-foreground: 12 12% 40%;
+  --accent: var(--mint-deep);
+  --accent-foreground: var(--paper);
   --destructive: 0 63% 48%;
-  --destructive-foreground: 36 60% 97%;
-  --input: 30 18% 80%;
-  --ring: var(--rose);
-  --chart-1: var(--rose);
-  --chart-2: var(--jade);
-  --chart-3: var(--lilac);
-  --chart-4: 35 70% 55%;
-  --chart-5: var(--ink);
+  --destructive-foreground: var(--paper);
+  --input: 20 25% 82%;
+  --ring: var(--coral-deep);
+  --chart-1: var(--coral);
+  --chart-2: var(--mint-deep);
+  --chart-3: var(--lavender-deep);
+  --chart-4: var(--peach);
+  --chart-5: var(--cocoa);
   --app-font-sans: 'Be Vietnam Pro', 'DM Sans', sans-serif;
-  --app-font-serif: 'Instrument Serif', Georgia, serif;
+  /* Fraunces doubles as the album-cover display face and covers Vietnamese diacritics. */
+  --app-font-serif: 'Fraunces', Georgia, serif;
   --app-font-mono: 'DM Mono', monospace;
-  /* Vietnamese words need full diacritic coverage (ị, ả, à…), which Instrument Serif lacks. */
-  --app-font-viet: 'Fraunces', 'Instrument Serif', Georgia, serif;
+  --app-font-viet: var(--app-font-serif);
   --radius: 0.35rem;
   --shadow-2xs: 0px 2px 0px 0px hsl(202.8169 89.1213% 53.1373% / 0); /*replace with H S L */
   --shadow-xs: 0px 2px 0px 0px hsl(202.8169 89.1213% 53.1373% / 0); /*replace with H S L */
@@ -421,6 +433,7 @@ body {
 
 .font-display {
   font-family: var(--app-font-serif);
+  font-variation-settings: 'SOFT' 100;
 }
 
 .font-mono {
@@ -497,17 +510,73 @@ body {
   pointer-events: none;
 }
 
-/* ---------- Hero ---------- */
+/* ---------- Little Rhythm: shared music motifs ---------- */
+
+/* Vinyl: grooves are a repeating radial gradient, so a record costs no images. */
+.vinyl {
+  /* No position here: unlayered CSS would override Tailwind's absolute/relative utilities. */
+  background:
+    radial-gradient(circle at 32% 28%, hsl(var(--cream) / 0.16), transparent 34%),
+    repeating-radial-gradient(circle, hsl(var(--cocoa)) 0 2px, hsl(12 20% 30%) 2px 3px),
+    hsl(var(--cocoa));
+  box-shadow: 0 18px 40px -22px hsl(var(--cocoa) / 0.8);
+}
+
+.vinyl-spin {
+  animation: vinyl-spin 18s linear infinite;
+}
+
+@keyframes vinyl-spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Three-bar equalizer glyph; it only dances while its group is hovered or focused. */
+.eq-icon {
+  display: inline-block;
+  width: 12px;
+  height: 10px;
+  background:
+    linear-gradient(currentColor, currentColor) 0 100% / 3px 60% no-repeat,
+    linear-gradient(currentColor, currentColor) 50% 100% / 3px 100% no-repeat,
+    linear-gradient(currentColor, currentColor) 100% 100% / 3px 40% no-repeat;
+}
+
+.monogram-sheen {
+  transform-origin: 20px 20px;
+  transition: transform 900ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.group:hover .monogram-sheen,
+.group:focus-visible .monogram-sheen {
+  transform: rotate(360deg);
+}
+
+/* ---------- Hero: album cover ---------- */
 
 .hero-stage {
   background:
-    radial-gradient(ellipse 60% 50% at 85% 10%, hsl(var(--lilac) / 0.09), transparent 70%),
-    radial-gradient(ellipse 50% 40% at 0% 70%, hsl(var(--rose) / 0.07), transparent 70%);
+    radial-gradient(ellipse 55% 50% at 88% 18%, hsl(var(--peach) / 0.55), transparent 70%),
+    radial-gradient(ellipse 45% 40% at 0% 70%, hsl(var(--mint) / 0.18), transparent 70%);
 }
 
-.hero-spotlight {
-  background: radial-gradient(circle, hsl(var(--rose) / 0.16) 0%, hsl(var(--lilac) / 0.08) 38%, transparent 68%);
-  will-change: transform, opacity;
+.album-sleeve {
+  container-type: inline-size;
+  box-shadow:
+    0 1px 0 hsl(var(--paper)) inset,
+    0 30px 60px -34px hsl(var(--cocoa) / 0.55);
+}
+
+.album-sheen {
+  background: radial-gradient(circle, hsl(var(--paper) / 0.35), transparent 62%);
+  mix-blend-mode: soft-light;
+}
+
+.vinyl-slot {
+  transition: transform 700ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.album:hover .vinyl-slot {
+  transform: translateX(9%);
 }
 
 .kinetic-word {
@@ -515,35 +584,114 @@ body {
   -webkit-tap-highlight-color: transparent;
 }
 
-.stage-floor {
-  background:
-    radial-gradient(ellipse 70% 45% at 50% 0%, hsl(var(--rose) / 0.22), transparent 70%),
-    radial-gradient(circle, hsl(var(--cream) / 0.08) 1px, transparent 1.4px) 0 0 / 18px 18px;
-  mask-image: linear-gradient(to bottom, black 40%, transparent 100%);
-}
-
-.beat-bar {
-  transform-origin: bottom;
+.np-bar {
   transform: scaleY(var(--s, 0.4));
   transition: transform 220ms cubic-bezier(0.22, 1, 0.36, 1);
   animation: bar-in 900ms cubic-bezier(0.22, 1, 0.36, 1) backwards;
-  animation-delay: calc(var(--i) * 28ms + 650ms);
+  animation-delay: calc(var(--i) * 14ms + 500ms);
 }
 
-.beat-strip[data-wave='0'] .beat-bar { animation: bar-wave-a 650ms ease-out backwards; animation-delay: calc(var(--i) * 22ms); }
-.beat-strip[data-wave='1'] .beat-bar { animation: bar-wave-b 650ms ease-out backwards; animation-delay: calc(var(--i) * 22ms); }
+/* Hovering or focusing a hero CTA "presses play": the waveform breathes until you leave.
+   It animates the separate `scale` property and keeps bar-in in the list, so leaving
+   doesn't restart the entrance animation. */
+.now-playing[data-hot] .np-bar {
+  animation:
+    bar-in 900ms cubic-bezier(0.22, 1, 0.36, 1) backwards,
+    np-breathe 700ms ease-in-out infinite alternate;
+  animation-delay: calc(var(--i) * 14ms + 500ms), calc(var(--i) * -37ms);
+}
+
+.now-playing[data-hot] .eq-icon,
+.track:hover .eq-icon,
+.track:focus-within .eq-icon {
+  animation: eq-dance 520ms ease-in-out infinite alternate;
+}
 
 @keyframes bar-in {
   from { transform: scaleY(0.04); }
 }
 
-@keyframes bar-wave-a {
-  40% { transform: scaleY(1); }
+@keyframes np-breathe {
+  from { scale: 1 0.55; }
+  to { scale: 1 1.3; }
 }
 
-@keyframes bar-wave-b {
-  40% { transform: scaleY(1); }
+@keyframes eq-dance {
+  from { background-size: 3px 30%, 3px 90%, 3px 60%; }
+  to { background-size: 3px 90%, 3px 40%, 3px 100%; }
 }
+
+/* ---------- Projects: tracklist ---------- */
+
+.track::before {
+  content: '';
+  position: absolute;
+  inset: 0 -20px;
+  z-index: -1;
+  background: linear-gradient(90deg, hsl(var(--peach) / 0.5), hsl(var(--peach) / 0.15) 70%, transparent);
+  opacity: 0;
+  transition: opacity 400ms ease;
+}
+
+.track-cover,
+.track-vinyl,
+.track-title {
+  transition: transform 650ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.track-wave {
+  transform: scaleX(0);
+  transition: transform 700ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.track:hover::before,
+.track:focus-within::before { opacity: 1; }
+.track:hover .track-cover,
+.track:focus-within .track-cover { transform: translateY(-6px) rotate(-2deg); }
+.track:hover .track-vinyl,
+.track:focus-within .track-vinyl { transform: translateX(14%) rotate(140deg); }
+.track:hover .track-title,
+.track:focus-within .track-title { transform: translateX(6px); }
+.track:hover .track-wave,
+.track:focus-within .track-wave { transform: scaleX(1); }
+
+.liner-thumb img { transition: transform 400ms ease; }
+.liner-thumb:hover img,
+.liner-thumb:focus-visible img { transform: scale(1.08); }
+
+/* Cover motifs: each plays once per hover, then rests. */
+.cover-bar, .cover-ring, .cover-tile, .cover-slide, .cover-column, .cover-gear, .cover-lens, .cover-beam {
+  transform-box: fill-box;
+  transform-origin: center;
+}
+.cover-column { transform-origin: bottom; }
+
+.cover-traveler {
+  offset-path: path('M40 140 C 75 140, 70 92, 104 92 S 140 46, 162 46');
+  offset-distance: 0%;
+  offset-rotate: 0deg;
+  opacity: 0;
+}
+
+.track:hover .cover-bar, .track:focus-within .cover-bar { animation: cover-bounce 480ms ease-in-out 2 alternate; }
+.track:hover .cover-ring, .track:focus-within .cover-ring { animation: cover-pulse 900ms ease-out 2; }
+.track:hover .cover-beam, .track:focus-within .cover-beam { animation: cover-flash 900ms ease-in-out; }
+.track:hover .cover-traveler, .track:focus-within .cover-traveler { animation: cover-travel 1400ms cubic-bezier(0.65, 0, 0.35, 1) forwards; }
+.track:hover .cover-tile, .track:focus-within .cover-tile { animation: cover-pop 500ms ease-out; }
+.track:hover .cover-gear, .track:focus-within .cover-gear { animation: cover-turn 1200ms cubic-bezier(0.22, 1, 0.36, 1); }
+.track:hover .cover-slide, .track:focus-within .cover-slide { animation: cover-deal 600ms cubic-bezier(0.22, 1, 0.36, 1) backwards; }
+.track:hover .cover-column, .track:focus-within .cover-column { animation: cover-grow 700ms cubic-bezier(0.22, 1, 0.36, 1) backwards; }
+.track:hover .cover-lens, .track:focus-within .cover-lens { animation: cover-scan 1200ms ease-in-out; }
+
+@keyframes cover-bounce { to { transform: scaleY(1.45); } }
+@keyframes cover-pulse { from { transform: scale(0.6); opacity: 0; } }
+@keyframes cover-flash { 50% { opacity: 0.35; } }
+@keyframes cover-travel { 10% { opacity: 1; } 100% { offset-distance: 100%; opacity: 1; } }
+@keyframes cover-pop { 50% { transform: scale(0.82); } }
+@keyframes cover-turn { to { transform: rotate(180deg); } }
+@keyframes cover-deal { from { transform: translate(-14px, -14px) rotate(-6deg); opacity: 0; } }
+@keyframes cover-grow { from { transform: scaleY(0.2); } }
+@keyframes cover-scan { 50% { transform: translateX(-60px); } }
 
 /* ---------- Creative side ---------- */
 
@@ -565,5 +713,12 @@ body {
     transition-duration: 0.01ms !important;
   }
   .reveal { opacity: 1; transform: none; }
-  .beat-bar { animation: none !important; }
+  /* Turn off infinite loops outright; shortening them would make them flicker. */
+  .vinyl-spin,
+  .np-bar,
+  .eq-icon,
+  .now-playing[data-hot] .np-bar { animation: none !important; }
+  .album:hover .vinyl-slot,
+  .track:hover .track-vinyl,
+  .track:hover .track-cover { transform: none; }
 }

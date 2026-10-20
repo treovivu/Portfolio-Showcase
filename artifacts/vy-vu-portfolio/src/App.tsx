@@ -11,7 +11,6 @@ import {
   Mail,
   Maximize2,
   Menu,
-  MoveUpRight,
   Sparkles,
   Trophy,
   X,
@@ -34,37 +33,11 @@ import nsdcWorkshop from '@assets/nsdc-workshop.png';
 import nsdcKickoff from '@assets/nsdc-kickoff-2026.png';
 import nsdcCocaColaVisit from '@assets/nsdc-coca-cola-visit.png';
 import { CreativeSide } from '@/components/creative-side';
+import { Monogram } from '@/components/monogram';
+import { ProjectAction, Tracklist } from '@/components/tracklist';
 import { HeroStage } from '@/components/hero-stage';
 import { external, links } from '@/lib/site';
-
-type MediaItem = {
-  id: string;
-  label: string;
-  caption: string;
-  alt: string;
-  src?: string;
-};
-
-type ProjectLink = {
-  label: string;
-  url: string;
-};
-
-type ProjectDetail = {
-  number: string;
-  title: string;
-  role: string;
-  organization: string;
-  period: string;
-  description: string;
-  highlights: string[];
-  skills: string[];
-  tone: 'blue' | 'paper' | 'ink';
-  media: MediaItem[];
-  featured?: boolean;
-  award?: string;
-  links?: ProjectLink[];
-};
+import type { MediaItem, ProjectDetail } from '@/lib/types';
 
 const navItems = [
   { label: 'Home', href: '#top' },
@@ -112,7 +85,7 @@ const work: ProjectDetail[] = [
       'Integrated Nova, an ElevenLabs AI voice agent that controls concert lighting, visual intensity, and sensory preferences such as reduced motion through natural-language commands.',
     ],
     skills: ['React', 'TypeScript', 'Python', 'watchOS / Swift', 'ElevenLabs', 'Accessibility'],
-    tone: 'ink',
+    cover: 'aurabeat',
     featured: true,
     links: [
       { label: 'GitHub', url: 'https://github.com/treovivu/AuraBeat/tree/nova-elevenlabs' },
@@ -139,7 +112,7 @@ const work: ProjectDetail[] = [
       'Integrated ElevenLabs AI voice assistance, designed customizable UI themes, and used Git/GitHub to merge independently developed features with teammates’ contributions.',
     ],
     skills: ['Auth0 (OAuth)', 'Google Maps API', 'ElevenLabs', 'JavaScript', 'HTML/CSS', 'Git/GitHub'],
-    tone: 'blue',
+    cover: 'herbuddy',
     featured: true,
     award: 'MLH Best Use of Auth0 Winner',
     links: [
@@ -170,7 +143,7 @@ const work: ProjectDetail[] = [
       'Conducted outreach to approximately 10 prospective speakers, documenting company information, presentation topics, and business interests to support exhibition planning.',
     ],
     skills: ['Squarespace', 'Web Design', 'Video Production', 'Stakeholder Outreach', 'Presentation'],
-    tone: 'paper',
+    cover: 'vimf',
     links: [{ label: 'Website', url: 'https://porpoise-star-y6kf.squarespace.com/' }],
     media: [
       { id: 'vimf-cover', label: 'VIMF cover image', caption: 'Vietnam Industrial & Manufacturing Fair promotional banner.', alt: 'Vietnam Industrial and Manufacturing Fair promotional banner with manufacturing event dates and robotics imagery', src: vimfCover },
@@ -189,7 +162,7 @@ const work: ProjectDetail[] = [
       'Directed the collaborative creation and testing of 100 interactive PowerPoint slides featuring Morse code challenges, scavenger hunts, and music quizzes.',
     ],
     skills: ['Microsoft Excel', 'Leadership', 'Team Coordination', 'Presentation Design', 'Event Planning'],
-    tone: 'blue',
+    cover: 'halloween',
     media: [],
   },
   {
@@ -205,7 +178,7 @@ const work: ProjectDetail[] = [
       'Developed an Excel-based event tracker and coordinated room reservation requests, event logistics, and student-facing communications.',
     ],
     skills: ['Event Coordination', 'Microsoft Excel', 'Communication', 'Logistics'],
-    tone: 'paper',
+    cover: 'nsdc',
     media: [
       { id: 'nsdc-scavenger-hunt', label: 'SQL Scavenger Hunt', caption: '“Where is NSDC Trophy??” — a SQL scavenger hunt event.', alt: 'Group photo of NSDC members in front of a screen reading “Where is NSDC Trophy?? SQL Scavenger Hunt”', src: nsdcScavengerHunt },
       { id: 'nsdc-workshop', label: 'Workshop', caption: 'Students working through a hands-on NSDC session.', alt: 'Students working on laptops at classroom tables during an NSDC session', src: nsdcWorkshop },
@@ -251,27 +224,6 @@ function MediaPlaceholder({
         <Maximize2 size={12} /> View full size
       </span>
     </button>
-  );
-}
-
-function ProjectAction({
-  label,
-  url,
-  tone = 'paper',
-}: {
-  label: string;
-  url: string;
-  tone?: ProjectDetail['tone'];
-}) {
-  return (
-    <a
-      href={url}
-      {...external}
-      className={`inline-flex items-center gap-2 border px-3 py-2 font-mono text-[10px] uppercase tracking-[0.11em] transition-colors hover:border-primary hover:bg-primary hover:text-primary-foreground ${tone === 'ink' ? 'border-background/25' : 'border-foreground/20'}`}
-      data-testid={`link-project-${label.toLowerCase().replaceAll(' ', '-')}`}
-    >
-      {label} <ArrowUpRight size={13} />
-    </a>
   );
 }
 
@@ -327,9 +279,7 @@ function App() {
       >
         <div className="mx-auto flex h-[72px] max-w-[1280px] items-center justify-between px-5 md:px-10">
           <a href="#top" className="group flex items-center gap-3" data-testid="link-logo">
-            <span className="flex h-9 w-9 items-center justify-center bg-foreground text-background font-mono text-xs font-medium transition-transform duration-300 group-hover:rotate-12">
-              VV
-            </span>
+            <Monogram className="monogram h-10 w-10" />
             <span className="hidden text-sm font-semibold tracking-[-0.02em] sm:block">
               Vy Vu<span className="text-primary">.</span>
             </span>
@@ -493,87 +443,7 @@ function App() {
         </div>
       </section>
 
-      <section id="work" className="scroll-mt-24">
-        <div className="mx-auto max-w-[1280px] px-5 py-28 md:px-10 md:py-40">
-          <div className="reveal flex flex-col justify-between gap-6 md:flex-row md:items-end">
-            <div>
-              <p className="font-mono text-[10px] uppercase tracking-[0.17em] text-primary">05 / selected work</p>
-              <h2 className="mt-5 text-5xl leading-[.9] tracking-[-0.055em] md:text-8xl">Work in<br /><span className="font-display font-normal italic">progress.</span></h2>
-            </div>
-            <p className="max-w-[290px] text-sm leading-[1.6] text-foreground/60 md:pb-2">Products I&apos;ve built and experiences that taught me to lead, coordinate, and ship.</p>
-          </div>
-
-          <div className="mt-16 space-y-5">
-            {work.map((project, index) => (
-              <article
-                key={project.number}
-                className={`reveal reveal-delay-${(index % 3) + 1} group relative grid gap-8 border p-6 transition-transform duration-500 hover:-translate-y-1 md:grid-cols-[100px_1fr_1.05fr] md:gap-10 md:p-9 ${project.tone === 'ink' ? 'border-foreground/15 bg-foreground text-background' : project.tone === 'blue' ? 'border-foreground/15 bg-[#d7e4eb]' : 'border-foreground/15 bg-card'} ${project.featured ? 'border-primary/60 shadow-[6px_6px_0_hsl(var(--primary)/.16)]' : ''}`}
-                data-testid={`card-project-${project.number}`}
-              >
-                <div className="flex items-start justify-between md:block">
-                  <span className={`font-mono text-[10px] ${project.tone === 'ink' ? 'text-primary' : 'text-primary'}`}>{project.number}</span>
-                  <MoveUpRight size={18} className="text-primary md:mt-10" />
-                </div>
-                <div>
-                  {project.media[0] && <MediaPlaceholder item={project.media[0]} className="mb-6" onOpen={setLightboxItem} />}
-                  <p className={`font-mono text-[9px] uppercase tracking-[0.15em] ${project.tone === 'ink' ? 'text-background/55' : 'text-foreground/50'}`}>{project.role}</p>
-                  <h3 className="mt-4 max-w-[420px] text-3xl leading-[.96] tracking-[-0.045em] md:text-5xl">{project.title}</h3>
-                  {project.award && (
-                    <div className="mt-5 inline-flex items-center gap-3 bg-primary px-4 py-3 text-primary-foreground shadow-[4px_4px_0_hsl(var(--foreground)/.12)]" data-testid="text-project-award">
-                      <Trophy size={20} strokeWidth={1.6} className="shrink-0" />
-                      <span>
-                        <span className="block font-mono text-[9px] uppercase tracking-[0.14em] text-primary-foreground/70">Winner</span>
-                        <span className="block text-base font-medium leading-tight tracking-[-0.01em]">{project.award.replace(/ Winner$/, '')}</span>
-                      </span>
-                    </div>
-                  )}
-                  <p className={`mt-5 text-sm leading-[1.5] ${project.tone === 'ink' ? 'text-background/60' : 'text-foreground/60'}`}>{project.organization}</p>
-                  <p className={`mt-1 font-mono text-[9px] uppercase tracking-[0.12em] ${project.tone === 'ink' ? 'text-background/45' : 'text-foreground/45'}`}>{project.period}</p>
-                </div>
-                <div className="flex flex-col justify-between">
-                  <div>
-                    {project.featured && (
-                      <div className="mb-5 inline-flex items-center gap-2 bg-primary px-2.5 py-1.5 font-mono text-[9px] uppercase tracking-[0.12em] text-primary-foreground" data-testid="badge-featured-project">
-                        {project.award ? <><Trophy size={11} /> Award winner</> : <><Sparkles size={11} /> Featured project</>}
-                      </div>
-                    )}
-                    <p className={`text-sm leading-[1.7] ${project.tone === 'ink' ? 'text-background/70' : 'text-foreground/65'}`}>{project.description}</p>
-                  </div>
-                  <div className="mt-7 flex flex-wrap gap-2">
-                    {project.skills.map((skill) => (
-                      <span key={skill} className={`border px-2.5 py-1 font-mono text-[9px] uppercase tracking-[0.06em] ${project.tone === 'ink' ? 'border-background/20 text-background/65' : 'border-foreground/15 text-foreground/55'}`}>{skill}</span>
-                    ))}
-                  </div>
-                  {project.links && project.links.length > 0 && (
-                    <div className="mt-7 flex flex-wrap gap-2" data-testid="project-actions">
-                      {project.links.map((link) => <ProjectAction key={link.label} label={link.label} url={link.url} tone={project.tone} />)}
-                    </div>
-                  )}
-                  <button type="button" onClick={() => setActiveProject(project)} className="mt-7 inline-flex items-center gap-2 self-start font-mono text-[10px] uppercase tracking-[0.13em] text-primary" data-testid={`button-project-${project.number}`}>
-                    View project <ArrowUpRight size={14} />
-                  </button>
-                </div>
-              </article>
-            ))}
-          </div>
-
-          <article className="reveal mt-5 grid gap-8 overflow-hidden border border-primary/35 bg-primary p-7 text-primary-foreground md:grid-cols-[.8fr_1.2fr] md:p-10" data-testid="card-project-vivu-notes">
-            <div>
-              <p className="font-mono text-[9px] uppercase tracking-[0.15em] text-primary-foreground/65">06 / personal publication</p>
-              <h3 className="mt-5 font-display text-5xl italic leading-[.9] md:text-7xl">ViVu Notes</h3>
-              <p className="mt-4 font-mono text-[10px] uppercase tracking-[0.13em] text-primary-foreground/72">Notes on books, data, and becoming.</p>
-            </div>
-            <div className="flex flex-col justify-between">
-              <p className="max-w-[560px] text-xl leading-[1.2] tracking-[-0.02em]">
-                My personal publication where I write about books, lessons from studying abroad, personal growth, data, and ideas I&apos;m learning along the way.
-              </p>
-              <a href={links.notes} {...external} className="mt-8 inline-flex items-center gap-3 self-start border border-primary-foreground/35 px-4 py-3 font-mono text-[10px] uppercase tracking-[0.13em] transition-colors hover:bg-primary-foreground hover:text-primary" data-testid="link-vivu-notes-work">
-                Read ViVu Notes <ArrowUpRight size={14} />
-              </a>
-            </div>
-          </article>
-        </div>
-      </section>
+      <Tracklist work={work} onOpenProject={setActiveProject} onOpenMedia={setLightboxItem} />
 
       <section id="writing" className="mx-auto max-w-[1280px] scroll-mt-24 px-5 py-28 md:px-10 md:py-40">
         <div className="grid gap-14 lg:grid-cols-[.82fr_1.18fr] lg:gap-24">
