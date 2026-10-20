@@ -1,7 +1,9 @@
 import { createRoot } from 'react-dom/client';
+import { LazyMotion, MotionConfig, domAnimation } from 'framer-motion';
 
 import App from './App';
 import { ErrorBoundary } from '@/components/error-boundary';
+import { SoundtrackProvider } from '@/components/soundtrack';
 
 import './index.css';
 
@@ -12,6 +14,13 @@ createRoot(document.getElementById('root')!, {
   },
 }).render(
   <ErrorBoundary>
-    <App />
+    {/* domAnimation keeps the motion bundle small; reducedMotion="user" honours prefers-reduced-motion. */}
+    <LazyMotion features={domAnimation} strict>
+      <MotionConfig reducedMotion="user">
+        <SoundtrackProvider>
+          <App />
+        </SoundtrackProvider>
+      </MotionConfig>
+    </LazyMotion>
   </ErrorBoundary>,
 );
