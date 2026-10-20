@@ -15,6 +15,7 @@ import {
   Menu,
   MoveUpRight,
   Sparkles,
+  Trophy,
   X,
 } from 'lucide-react';
 import personalPhoto from '@assets/IMG_4981_1789411105954.JPG';
@@ -150,6 +151,7 @@ const work: ProjectDetail[] = [
     links: [
       { label: 'Live Demo', url: 'https://her-buddy.vercel.app' },
       { label: 'GitHub', url: 'https://github.com/1Cazarez/HerBuddy' },
+      { label: 'Devpost', url: 'https://devpost.com/software/her-buddy' },
     ],
     media: [
       { id: 'herbuddy-cover', label: 'Project screenshot', caption: 'HerBuddy campus support dashboard with safety and wellness tools.', alt: 'HerBuddy campus support dashboard showing route matching, wellness summary, and safety check-in', src: herBuddyCover },
@@ -575,7 +577,7 @@ function App() {
               >
                 {project.featured && (
                   <div className="absolute right-5 top-5 flex items-center gap-2 bg-primary px-2.5 py-1.5 font-mono text-[9px] uppercase tracking-[0.12em] text-primary-foreground md:right-9 md:top-9" data-testid="badge-featured-project">
-                    <Sparkles size={11} /> Featured project
+                    {project.award ? <><Trophy size={11} /> Award winner</> : <><Sparkles size={11} /> Featured project</>}
                   </div>
                 )}
                 <div className="flex items-start justify-between md:block">
@@ -587,8 +589,12 @@ function App() {
                   <p className={`font-mono text-[9px] uppercase tracking-[0.15em] ${project.tone === 'ink' ? 'text-background/55' : 'text-foreground/50'}`}>{project.role}</p>
                   <h3 className="mt-4 max-w-[420px] text-3xl leading-[.96] tracking-[-0.045em] md:text-5xl">{project.title}</h3>
                   {project.award && (
-                    <div className="mt-5 inline-flex items-center gap-2 border border-primary/45 bg-primary/10 px-3 py-2 font-mono text-[9px] uppercase tracking-[0.1em] text-primary" data-testid="text-project-award">
-                      <Sparkles size={12} /> {project.award}
+                    <div className="mt-5 inline-flex items-center gap-3 bg-primary px-4 py-3 text-primary-foreground shadow-[4px_4px_0_hsl(var(--foreground)/.12)]" data-testid="text-project-award">
+                      <Trophy size={20} strokeWidth={1.6} className="shrink-0" />
+                      <span>
+                        <span className="block font-mono text-[9px] uppercase tracking-[0.14em] text-primary-foreground/70">Winner</span>
+                        <span className="block text-base font-medium leading-tight tracking-[-0.01em]">{project.award.replace(/ Winner$/, '')}</span>
+                      </span>
                     </div>
                   )}
                   <p className={`mt-5 text-sm leading-[1.5] ${project.tone === 'ink' ? 'text-background/60' : 'text-foreground/60'}`}>{project.organization}</p>
@@ -686,6 +692,17 @@ function App() {
                   <p className="mt-2 text-sm text-background/60">3 semesters · GPA 4.05</p>
                 </div>
               </div>
+              <a href="https://devpost.com/software/her-buddy" {...external} className="group flex items-center gap-5 border-b border-background/20 py-7" data-testid="link-achievement-award">
+                <span className="flex h-12 w-12 shrink-0 items-center justify-center bg-primary text-primary-foreground">
+                  <Trophy size={22} strokeWidth={1.6} />
+                </span>
+                <span className="flex-1">
+                  <span className="block font-mono text-[9px] uppercase tracking-[0.15em] text-primary">Hackathon award · HackHERS 2026</span>
+                  <span className="mt-2 block text-2xl tracking-[-0.03em] transition-colors group-hover:text-primary">MLH Best Use of Auth0 Winner</span>
+                  <span className="mt-1 block text-sm text-background/60">HerBuddy, a campus safety app</span>
+                </span>
+                <ArrowUpRight size={18} className="shrink-0 text-background/40 transition-transform group-hover:-translate-y-1 group-hover:translate-x-1 group-hover:text-primary" />
+              </a>
               <div className="border-b border-background/20 py-7">
                 <p className="font-mono text-[9px] uppercase tracking-[0.15em] text-primary">Concentrations</p>
                 <div className="mt-5 flex flex-wrap gap-3">
@@ -811,8 +828,8 @@ function App() {
                   <h2 className="mt-4 max-w-[760px] text-4xl leading-[.92] tracking-[-0.05em] md:text-7xl">{activeProject.title}</h2>
                   <p className="mt-4 text-sm text-foreground/55">{activeProject.organization} · {activeProject.period}</p>
                    {activeProject.award && (
-                     <div className="mt-5 inline-flex items-center gap-2 border border-primary/45 bg-primary/10 px-3 py-2 font-mono text-[9px] uppercase tracking-[0.1em] text-primary" data-testid="detail-project-award">
-                       <Sparkles size={12} /> {activeProject.award}
+                     <div className="mt-5 inline-flex items-center gap-2 bg-primary px-3 py-2 font-mono text-[10px] uppercase tracking-[0.1em] text-primary-foreground" data-testid="detail-project-award">
+                       <Trophy size={13} /> {activeProject.award}
                      </div>
                    )}
                 </div>
