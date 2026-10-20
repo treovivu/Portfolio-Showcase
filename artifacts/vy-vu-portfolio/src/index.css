@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=DM+Mono:wght@400;500&family=Fraunces:ital,opsz,wght,SOFT@1,9..144,300..500,100&family=Instrument+Serif:ital@0;1&display=swap');
 @import 'tailwindcss';
 @import 'tw-animate-css';
 @plugin "@tailwindcss/typography";
@@ -79,43 +79,52 @@
   --elevate-1: rgba(0, 0, 0, 0.03);
   --elevate-2: rgba(0, 0, 0, 0.08);
 
-  --background: 42 32% 93%;
-  --foreground: 224 28% 16%;
-  --border: 220 16% 78%;
-  --card: 42 36% 97%;
-  --card-foreground: 224 28% 16%;
-  --card-border: 220 16% 78%;
-  --sidebar: 224 28% 16%;
-  --sidebar-foreground: 42 36% 97%;
-  --sidebar-border: 224 20% 25%;
-  --sidebar-primary: 8 78% 58%;
-  --sidebar-primary-foreground: 42 36% 97%;
-  --sidebar-accent: 224 22% 23%;
-  --sidebar-accent-foreground: 42 36% 97%;
-  --sidebar-ring: 8 78% 58%;
-  --popover: 42 36% 97%;
-  --popover-foreground: 224 28% 16%;
-  --popover-border: 220 16% 78%;
-  --primary: 207 42% 45%;
-  --primary-foreground: 42 36% 97%;
-  --secondary: 195 32% 82%;
-  --secondary-foreground: 224 28% 16%;
-  --muted: 42 18% 86%;
-  --muted-foreground: 224 12% 43%;
-  --accent: 195 38% 48%;
-  --accent-foreground: 224 28% 16%;
+  /* Nhịp palette: cream #F8F1E8, ink #302A32, lacquer rose #BA5261, jade #287E69, lilac #7A62B4 */
+  --cream: 34 53% 94%;
+  --ink: 285 9% 18%;
+  --rose: 351 43% 53%;
+  --jade: 165 52% 33%;
+  --lilac: 258 35% 55%;
+
+  --background: var(--cream);
+  --foreground: var(--ink);
+  --border: 30 18% 80%;
+  --card: 36 60% 97%;
+  --card-foreground: var(--ink);
+  --card-border: 30 18% 80%;
+  --sidebar: var(--ink);
+  --sidebar-foreground: 36 60% 97%;
+  --sidebar-border: 285 8% 26%;
+  --sidebar-primary: var(--rose);
+  --sidebar-primary-foreground: 36 60% 97%;
+  --sidebar-accent: 285 8% 24%;
+  --sidebar-accent-foreground: 36 60% 97%;
+  --sidebar-ring: var(--rose);
+  --popover: 36 60% 97%;
+  --popover-foreground: var(--ink);
+  --popover-border: 30 18% 80%;
+  --primary: var(--rose);
+  --primary-foreground: 36 60% 97%;
+  --secondary: 258 30% 88%;
+  --secondary-foreground: var(--ink);
+  --muted: 32 28% 88%;
+  --muted-foreground: 285 6% 40%;
+  --accent: var(--jade);
+  --accent-foreground: 36 60% 97%;
   --destructive: 0 63% 48%;
-  --destructive-foreground: 42 36% 97%;
-  --input: 220 16% 78%;
-  --ring: 8 78% 58%;
-  --chart-1: 207 42% 45%;
-  --chart-2: 195 38% 48%;
-  --chart-3: 224 28% 16%;
+  --destructive-foreground: 36 60% 97%;
+  --input: 30 18% 80%;
+  --ring: var(--rose);
+  --chart-1: var(--rose);
+  --chart-2: var(--jade);
+  --chart-3: var(--lilac);
   --chart-4: 35 70% 55%;
-  --chart-5: 160 35% 44%;
-  --app-font-sans: 'DM Sans', sans-serif;
+  --chart-5: var(--ink);
+  --app-font-sans: 'Be Vietnam Pro', 'DM Sans', sans-serif;
   --app-font-serif: 'Instrument Serif', Georgia, serif;
   --app-font-mono: 'DM Mono', monospace;
+  /* Vietnamese words need full diacritic coverage (ị, ả, à…), which Instrument Serif lacks. */
+  --app-font-viet: 'Fraunces', 'Instrument Serif', Georgia, serif;
   --radius: 0.35rem;
   --shadow-2xs: 0px 2px 0px 0px hsl(202.8169 89.1213% 53.1373% / 0); /*replace with H S L */
   --shadow-xs: 0px 2px 0px 0px hsl(202.8169 89.1213% 53.1373% / 0); /*replace with H S L */
@@ -209,15 +218,15 @@
   --sidebar: 224 28% 10%;
   --sidebar-foreground: 42 36% 97%;
   --sidebar-border: 224 18% 20%;
-  --sidebar-primary: 8 78% 62%;
+  --sidebar-primary: 351 48% 64%;
   --sidebar-primary-foreground: 224 28% 12%;
   --sidebar-accent: 224 22% 19%;
   --sidebar-accent-foreground: 42 36% 97%;
-  --sidebar-ring: 8 78% 62%;
+  --sidebar-ring: 351 48% 64%;
   --popover: 224 24% 16%;
   --popover-foreground: 42 36% 97%;
   --popover-border: 224 18% 27%;
-  --primary: 207 42% 58%;
+  --primary: 351 48% 64%;
   --primary-foreground: 224 28% 12%;
   --secondary: 195 24% 26%;
   --secondary-foreground: 42 36% 97%;
@@ -230,7 +239,7 @@
 
   /* Used as the border around inputs. Dark mode: Should be a border that is light enough to have high contrast when rendered on a --card background. More contrast than standard --border */
   --input: 224 18% 27%;
-  --ring: 8 78% 62%;
+  --ring: 351 48% 64%;
   --chart-1: 207 42% 58%;
   --chart-2: 195 38% 55%;
   --chart-3: 42 36% 97%;
@@ -458,23 +467,6 @@ body {
   transform: scaleX(1);
 }
 
-.project-visual {
-  background: #17202f;
-  background-image:
-    linear-gradient(125deg, transparent 20%, hsl(207 42% 58% / 0.1) 20%, transparent 45%),
-    radial-gradient(circle at 74% 42%, hsl(195 55% 55% / 0.3), transparent 14rem),
-    linear-gradient(145deg, #17202f 0%, #263b4c 100%);
-}
-
-.project-visual::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background-image: linear-gradient(hsl(42 36% 97% / 0.055) 1px, transparent 1px), linear-gradient(90deg, hsl(42 36% 97% / 0.055) 1px, transparent 1px);
-  background-size: 28px 28px;
-  mask-image: linear-gradient(to bottom right, black, transparent 78%);
-}
-
 .media-placeholder-grid {
   background-image:
     linear-gradient(hsl(var(--foreground) / 0.06) 1px, transparent 1px),
@@ -483,22 +475,87 @@ body {
   mask-image: linear-gradient(to bottom right, black, transparent 78%);
 }
 
-.orbit {
-  animation: orbit 16s linear infinite;
-  transform-origin: center;
+/* ---------- Nhịp: shared details ---------- */
+
+.font-viet {
+  font-family: var(--app-font-viet);
+  font-variation-settings: 'SOFT' 100;
 }
 
-.float-slow {
-  animation: float-slow 7s ease-in-out infinite;
+:focus-visible {
+  outline: 2px solid hsl(var(--ring));
+  outline-offset: 3px;
 }
 
-@keyframes orbit {
-  to { transform: rotate(360deg); }
+/* A strip of translucent washi tape: the scrapbook accent. */
+.scrap-tape {
+  background:
+    repeating-linear-gradient(90deg, hsl(var(--cream) / 0.35) 0 2px, transparent 2px 6px),
+    hsl(var(--lilac) / 0.32);
+  box-shadow: 0 1px 2px hsl(var(--ink) / 0.08);
+  clip-path: polygon(2% 0, 98% 6%, 100% 94%, 0 100%);
+  pointer-events: none;
 }
 
-@keyframes float-slow {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-9px); }
+/* ---------- Hero ---------- */
+
+.hero-stage {
+  background:
+    radial-gradient(ellipse 60% 50% at 85% 10%, hsl(var(--lilac) / 0.09), transparent 70%),
+    radial-gradient(ellipse 50% 40% at 0% 70%, hsl(var(--rose) / 0.07), transparent 70%);
+}
+
+.hero-spotlight {
+  background: radial-gradient(circle, hsl(var(--rose) / 0.16) 0%, hsl(var(--lilac) / 0.08) 38%, transparent 68%);
+  will-change: transform, opacity;
+}
+
+.kinetic-word {
+  cursor: default;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.stage-floor {
+  background:
+    radial-gradient(ellipse 70% 45% at 50% 0%, hsl(var(--rose) / 0.22), transparent 70%),
+    radial-gradient(circle, hsl(var(--cream) / 0.08) 1px, transparent 1.4px) 0 0 / 18px 18px;
+  mask-image: linear-gradient(to bottom, black 40%, transparent 100%);
+}
+
+.beat-bar {
+  transform-origin: bottom;
+  transform: scaleY(var(--s, 0.4));
+  transition: transform 220ms cubic-bezier(0.22, 1, 0.36, 1);
+  animation: bar-in 900ms cubic-bezier(0.22, 1, 0.36, 1) backwards;
+  animation-delay: calc(var(--i) * 28ms + 650ms);
+}
+
+.beat-strip[data-wave='0'] .beat-bar { animation: bar-wave-a 650ms ease-out backwards; animation-delay: calc(var(--i) * 22ms); }
+.beat-strip[data-wave='1'] .beat-bar { animation: bar-wave-b 650ms ease-out backwards; animation-delay: calc(var(--i) * 22ms); }
+
+@keyframes bar-in {
+  from { transform: scaleY(0.04); }
+}
+
+@keyframes bar-wave-a {
+  40% { transform: scaleY(1); }
+}
+
+@keyframes bar-wave-b {
+  40% { transform: scaleY(1); }
+}
+
+/* ---------- Creative side ---------- */
+
+.mode-stage {
+  aspect-ratio: 20 / 13;
+  overflow: hidden;
+  border: 1px solid hsl(var(--ink));
+  background:
+    radial-gradient(ellipse 60% 55% at 50% -10%, hsl(var(--cream) / 0.1), transparent 70%),
+    hsl(var(--ink));
+  color: hsl(var(--cream));
+  -webkit-tap-highlight-color: transparent;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -508,4 +565,5 @@ body {
     transition-duration: 0.01ms !important;
   }
   .reveal { opacity: 1; transform: none; }
+  .beat-bar { animation: none !important; }
 }

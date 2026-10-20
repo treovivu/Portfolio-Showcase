@@ -1,11 +1,9 @@
 import { useEffect, useState } from 'react';
 import {
-  ArrowDownRight,
   ArrowUpRight,
   BookOpen,
   Check,
   ChevronDown,
-  Circle,
   Database,
   FileText,
   Github,
@@ -35,14 +33,9 @@ import nsdcScavengerHunt from '@assets/nsdc-sql-scavenger-hunt.png';
 import nsdcWorkshop from '@assets/nsdc-workshop.png';
 import nsdcKickoff from '@assets/nsdc-kickoff-2026.png';
 import nsdcCocaColaVisit from '@assets/nsdc-coca-cola-visit.png';
-
-const links = {
-  linkedin: 'https://www.linkedin.com/in/vy-vu22/',
-  github: 'https://github.com/treovivu',
-  notes: 'https://vivunote.substack.com/',
-  email: 'vvu22@student.gsu.edu',
-  resume: `${import.meta.env.BASE_URL}Vy_Vu_resume.pdf`,
-};
+import { CreativeSide } from '@/components/creative-side';
+import { HeroStage } from '@/components/hero-stage';
+import { external, links } from '@/lib/site';
 
 type MediaItem = {
   id: string;
@@ -76,6 +69,7 @@ type ProjectDetail = {
 const navItems = [
   { label: 'Home', href: '#top' },
   { label: 'About', href: '#about' },
+  { label: 'Creative', href: '#creative' },
   { label: 'Work', href: '#work' },
   { label: 'Writing', href: '#writing' },
   { label: 'Achievements', href: '#achievements' },
@@ -260,8 +254,6 @@ function MediaPlaceholder({
   );
 }
 
-const external = { target: '_blank', rel: 'noreferrer' } as const;
-
 function ProjectAction({
   label,
   url,
@@ -402,82 +394,7 @@ function App() {
         )}
       </nav>
 
-      <section id="top" className="relative mx-auto flex min-h-[790px] max-w-[1280px] items-center px-5 pb-20 pt-36 md:px-10 md:pt-40">
-        <div className="grid w-full items-center gap-16 lg:grid-cols-[1.05fr_.95fr] lg:gap-10">
-          <div>
-            <div className="reveal mb-9 flex items-center gap-3 font-mono text-[10px] uppercase tracking-[0.18em] text-foreground/55">
-              <span className="h-2 w-2 bg-primary" /> Computer information systems student <span className="text-primary">·</span> Atlanta, GA
-            </div>
-            <h1 className="reveal reveal-delay-1 max-w-[800px] text-[clamp(3.45rem,8vw,7.6rem)] leading-[.86] tracking-[-0.065em]">
-              Building at the
-              <br />
-              <span className="font-display font-normal italic text-primary">intersection.</span>
-            </h1>
-            <p className="reveal reveal-delay-2 mt-10 max-w-[560px] text-lg leading-[1.55] text-foreground/70 md:text-xl">
-              Computer Information Systems student focused on AI Analytics and Application Development.
-              I&apos;m interested in how data can uncover patterns, explain behavior, and support better decisions.
-            </p>
-            <div className="reveal reveal-delay-3 mt-10 flex flex-wrap items-center gap-5">
-              <a
-                href="#work"
-                className="group inline-flex items-center gap-3 bg-foreground px-5 py-3.5 font-mono text-[11px] uppercase tracking-[0.13em] text-background transition-colors hover:bg-primary"
-                data-testid="link-hero-work"
-              >
-                View my work <ArrowDownRight size={16} className="transition-transform group-hover:translate-x-1 group-hover:translate-y-1" />
-              </a>
-              <a href="#writing" className="signal-line font-mono text-[11px] uppercase tracking-[0.13em]" data-testid="link-hero-notes">
-                Read ViVu Notes
-              </a>
-              <a
-                href={links.linkedin}
-                {...external}
-                className="font-mono text-[11px] uppercase tracking-[0.13em] text-foreground/60 transition-colors hover:text-primary"
-                data-testid="link-hero-linkedin"
-              >
-                Connect on LinkedIn
-              </a>
-            </div>
-          </div>
-
-          <div className="reveal reveal-delay-2 relative mx-auto w-full max-w-[570px] lg:ml-auto">
-            <div className="absolute -left-7 top-5 font-mono text-[9px] uppercase tracking-[0.16em] text-foreground/45 [writing-mode:vertical-rl]">
-              curiosity / analysis / making
-            </div>
-            <div className="relative aspect-square overflow-hidden border border-foreground/15 bg-[#243b53] p-5 shadow-[14px_14px_0_hsl(var(--primary)/.16)] md:p-8">
-              <div className="project-visual absolute inset-0" />
-              <div className="relative flex h-full flex-col justify-between text-[hsl(var(--background))]">
-                <div className="flex items-start justify-between font-mono text-[9px] uppercase tracking-[0.15em] text-[hsl(var(--background)/.62)]">
-                  <span>VV / 2026</span>
-                  <span className="flex items-center gap-2"><Circle size={7} fill="currentColor" className="text-primary" /> building</span>
-                </div>
-                <div className="relative mx-auto flex aspect-square w-[71%] items-center justify-center">
-                  <div className="absolute inset-0 rounded-full border border-[hsl(var(--background)/.2)]" />
-                  <div className="orbit absolute inset-[11%] rounded-full border border-dashed border-[hsl(var(--background)/.25)]" />
-                  <div className="orbit absolute inset-[25%] rounded-full border border-[hsl(var(--primary)/.8)] [animation-duration:10s]" />
-                  <div className="absolute h-[29%] w-[29%] rounded-full bg-primary shadow-[0_0_0_11px_hsl(var(--primary)/.12)]" />
-                  <div className="absolute left-[9%] top-[18%] h-2.5 w-2.5 rounded-full bg-[hsl(var(--background))]" />
-                  <div className="absolute bottom-[17%] right-[12%] h-2.5 w-2.5 rounded-full bg-accent" />
-                  <div className="absolute right-[12%] top-[25%] h-1.5 w-1.5 rounded-full bg-[hsl(var(--background))]" />
-                  <span className="relative z-10 font-mono text-[9px] uppercase tracking-[0.12em]">in progress</span>
-                </div>
-                <div className="flex items-end justify-between">
-                  <div>
-                    <p className="font-display text-3xl italic">Curiosity, cultivated.</p>
-                    <p className="mt-2 max-w-[210px] font-mono text-[9px] uppercase leading-[1.5] tracking-[0.12em] text-[hsl(var(--background)/.58)]">
-                      A student portfolio about data, technology, and becoming.
-                    </p>
-                  </div>
-                  <div className="font-mono text-right text-[9px] leading-[1.6] text-[hsl(var(--background)/.58)]">GSU<br />ATL</div>
-                </div>
-              </div>
-            </div>
-            <div className="float-slow absolute -bottom-6 -right-2 border border-foreground/20 bg-background px-4 py-3 shadow-[5px_5px_0_hsl(var(--foreground)/.08)] md:-right-6" data-testid="status-current-focus">
-              <p className="font-mono text-[9px] uppercase tracking-[0.15em] text-foreground/45">Currently</p>
-              <p className="mt-1 text-sm font-medium">learning by building</p>
-            </div>
-          </div>
-        </div>
-      </section>
+      <HeroStage />
 
       <div className="mx-auto max-w-[1280px] px-5 md:px-10">
         <div className="section-rule flex items-center justify-between py-5 font-mono text-[10px] uppercase tracking-[0.16em] text-foreground/50">
@@ -529,11 +446,13 @@ function App() {
         </div>
       </section>
 
+      <CreativeSide />
+
       <section id="approach" className="border-y border-foreground/15 bg-secondary/20 scroll-mt-24">
         <div className="mx-auto max-w-[1280px] px-5 py-24 md:px-10 md:py-32">
           <div className="reveal flex flex-col justify-between gap-6 md:flex-row md:items-end">
             <div>
-              <p className="font-mono text-[10px] uppercase tracking-[0.17em] text-primary">03 / what I&apos;m building</p>
+              <p className="font-mono text-[10px] uppercase tracking-[0.17em] text-primary">04 / what I&apos;m building</p>
               <h2 className="mt-5 max-w-[660px] text-5xl leading-[.9] tracking-[-0.055em] md:text-8xl">What I&apos;m<br /><span className="font-display font-normal italic">building.</span></h2>
             </div>
             <p className="max-w-[270px] text-sm leading-[1.5] text-foreground/60 md:pb-2">I&apos;m developing the skills, experiences, and point of view to do meaningful work with data and technology.</p>
@@ -562,7 +481,7 @@ function App() {
         <div className="mx-auto max-w-[1280px] px-5 py-28 md:px-10 md:py-40">
           <div className="reveal flex flex-col justify-between gap-6 md:flex-row md:items-end">
             <div>
-              <p className="font-mono text-[10px] uppercase tracking-[0.17em] text-primary">04 / selected work</p>
+              <p className="font-mono text-[10px] uppercase tracking-[0.17em] text-primary">05 / selected work</p>
               <h2 className="mt-5 text-5xl leading-[.9] tracking-[-0.055em] md:text-8xl">Work in<br /><span className="font-display font-normal italic">progress.</span></h2>
             </div>
             <p className="max-w-[290px] text-sm leading-[1.6] text-foreground/60 md:pb-2">Products I&apos;ve built and experiences that taught me to lead, coordinate, and ship.</p>
@@ -643,7 +562,7 @@ function App() {
       <section id="writing" className="mx-auto max-w-[1280px] scroll-mt-24 px-5 py-28 md:px-10 md:py-40">
         <div className="grid gap-14 lg:grid-cols-[.82fr_1.18fr] lg:gap-24">
           <div className="reveal">
-            <p className="font-mono text-[10px] uppercase tracking-[0.17em] text-primary">05 / writing & ideas</p>
+            <p className="font-mono text-[10px] uppercase tracking-[0.17em] text-primary">06 / writing & ideas</p>
             <h2 className="mt-5 text-5xl leading-[.9] tracking-[-0.055em] md:text-7xl">A place to<br /><span className="font-display font-normal italic">think out loud.</span></h2>
             <p className="mt-8 max-w-[430px] text-lg leading-[1.6] text-foreground/65">
               I started ViVu Notes as a place to document what I am learning through books, college, data, and life as an international student.
@@ -678,7 +597,7 @@ function App() {
         <div className="mx-auto max-w-[1280px] px-5 py-24 md:px-10 md:py-32">
           <div className="grid gap-12 lg:grid-cols-[.8fr_1.2fr] lg:gap-24">
             <div className="reveal">
-              <p className="font-mono text-[10px] uppercase tracking-[0.17em] text-primary">06 / a few milestones</p>
+              <p className="font-mono text-[10px] uppercase tracking-[0.17em] text-primary">07 / a few milestones</p>
               <h2 className="mt-5 text-5xl leading-[.9] tracking-[-0.055em] md:text-7xl">Early steps,<br /><span className="font-display font-normal italic">clear direction.</span></h2>
             </div>
             <div className="reveal reveal-delay-1">
@@ -731,7 +650,7 @@ function App() {
       <section id="skills" className="mx-auto max-w-[1280px] scroll-mt-24 px-5 py-28 md:px-10 md:py-36">
         <div className="reveal flex flex-col justify-between gap-6 md:flex-row md:items-end">
           <div>
-            <p className="font-mono text-[10px] uppercase tracking-[0.17em] text-primary">07 / tools & skills</p>
+            <p className="font-mono text-[10px] uppercase tracking-[0.17em] text-primary">08 / tools & skills</p>
             <h2 className="mt-5 text-5xl leading-[.9] tracking-[-0.055em] md:text-8xl">Still<br /><span className="font-display font-normal italic">building.</span></h2>
           </div>
           <p className="max-w-[300px] text-sm leading-[1.6] text-foreground/60 md:pb-2">Tools I&apos;ve used in coursework, hackathons, and work, and keep sharpening.</p>
@@ -751,7 +670,7 @@ function App() {
       <section className="border-y border-foreground/15 bg-secondary/20">
         <div className="mx-auto grid max-w-[1280px] gap-10 px-5 py-24 md:px-10 md:py-28 lg:grid-cols-[.75fr_1.25fr] lg:items-center">
           <div className="reveal">
-            <p className="font-mono text-[10px] uppercase tracking-[0.17em] text-primary">08 / currently</p>
+            <p className="font-mono text-[10px] uppercase tracking-[0.17em] text-primary">09 / currently</p>
             <h2 className="mt-5 text-5xl leading-[.9] tracking-[-0.055em] md:text-7xl">A living<br /><span className="font-display font-normal italic">list.</span></h2>
           </div>
           <div className="reveal reveal-delay-1 grid gap-0 border-t border-foreground/15 sm:grid-cols-2">
@@ -775,7 +694,7 @@ function App() {
           <div className="absolute -right-10 -top-24 h-80 w-80 rounded-full border border-primary/25 md:h-[480px] md:w-[480px]" />
           <div className="absolute -right-2 -top-16 h-64 w-64 rounded-full border border-primary/15 md:h-[380px] md:w-[380px]" />
           <div className="relative max-w-[760px]">
-            <p className="font-mono text-[10px] uppercase tracking-[0.17em] text-primary">09 / let&apos;s connect</p>
+            <p className="font-mono text-[10px] uppercase tracking-[0.17em] text-primary">10 / let&apos;s connect</p>
             <h2 className="mt-6 text-6xl leading-[.85] tracking-[-0.065em] md:text-8xl">Keep the<br /><span className="font-display font-normal italic">conversation going.</span></h2>
             <p className="mt-8 max-w-[590px] text-base leading-[1.65] text-foreground/65">
               I&apos;m always happy to connect with students, professionals, mentors, and people working across data, technology, and business.
