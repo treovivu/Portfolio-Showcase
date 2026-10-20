@@ -408,39 +408,55 @@ function App() {
         <div className="grid gap-12 lg:grid-cols-[.72fr_1.28fr] lg:gap-24">
           <div className="reveal">
             <p className="font-mono text-[10px] uppercase tracking-[0.17em] text-primary">02 / about me</p>
-            <h2 className="mt-6 max-w-[420px] text-5xl leading-[.92] tracking-[-0.055em] md:text-7xl">A little about me.</h2>
-            <MediaPlaceholder
-              item={{ id: 'about-photo', label: 'Vy Vu', caption: 'A personal moment from Atlanta, Georgia.', alt: 'Vy Vu standing outdoors in Atlanta at night', src: personalPhoto }}
-              className="mt-10 max-w-[350px]"
-              onOpen={setLightboxItem}
-            />
+            <h2 className="mt-6 max-w-[420px] text-5xl leading-[.92] tracking-[-0.055em] md:text-7xl">
+              From Vietnam
+              <br />
+              <span className="font-display font-normal italic">to Atlanta.</span>
+            </h2>
+            <div className="relative mt-10 max-w-[350px] -rotate-[1.5deg] transition-transform duration-500 hover:rotate-0">
+              <span aria-hidden="true" className="scrap-tape absolute -top-3 left-1/2 z-10 h-7 w-24 -translate-x-1/2 rotate-[3deg]" />
+              <MediaPlaceholder
+                item={{ id: 'about-photo', label: 'Vy Vu', caption: 'A personal moment from Atlanta, Georgia.', alt: 'Vy Vu standing outdoors in Atlanta at night', src: personalPhoto }}
+                onOpen={setLightboxItem}
+              />
+            </div>
+            <p className="mt-6 max-w-[350px] text-sm text-foreground/60" data-testid="text-about-greeting">
+              <span className="font-viet text-lg italic text-primary" lang="vi">Rất vui được gặp bạn</span>
+              <span className="block font-mono text-[9px] uppercase tracking-[0.15em] text-foreground/45">nice to meet you</span>
+            </p>
           </div>
           <div className="reveal reveal-delay-1">
             <p className="max-w-[760px] text-2xl leading-[1.15] tracking-[-0.03em] md:text-[2.65rem] md:leading-[1.08]">
-              I&apos;m a sophomore at Georgia State University studying Computer Information Systems with concentrations in Artificial Intelligence Analytics and Application Development.
+              I&apos;m a sophomore at Georgia State University from Vietnam, studying Computer Information Systems with concentrations in Artificial Intelligence Analytics and Application Development.
             </p>
             <div className="mt-10 grid gap-8 border-t border-foreground/15 pt-7 sm:grid-cols-2">
               <p className="text-sm leading-[1.7] text-foreground/65">
-                What interests me most is the intersection of data, technology, and business. I enjoy understanding how information can uncover patterns, explain behavior, and support better decisions.
+                What interests me most is the intersection of data, technology, and business. I enjoy understanding how information can uncover patterns, explain behavior, and support better decisions, which is why I&apos;m pursuing <span className="text-foreground">Data Analyst and Business Data Analyst</span> roles.
               </p>
               <p className="text-sm leading-[1.7] text-foreground/65">
-                Outside of my technical coursework, I enjoy organizing projects, working with people, writing, reading, and turning ideas into something useful.
+                Outside of my technical coursework, I enjoy organizing projects, working with people, writing, reading, and turning ideas into something useful. Off the clock, you&apos;ll find me learning K-pop choreography, playing guitar, or singing.
               </p>
             </div>
             <p className="mt-8 max-w-[730px] text-sm leading-[1.7] text-foreground/65">
               I&apos;m currently strengthening my skills in Python, SQL, Excel, data analysis, and application development while building hands-on projects and exploring opportunities in data analytics and market data.
             </p>
             <div className="mt-12 grid gap-4 border-t border-foreground/15 pt-6 sm:grid-cols-2">
-              <div className="border border-foreground/15 bg-card p-5">
-                <p className="font-mono text-[9px] uppercase tracking-[0.15em] text-primary">Georgia State University</p>
-                <p className="mt-3 text-lg tracking-[-0.02em]">Computer Information Systems</p>
-                <p className="mt-2 text-sm text-foreground/55">Honors College</p>
-              </div>
-              <div className="border border-foreground/15 bg-card p-5">
-                <p className="font-mono text-[9px] uppercase tracking-[0.15em] text-primary">Academic milestone</p>
-                <p className="mt-3 text-lg tracking-[-0.02em]">President&apos;s List</p>
-                <p className="mt-2 text-sm text-foreground/55">3 semesters · GPA 4.05</p>
-              </div>
+              {[
+                { label: 'Georgia State University', title: 'Computer Information Systems', detail: 'Honors College' },
+                { label: 'Academic milestone', title: 'President’s List', detail: '3 semesters · GPA 4.05' },
+                { label: 'Home → home base', title: 'Vietnam → Atlanta, GA', detail: 'International student' },
+                { label: 'Seeking', title: 'Data Analyst internships', detail: 'Including Business Data Analyst roles', accent: true },
+              ].map((fact) => (
+                <div
+                  key={fact.label}
+                  className={`border p-5 transition-transform duration-300 hover:-translate-y-1 ${fact.accent ? 'border-[hsl(var(--jade)/.45)] bg-[hsl(var(--jade)/.07)]' : 'border-foreground/15 bg-card'}`}
+                  data-testid={`card-about-${fact.label.toLowerCase().replace(/[^a-z]+/g, '-')}`}
+                >
+                  <p className={`font-mono text-[9px] uppercase tracking-[0.15em] ${fact.accent ? 'text-[hsl(var(--jade))]' : 'text-primary'}`}>{fact.label}</p>
+                  <p className="mt-3 text-lg tracking-[-0.02em]">{fact.title}</p>
+                  <p className="mt-2 text-sm text-foreground/55">{fact.detail}</p>
+                </div>
+              ))}
             </div>
           </div>
         </div>

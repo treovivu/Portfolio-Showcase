@@ -1,34 +1,22 @@
 import { useEffect, useRef, useState, type CSSProperties, type PointerEvent as ReactPointerEvent, type ReactNode } from 'react';
 import { m, useMotionValue, useReducedMotion, useSpring, type TargetAndTransition } from 'framer-motion';
-import { ArrowDownRight, Circle } from 'lucide-react';
+import { ArrowDownRight, ArrowUpRight, Circle } from 'lucide-react';
 import { enter, spring } from '@/lib/motion';
 import { external, links } from '@/lib/site';
 
-type Flourish = 'move' | 'create' | 'build';
-
-// Fixed "cut-out" angles so the create flourish feels hand-placed, not random on every replay.
-const scrapAngles = [-9, 6, -4, 8, -6, 5];
+type Flourish = 'sway' | 'stack';
 
 const flourish: Record<Flourish, (index: number) => { initial?: TargetAndTransition; animate: TargetAndTransition }> = {
   // A small choreography wave: each letter steps up and sways in sequence.
-  move: (i) => ({
+  sway: (i) => ({
     animate: {
       y: ['0em', '-0.16em', '0.03em', '0em'],
       rotate: [0, i % 2 ? 7 : -7, 0, 0],
       transition: { duration: 0.6, delay: i * 0.06, ease: 'easeOut' },
     },
   }),
-  // Letters lift like scrapbook cut-outs, then settle back onto the page.
-  create: (i) => ({
-    animate: {
-      rotate: [0, scrapAngles[i % scrapAngles.length], 0],
-      y: ['0em', '-0.06em', '0em'],
-      scale: [1, 1.08, 1],
-      transition: { duration: 0.7, delay: i * 0.04, ease: 'easeInOut' },
-    },
-  }),
-  // Blocks drop in from above and stack, one at a time.
-  build: (i) => ({
+  // Letters drop in and stack like bars on a chart.
+  stack: (i) => ({
     initial: { y: '-0.55em', opacity: 0 },
     animate: { y: '0em', opacity: 1, transition: { ...spring.beat, delay: i * 0.07 } },
   }),
@@ -66,66 +54,83 @@ function KineticWord({
             </m.span>
           );
         })}
-        {kind === 'create' && (
-          <m.svg
-            key={`underline-${beat}`}
-            viewBox="0 0 200 16"
-            preserveAspectRatio="none"
-            className="pointer-events-none absolute -bottom-[0.06em] left-0 h-[0.16em] w-full origin-left text-[hsl(var(--lilac))]"
-            initial={{ scaleX: beat === 0 ? 1 : 0 }}
-            animate={{ scaleX: 1 }}
-            transition={{ duration: 0.55, ease: 'easeOut', delay: 0.15 }}
-          >
-            <path d="M2 10 C 30 2, 50 15, 80 8 S 140 2, 198 9" fill="none" stroke="currentColor" strokeWidth="4" strokeLinecap="round" />
-          </m.svg>
-        )}
       </span>
       {after}
     </span>
   );
 }
 
-const barCount = 28;
-const barBase = Array.from({ length: barCount }, (_, i) => 0.28 + 0.6 * Math.abs(Math.sin(i * 0.9) * Math.cos(i * 0.37)));
-const barTone = ['--rose', '--lilac', '--jade'];
+const barCount = 24;
+const barBase = Array.from({ length: barCount }, (_, i) => 0.24 + 0.62 * Math.abs(Math.sin(i * 0.9) * Math.cos(i * 0.37)));
+const barTone = ['--rose', '--jade', '--lilac'];
+const peakIndex = barBase.indexOf(Math.max(...barBase));
 
-function BeatStrip() {
+// A tiny chart that behaves like an equalizer: bars swell under the cursor and a readout follows.
+function RhythmChart() {
   const barsRef = useRef<HTMLSpanElement[]>([]);
+  const readoutRef = useRef<HTMLSpanElement>(null);
   const [wave, setWave] = useState(0);
 
-  // The bars swell under the cursor, like an equalizer following the spotlight.
+  const showReadout = (index: number) => {
+    const readout = readoutRef.current;
+    if (!readout) return;
+    readout.textContent = `beat ${String(index + 1).padStart(2, '0')} · ${Math.round(barBase[index] * 100)}`;
+    readout.style.transform = `translateX(calc(${((index + 0.5) / barCount) * 100}cqw - 50%))`;
+    readout.style.opacity = '1';
+  };
+
   const follow = (event: ReactPointerEvent<HTMLDivElement>) => {
     if (event.pointerType !== 'mouse') return;
     const rect = event.currentTarget.getBoundingClientRect();
-    const ratio = (event.clientX - rect.left) / rect.width;
+    const ratio = Math.min(0.999, Math.max(0, (event.clientX - rect.left) / rect.width));
     barsRef.current.forEach((bar, i) => {
       const distance = i / (barCount - 1) - ratio;
-      const lift = 1 + 1.1 * Math.exp(-(distance * distance) / 0.008);
+      const lift = 1 + 0.9 * Math.exp(-(distance * distance) / 0.006);
       bar.style.setProperty('--s', Math.min(1, barBase[i] * lift).toFixed(3));
     });
+    showReadout(Math.floor(ratio * barCount));
   };
 
-  const reset = () => barsRef.current.forEach((bar, i) => bar.style.setProperty('--s', barBase[i].toFixed(3)));
+  const reset = () => {
+    barsRef.current.forEach((bar, i) => bar.style.setProperty('--s', barBase[i].toFixed(3)));
+    if (readoutRef.current) readoutRef.current.style.opacity = '0';
+  };
 
   return (
-    <div
-      className="beat-strip flex h-14 items-end gap-[3px] md:h-16"
-      data-wave={wave === 0 ? undefined : wave % 2}
-      onPointerMove={follow}
-      onPointerLeave={reset}
-      onClick={() => setWave((count) => count + 1)}
-      aria-hidden="true"
-    >
-      {barBase.map((base, i) => (
+    <div aria-hidden="true">
+      <div className="relative h-5 [container-type:inline-size]">
         <span
-          key={i}
-          ref={(node) => {
-            if (node) barsRef.current[i] = node;
-          }}
-          className="beat-bar h-full flex-1 rounded-full"
-          style={{ '--s': base.toFixed(3), '--i': i, background: `hsl(var(${barTone[i % 3]}))` } as CSSProperties}
+          ref={readoutRef}
+          className="absolute left-0 top-0 whitespace-nowrap bg-[hsl(var(--cream))] px-1.5 py-0.5 font-mono text-[9px] uppercase tracking-[0.1em] text-[hsl(var(--ink))] opacity-0 transition-opacity duration-150"
         />
-      ))}
+      </div>
+      <div
+        className="beat-strip relative mt-1 flex h-16 cursor-crosshair items-end gap-[3px] border-b border-[hsl(var(--cream)/.3)] md:h-20"
+        data-wave={wave === 0 ? undefined : wave % 2}
+        onPointerMove={follow}
+        onPointerLeave={reset}
+        onClick={() => {
+          setWave((count) => count + 1);
+          showReadout(peakIndex);
+        }}
+      >
+        <span className="pointer-events-none absolute inset-x-0 top-1/2 border-t border-dashed border-[hsl(var(--cream)/.14)]" />
+        {barBase.map((base, i) => (
+          <span
+            key={i}
+            ref={(node) => {
+              if (node) barsRef.current[i] = node;
+            }}
+            className="beat-bar h-full flex-1 rounded-t-[2px]"
+            style={{ '--s': base.toFixed(3), '--i': i, background: `hsl(var(${barTone[i % 3]}))` } as CSSProperties}
+          />
+        ))}
+      </div>
+      <div className="mt-2 flex justify-between font-mono text-[8px] uppercase tracking-[0.14em] text-[hsl(var(--cream)/.45)]">
+        <span>count 1</span>
+        <span>fig. 01 — a beat, as data</span>
+        <span>8</span>
+      </div>
     </div>
   );
 }
@@ -133,8 +138,8 @@ function BeatStrip() {
 export function HeroStage() {
   const reduceMotion = useReducedMotion();
   const sectionRef = useRef<HTMLElement>(null);
-  const [beats, setBeats] = useState<Record<Flourish, number>>({ move: 0, create: 0, build: 0 });
-  const lastReplay = useRef<Record<Flourish, number>>({ move: 0, create: 0, build: 0 });
+  const [beats, setBeats] = useState<Record<Flourish, number>>({ sway: 0, stack: 0 });
+  const lastReplay = useRef<Record<Flourish, number>>({ sway: 0, stack: 0 });
   const [canSpotlight, setCanSpotlight] = useState(false);
 
   const pointerX = useMotionValue(0);
@@ -161,7 +166,7 @@ export function HeroStage() {
   // Play each word's flourish once, in time, right after the entrance settles.
   useEffect(() => {
     if (reduceMotion) return;
-    const timers = (['move', 'create', 'build'] as const).map((kind, i) => window.setTimeout(() => replay(kind), 1050 + i * 380));
+    const timers = (['sway', 'stack'] as const).map((kind, i) => window.setTimeout(() => replay(kind), 1000 + i * 420));
     return () => timers.forEach(window.clearTimeout);
   }, [reduceMotion]);
 
@@ -202,38 +207,41 @@ export function HeroStage() {
       <div className="relative mx-auto flex min-h-[760px] max-w-[1280px] items-center px-5 pb-20 pt-28 md:px-10 md:pt-32">
         <div className="grid w-full items-center gap-16 lg:grid-cols-[1.08fr_.92fr] lg:gap-10">
           <div>
-            <m.div {...rise(0)} className="mb-7 flex flex-wrap items-baseline gap-x-3 gap-y-2">
+            <m.div {...rise(0)} className="mb-7 flex flex-wrap items-baseline gap-x-3 gap-y-3">
               <span className="font-viet text-2xl italic text-primary" lang="vi">Xin chào</span>
-              <span className="text-sm text-foreground/60">(hello) — I&apos;m Vy Vu.</span>
-              <span className="basis-full font-mono text-[10px] uppercase leading-[1.7] tracking-[0.18em] text-foreground/55">
-                <span className="mr-3 inline-block h-2 w-2 bg-primary" />
-                <span className="whitespace-nowrap">Computer information systems student</span> <span className="text-primary">·</span>{' '}
-                <span className="whitespace-nowrap">Atlanta, GA</span>
+              <span className="text-sm text-foreground/60">(hello) — I&apos;m Vy Vu, a CIS student from Vietnam, based in Atlanta.</span>
+              <span className="basis-full">
+                <span className="inline-flex items-center gap-2 border border-[hsl(var(--jade)/.45)] bg-[hsl(var(--jade)/.08)] px-3 py-1.5 font-mono text-[10px] uppercase tracking-[0.14em] text-[hsl(var(--jade))]" data-testid="text-hero-role">
+                  <span className="h-1.5 w-1.5 rounded-full bg-[hsl(var(--jade))]" /> Aspiring Data Analyst
+                </span>
               </span>
             </m.div>
 
-            <h1 className="max-w-[820px] text-[clamp(2.9rem,6.4vw,6rem)] leading-[.92] tracking-[-0.06em]">
-              <span className="sr-only">Made to move, create, and build.</span>
+            <h1 className="max-w-[820px] text-[clamp(3rem,6.6vw,6.2rem)] leading-[.92] tracking-[-0.06em]">
+              <span className="sr-only">Finding the rhythm in data.</span>
               <span aria-hidden="true">
                 <m.span {...line(0.1)} className="block">
-                  Made to{' '}
-                  <KineticWord text="move" kind="move" beat={beats.move} onReplay={() => replay('move')} className="font-display pr-[0.06em] text-[1.08em] font-normal italic text-primary" after="," />
+                  Finding the
                 </m.span>
                 <m.span {...line(0.2)} className="block">
-                  <KineticWord text="create" kind="create" beat={beats.create} onReplay={() => replay('create')} className="font-light italic text-[hsl(var(--lilac))]" after="," /> and
-                </m.span>
-                <m.span {...line(0.3)} className="block">
-                  <KineticWord text="build" kind="build" beat={beats.build} onReplay={() => replay('build')} className="font-semibold text-[hsl(var(--jade))]" after={<span className="text-primary">.</span>} />
+                  <KineticWord text="rhythm" kind="sway" beat={beats.sway} onReplay={() => replay('sway')} className="font-display pr-[0.06em] text-[1.08em] font-normal italic text-primary" /> in{' '}
+                  <KineticWord text="data" kind="stack" beat={beats.stack} onReplay={() => replay('stack')} className="font-semibold text-[hsl(var(--jade))]" after={<span className="text-primary">.</span>} />
                 </m.span>
               </span>
             </h1>
 
-            <m.p {...rise(0.45)} className="mt-8 max-w-[560px] text-lg leading-[1.55] text-foreground/70 md:text-xl">
-              Computer Information Systems student focused on AI Analytics and Application Development, working toward AI product engineering.
-              I&apos;m interested in how data can uncover patterns, explain behavior, and support better decisions.
+            <m.p {...rise(0.4)} className="mt-8 max-w-[580px] text-lg leading-[1.55] text-foreground/70 md:text-xl">
+              I&apos;m looking for <span className="text-foreground">Data Analyst and Business Data Analyst internships</span>. I study Computer Information Systems at Georgia State, concentrating in AI Analytics and Application Development, and I like turning messy information into patterns people can act on.
             </m.p>
 
-            <m.div {...rise(0.55)} className="mt-9 flex flex-wrap items-center gap-5">
+            <m.ul {...rise(0.48)} className="mt-5 flex flex-wrap items-center gap-x-4 gap-y-1.5 font-mono text-[10px] uppercase tracking-[0.14em] text-foreground/50" aria-label="Toolkit">
+              <li className="text-primary">Toolkit</li>
+              {['SQL', 'Python', 'Excel', 'Data analysis', 'AI-powered apps'].map((tool) => (
+                <li key={tool} className="whitespace-nowrap">{tool}</li>
+              ))}
+            </m.ul>
+
+            <m.div {...rise(0.56)} className="mt-8 flex flex-wrap items-center gap-3 sm:gap-5">
               <a
                 href="#work"
                 className="group inline-flex items-center gap-3 bg-foreground px-5 py-3.5 font-mono text-[11px] uppercase tracking-[0.13em] text-background transition-colors hover:bg-primary"
@@ -241,13 +249,18 @@ export function HeroStage() {
               >
                 View my work <ArrowDownRight size={16} className="transition-transform group-hover:translate-x-1 group-hover:translate-y-1" />
               </a>
-              <a href="#writing" className="signal-line font-mono text-[11px] uppercase tracking-[0.13em]" data-testid="link-hero-notes">
-                Read ViVu Notes
+              <a
+                href={links.resume}
+                {...external}
+                className="inline-flex items-center gap-2 border border-foreground/25 px-5 py-3.5 font-mono text-[11px] uppercase tracking-[0.13em] transition-colors hover:border-primary hover:bg-primary hover:text-primary-foreground"
+                data-testid="link-hero-resume"
+              >
+                View resume <ArrowUpRight size={14} />
               </a>
               <a
                 href={links.linkedin}
                 {...external}
-                className="font-mono text-[11px] uppercase tracking-[0.13em] text-foreground/60 transition-colors hover:text-primary"
+                className="signal-line ml-1 font-mono text-[11px] uppercase tracking-[0.13em] text-foreground/70 transition-colors hover:text-primary"
                 data-testid="link-hero-linkedin"
               >
                 Connect on LinkedIn
@@ -271,17 +284,18 @@ export function HeroStage() {
                 </div>
 
                 <div>
-                  <p className="font-viet text-[clamp(4.6rem,13vw,8.6rem)] font-light italic leading-[.9] tracking-[-0.03em]" lang="vi">
-                    Nhịp<span className="text-primary">.</span>
+                  <p className="font-display text-[clamp(2.6rem,5.2vw,4.2rem)] italic leading-[.95] tracking-[-0.02em]">
+                    Every dataset
+                    <br />
+                    has a rhythm<span className="text-primary">.</span>
                   </p>
-                  <p className="mt-4 font-mono text-[9px] uppercase tracking-[0.16em] text-[hsl(var(--cream)/.5)]">Vietnamese · noun</p>
-                  <p className="mt-2 max-w-[320px] text-sm leading-[1.55] text-[hsl(var(--cream)/.75)]">
-                    rhythm; the beat that keeps things moving, in dance, in music, and in how I build.
+                  <p className="mt-5 max-w-[340px] text-sm leading-[1.6] text-[hsl(var(--cream)/.72)]">
+                    <span className="font-viet italic text-[hsl(var(--cream))]" lang="vi">Nhịp</span> is Vietnamese for rhythm. I look for it in data, in dance practice, and in music.
                   </p>
                 </div>
 
                 <div>
-                  <BeatStrip />
+                  <RhythmChart />
                   <div className="mt-5 flex items-end justify-between gap-6">
                     <p className="max-w-[230px] font-mono text-[9px] uppercase leading-[1.5] tracking-[0.12em] text-[hsl(var(--cream)/.58)]">
                       A student portfolio about data, technology, and becoming.
@@ -296,8 +310,8 @@ export function HeroStage() {
               className="absolute -bottom-6 -right-2 rotate-[2deg] border border-foreground/20 bg-background px-4 py-3 shadow-[5px_5px_0_hsl(var(--foreground)/.08)] transition-transform duration-300 hover:rotate-0 md:-right-6"
               data-testid="status-current-focus"
             >
-              <p className="font-mono text-[9px] uppercase tracking-[0.15em] text-foreground/45">Currently</p>
-              <p className="mt-1 text-sm font-medium">learning by building</p>
+              <p className="font-mono text-[9px] uppercase tracking-[0.15em] text-foreground/45">Open to</p>
+              <p className="mt-1 text-sm font-medium">Data Analyst internships</p>
             </div>
           </m.div>
         </div>
