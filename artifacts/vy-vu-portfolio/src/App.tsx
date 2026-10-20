@@ -8,6 +8,7 @@ import {
   Circle,
   Database,
   FileText,
+  Github,
   Linkedin,
   Mail,
   Maximize2,
@@ -26,12 +27,20 @@ import herBuddyBuddyMatch from '@assets/Screenshot_2026-09-22_at_1.28.46_PM_1790
 import herBuddyCampusMap from '@assets/Screenshot_2026-09-22_at_1.29.02_PM_1790098146026.png';
 import herBuddyWellness from '@assets/Screenshot_2026-09-22_at_1.29.16_PM_1790098159020.png';
 import vimfCover from '@assets/image_1790100671213.png';
+import auraBeatCover from '@assets/aurabeat-cover.png';
+import auraBeatTwoModes from '@assets/aurabeat-two-modes.png';
+import auraBeatInAction from '@assets/aurabeat-in-action.png';
+import nsdcScavengerHunt from '@assets/nsdc-sql-scavenger-hunt.png';
+import nsdcWorkshop from '@assets/nsdc-workshop.png';
+import nsdcKickoff from '@assets/nsdc-kickoff-2026.png';
+import nsdcCocaColaVisit from '@assets/nsdc-coca-cola-visit.png';
 
 const links = {
-  linkedin: '',
-  notes: '',
-  email: '',
-  resume: '',
+  linkedin: 'https://www.linkedin.com/in/vy-vu22/',
+  github: 'https://github.com/treovivu',
+  notes: 'https://vivunote.substack.com/',
+  email: 'vvu22@student.gsu.edu',
+  resume: `${import.meta.env.BASE_URL}Vy_Vu_resume.pdf`,
 };
 
 type MediaItem = {
@@ -42,19 +51,25 @@ type MediaItem = {
   src?: string;
 };
 
+type ProjectLink = {
+  label: string;
+  url: string;
+};
+
 type ProjectDetail = {
   number: string;
   title: string;
   role: string;
   organization: string;
+  period: string;
   description: string;
+  highlights: string[];
   skills: string[];
   tone: 'blue' | 'paper' | 'ink';
   media: MediaItem[];
   featured?: boolean;
   award?: string;
-  liveDemo?: string;
-  github?: string;
+  links?: ProjectLink[];
 };
 
 const navItems = [
@@ -90,17 +105,52 @@ const building = [
 const work: ProjectDetail[] = [
   {
     number: '01',
+    title: 'AuraBeat — Hacklanta ’26',
+    role: 'Hackathon project · Team Codezilla · 36 hours',
+    organization: 'Hacklanta ’26 · Georgia State University',
+    period: 'October 2026',
+    description:
+      'An accessible concert experience built so Deaf and hard-of-hearing fans get the whole show, not a reduced version of it. AuraBeat translates music into synchronized stage light, live lyrics, and Apple Watch haptics across two concert modes, with Nova, an ElevenLabs voice agent, adjusting the experience through natural conversation.',
+    highlights: [
+      'Developed 2 interactive concert modes using React, TypeScript, and Python: an At-home Concert driven by the performance video’s clock, and a Live Concert that analyzes real music from a microphone.',
+      'Implemented 5 music-responsive Apple Watch haptic cue types (beat, bass, build, chorus, and drop), connecting real-time audio analysis with a watchOS application.',
+      'Integrated Nova, an ElevenLabs AI voice agent that controls concert lighting, visual intensity, and sensory preferences such as reduced motion through natural-language commands.',
+    ],
+    skills: ['React', 'TypeScript', 'Python', 'watchOS / Swift', 'ElevenLabs', 'Accessibility'],
+    tone: 'ink',
+    featured: true,
+    links: [
+      { label: 'GitHub', url: 'https://github.com/treovivu/AuraBeat/tree/nova-elevenlabs' },
+      { label: 'Devpost', url: 'https://devpost.com/software/aurabeat' },
+      { label: 'Demo Video', url: 'https://www.youtube.com/watch?v=0fEBo2NEh4E' },
+    ],
+    media: [
+      { id: 'aurabeat-cover', label: 'Project cover', caption: 'AuraBeat — a multisensory concert companion, live and at home.', alt: 'AuraBeat title slide reading “A multisensory concert companion: live and at home” beside a laptop showing a concert crowd', src: auraBeatCover },
+      { id: 'aurabeat-two-modes', label: 'Two concert modes', caption: 'Live Concert and At-home Concert: one rhythm, two experiences.', alt: 'Slide comparing AuraBeat’s Live Concert mode, with audio-reactive lighting, captions and haptics, and its At-home mode, with recorded playback and timed lyrics, shown on two phone screens', src: auraBeatTwoModes },
+      { id: 'aurabeat-in-action', label: 'AuraBeat in action', caption: 'The At-home Concert with a “Get ready” cue, live lyrics, and beat-timing feedback.', alt: 'Two AuraBeat At-home Concert screens showing a Get Ready prompt, synchronized lyrics, and an on-beat score', src: auraBeatInAction },
+    ],
+  },
+  {
+    number: '02',
     title: 'HerBuddy — HackHERS 2026',
     role: 'Hackathon project',
-    organization: 'HackHERS 2026',
+    organization: 'HackHERS 2026 · Georgia State University',
+    period: 'September 2026',
     description:
-      'HerBuddy is a campus mental health and student support platform with peer matching, location-based safety zones, and AI-powered voice support.',
-    skills: ['Auth0', 'Google Maps API', 'ElevenLabs', 'HTML/CSS', 'JavaScript'],
+      'A campus safety app for students with buddy matching, walking navigation, and destination-based safety alerts, secured with GSU email sign-in through Auth0.',
+    highlights: [
+      'Independently developed a functional campus safety application featuring buddy matching, walking navigation, and destination-based safety alerts.',
+      'Implemented Auth0 OAuth authentication for GSU email-based sign-in and integrated Google Maps APIs to calculate walking-time estimates and support safety workflows.',
+      'Integrated ElevenLabs AI voice assistance, designed customizable UI themes, and used Git/GitHub to merge independently developed features with teammates’ contributions.',
+    ],
+    skills: ['Auth0 (OAuth)', 'Google Maps API', 'ElevenLabs', 'JavaScript', 'HTML/CSS', 'Git/GitHub'],
     tone: 'blue',
     featured: true,
-    award: 'MLH Best Use of Auth0',
-    liveDemo: 'https://her-buddy.vercel.app',
-    github: 'https://github.com/1Cazarez/HerBuddy',
+    award: 'MLH Best Use of Auth0 Winner',
+    links: [
+      { label: 'Live Demo', url: 'https://her-buddy.vercel.app' },
+      { label: 'GitHub', url: 'https://github.com/1Cazarez/HerBuddy' },
+    ],
     media: [
       { id: 'herbuddy-cover', label: 'Project screenshot', caption: 'HerBuddy campus support dashboard with safety and wellness tools.', alt: 'HerBuddy campus support dashboard showing route matching, wellness summary, and safety check-in', src: herBuddyCover },
       { id: 'herbuddy-contributions', label: 'Contributions photos', caption: 'The HerBuddy team during HackHERS 2026.', alt: 'Vy Vu with three HerBuddy teammates at HackHERS 2026', src: herBuddyContributions },
@@ -110,96 +160,61 @@ const work: ProjectDetail[] = [
     ],
   },
   {
-    number: '02',
-    title: 'Interactive Event Experience',
-    role: 'Event Leader',
-    organization: 'Trường MN - TiH - THCS - THPT Việt Anh',
-    description:
-      'Coordinated an interactive Morse Code game for approximately 100 participants and created a 100-slide PowerPoint experience. Organized assignments and progress tracking for a 30-member team using Excel.',
-    skills: ['Microsoft Excel', 'Event Planning', 'Leadership', 'Team Coordination', 'Presentation Design'],
-    tone: 'blue',
-    media: [
-      { id: 'event-cover', label: 'Cover image', caption: 'Upload one strong cover image for this project.', alt: 'Interactive Event Experience cover placeholder' },
-      { id: 'event-slides', label: 'Presentation slides', caption: 'Selected examples from the Morse Code presentation.', alt: 'Morse Code presentation slides placeholder' },
-      { id: 'event-materials', label: 'Event materials', caption: 'Upload event materials or activity visuals.', alt: 'Interactive event materials placeholder' },
-      { id: 'event-excel', label: 'Excel workflow', caption: 'Upload a readable screenshot of the team organization system.', alt: 'Excel team organization workflow placeholder' },
-    ],
-  },
-  {
     number: '03',
-    title: 'Strategic Partnerships & VIMF',
-    role: 'Strategic Partnerships Intern',
-    organization: 'OMG Events Management Co Ltd',
+    title: 'VIMF Website & Partnerships',
+    role: 'Strategic Partnerships & Website Designer',
+    organization: 'OMG Events Management Co., Ltd. · Ho Chi Minh City',
+    period: 'August 2023 – March 2024',
     description:
-      'Researched and conducted outreach to more than 50 industrial and manufacturing companies to support partnership, sponsorship, and event participation opportunities. Worked with the event manager to support relationships with business leaders, media partners, and key stakeholders involved with the Vietnam Industrial & Manufacturing Fair.',
-    skills: ['Strategic Partnerships', 'Stakeholder Management', 'Business Development', 'Communication', 'Event Management'],
+      'Designed and built the Squarespace website for the Vietnam Industrial & Manufacturing Fair (VIMF), an international industrial exhibition connecting machinery, equipment, and technology suppliers with manufacturers in Vietnam. I also produced its promotional videos and supported speaker outreach.',
+    highlights: [
+      'Independently designed and developed a 5-page Squarespace website for VIMF, featuring 10 manufacturing industry categories and 3 downloadable business resources to support exhibition marketing.',
+      'Structured the site around how exhibitors decide: an overview of OMG and VIMF, featured product areas (3D printing, automation, robotics), why to exhibit, and pre-registration and mailing-list sign-up.',
+      'Produced 2 promotional videos (introduction and recap) and presented the website to business representatives in Albuquerque, New Mexico.',
+      'Conducted outreach to approximately 10 prospective speakers, documenting company information, presentation topics, and business interests to support exhibition planning.',
+    ],
+    skills: ['Squarespace', 'Web Design', 'Video Production', 'Stakeholder Outreach', 'Presentation'],
     tone: 'paper',
+    links: [{ label: 'Website', url: 'https://porpoise-star-y6kf.squarespace.com/' }],
     media: [
       { id: 'vimf-cover', label: 'VIMF cover image', caption: 'Vietnam Industrial & Manufacturing Fair promotional banner.', alt: 'Vietnam Industrial and Manufacturing Fair promotional banner with manufacturing event dates and robotics imagery', src: vimfCover },
-      { id: 'vimf-banner', label: 'Invitation banners', caption: 'Upload invitation banners or promotional materials.', alt: 'VIMF invitation banner placeholder' },
-      { id: 'vimf-event', label: 'Event photos', caption: 'Only upload approved event photos here.', alt: 'VIMF event photo placeholder' },
-      { id: 'vimf-outreach', label: 'Outreach sample', caption: 'Upload an approved partnership outreach sample.', alt: 'Partnership outreach sample placeholder' },
     ],
   },
   {
     number: '04',
+    title: 'Virtual Halloween Event',
+    role: 'Event Leader',
+    organization: 'Viet Anh Light House · Ho Chi Minh City',
+    period: 'October 2022 – November 2022',
+    description:
+      'Led a 30-member team to plan and run a virtual Halloween event built around 100 interactive PowerPoint slides.',
+    highlights: [
+      'Led a 30-member event team and developed an Excel-based tracking system to coordinate responsibilities, monitor assignments, and manage virtual event preparation.',
+      'Directed the collaborative creation and testing of 100 interactive PowerPoint slides featuring Morse code challenges, scavenger hunts, and music quizzes.',
+    ],
+    skills: ['Microsoft Excel', 'Leadership', 'Team Coordination', 'Presentation Design', 'Event Planning'],
+    tone: 'blue',
+    media: [],
+  },
+  {
+    number: '05',
     title: 'National Student Data Corps',
     role: 'Event Coordinator',
-    organization: 'National Student Data Corps at Georgia State University',
+    organization: 'National Student Data Corps · Georgia State University',
+    period: 'January 2025',
     description:
-      'Plan and coordinate workshops, networking events, and general body meetings related to data analytics, visualization, data cleaning, and emerging AI tools. Collaborate with student leaders and advisors on logistics, scheduling, communication, and member engagement.',
-    skills: ['Event Coordination', 'Data Analytics', 'Leadership', 'Project Management', 'Communication'],
-    tone: 'ink',
-    media: [
-      { id: 'nsc-cover', label: 'Cover image', caption: 'Upload a workshop or event cover image.', alt: 'National Student Data Corps cover placeholder' },
-      { id: 'nsc-flyer', label: 'Event flyers', caption: 'Upload flyers for workshops or general body meetings.', alt: 'National Student Data Corps flyer placeholder' },
-      { id: 'nsc-workshop', label: 'Workshop photos', caption: 'Upload approved workshop photos or event materials.', alt: 'National Student Data Corps workshop placeholder' },
-      { id: 'nsc-data', label: 'Data activity', caption: 'Upload a data-related activity visual.', alt: 'National Student Data Corps data activity placeholder' },
+      'Coordinated campus events for NSDC, from publishing them on the Panther Involvement Network to tracking logistics and student communication.',
+    highlights: [
+      'Managed NSDC’s Panther Involvement Network (PIN) page, publishing and coordinating approximately 5 campus events, including event descriptions and promotional content.',
+      'Developed an Excel-based event tracker and coordinated room reservation requests, event logistics, and student-facing communications.',
     ],
-  },
-];
-
-const dataProjects: ProjectDetail[] = [
-  {
-    number: '01',
-    title: 'Content Performance Analysis',
-    role: 'Future data project',
-    organization: 'Personal writing and content',
-    description:
-      'Analyzing performance data from my own writing and content to understand audience behavior, engagement, and content trends.',
-    skills: ['Dataset', 'SQL / Python', 'Visualization'],
+    skills: ['Event Coordination', 'Microsoft Excel', 'Communication', 'Logistics'],
     tone: 'paper',
     media: [
-      { id: 'content-dashboard', label: 'Dashboard screenshots', caption: 'Upload dashboard screenshots when this project is ready.', alt: 'Content Performance Analysis dashboard placeholder' },
-      { id: 'content-chart', label: 'Charts and visualizations', caption: 'Upload charts or a dataset preview.', alt: 'Content Performance Analysis chart placeholder' },
-    ],
-  },
-  {
-    number: '02',
-    title: 'Personal Analytics Project',
-    role: 'Future data project',
-    organization: 'Everyday life and decision-making',
-    description:
-      'Using data from everyday life to explore patterns, behaviors, and decision-making.',
-    skills: ['Dataset', 'Process', 'Insights'],
-    tone: 'paper',
-    media: [
-      { id: 'personal-dashboard', label: 'Data visualizations', caption: 'Upload a visualization or dashboard screenshot.', alt: 'Personal Analytics Project visualization placeholder' },
-      { id: 'personal-cleaning', label: 'Before and after', caption: 'Upload a before-and-after data cleaning example.', alt: 'Personal Analytics Project data cleaning placeholder' },
-    ],
-  },
-  {
-    number: '03',
-    title: 'SQL / Python Project',
-    role: 'Future data project',
-    organization: 'Technical analysis',
-    description:
-      'A future technical project demonstrating data cleaning, analysis, querying, and visualization.',
-    skills: ['SQL', 'Python', 'Data Cleaning'],
-    tone: 'paper',
-    media: [
-      { id: 'sql-code', label: 'Code screenshot', caption: 'Upload a useful SQL or Python code screenshot.', alt: 'SQL and Python project code placeholder' },
-      { id: 'sql-output', label: 'Analysis output', caption: 'Upload the final chart, dashboard, or dataset preview.', alt: 'SQL and Python project output placeholder' },
+      { id: 'nsdc-scavenger-hunt', label: 'SQL Scavenger Hunt', caption: '“Where is NSDC Trophy??” — a SQL scavenger hunt event.', alt: 'Group photo of NSDC members in front of a screen reading “Where is NSDC Trophy?? SQL Scavenger Hunt”', src: nsdcScavengerHunt },
+      { id: 'nsdc-workshop', label: 'Workshop', caption: 'Students working through a hands-on NSDC session.', alt: 'Students working on laptops at classroom tables during an NSDC session', src: nsdcWorkshop },
+      { id: 'nsdc-kickoff', label: 'NSDC ’26 Kickoff', caption: 'Members at the NSDC ’26 Kickoff.', alt: 'Two group photos of NSDC members in front of a screen reading “NSDC ’26 Kickoff”', src: nsdcKickoff },
+      { id: 'nsdc-coca-cola', label: 'Company visit', caption: 'NSDC members on a company visit to Coca-Cola.', alt: 'Group of students holding Coca-Cola tote bags in front of a vintage Coca-Cola delivery truck', src: nsdcCocaColaVisit },
     ],
   },
 ];
@@ -208,33 +223,13 @@ const certificates: MediaItem[] = [
   { id: 'presidents-list-1', label: 'President’s List · Spring 2026', caption: 'Georgia State University President’s List certificate.', alt: 'Vy Vu Georgia State University President’s List certificate for Spring 2026', src: presidentsListSpring2026 },
   { id: 'presidents-list-2', label: 'President’s List · Fall 2025', caption: 'Georgia State University President’s List certificate.', alt: 'Vy Vu Georgia State University President’s List certificate for Fall 2025', src: presidentsListFall2025 },
   { id: 'presidents-list-3', label: 'President’s List · Spring 2025', caption: 'Georgia State University President’s List certificate.', alt: 'Vy Vu Georgia State University President’s List certificate for Spring 2025', src: presidentsListSpring2025 },
-  { id: 'menaul-1', label: 'Menaul School certificate', caption: 'Upload an academic certificate or award from Menaul School.', alt: 'Menaul School certificate placeholder' },
-  { id: 'menaul-2', label: 'Menaul School award', caption: 'Upload another approved Menaul School certificate or award.', alt: 'Menaul School award placeholder' },
 ];
 
 const skills = [
-  { title: 'Data', items: ['Python', 'SQL', 'Microsoft Excel', 'Data Analysis', 'Data Visualization'] },
-  { title: 'Technology', items: ['Application Development', 'Information Systems'] },
-  { title: 'Business', items: ['Business Analysis', 'Stakeholder Management', 'Strategic Partnerships', 'Project Coordination'] },
-  { title: 'Communication', items: ['Storytelling', 'Presentation', 'Writing', 'Team Collaboration'] },
-];
-
-const articles = [
-  {
-    title: 'A place for notes, questions, and becoming',
-    description: 'A future space for sharing what I am reading, learning, and thinking through.',
-    date: 'Coming soon',
-  },
-  {
-    title: 'What data can teach us about attention',
-    description: 'A future reflection on content, patterns, and the stories inside everyday signals.',
-    date: 'Coming soon',
-  },
-  {
-    title: 'Learning in public',
-    description: 'A future note on building technical skills with curiosity instead of perfection.',
-    date: 'Coming soon',
-  },
+  { title: 'Programming', items: ['Python', 'SQL', 'JavaScript', 'TypeScript', 'React', 'HTML/CSS', 'Java'] },
+  { title: 'Platforms & APIs', items: ['Git/GitHub', 'Auth0 (OAuth)', 'Google Maps API', 'ElevenLabs', 'watchOS/Swift', 'Squarespace'] },
+  { title: 'Data & Business', items: ['Microsoft Excel', 'Data Analysis', 'Stakeholder Outreach', 'Project Coordination'] },
+  { title: 'Certification', items: ['Microsoft Office Specialist (MOS)'] },
 ];
 
 function MediaPlaceholder({
@@ -246,77 +241,43 @@ function MediaPlaceholder({
   onOpen?: (item: MediaItem) => void;
   className?: string;
 }) {
-  if (item.src) {
-    return (
-      <button
-        type="button"
-        className={`group relative block aspect-[4/3] w-full overflow-hidden rounded-[3px] border border-foreground/15 bg-card text-left ${className}`}
-        onClick={() => onOpen?.(item)}
-        data-testid={`media-${item.id}`}
-      >
-        <img src={item.src} alt={item.alt} className="h-full w-full object-contain transition-transform duration-500 group-hover:scale-[1.02]" />
-        <span className="absolute bottom-3 right-3 flex items-center gap-2 bg-foreground/85 px-2.5 py-1.5 font-mono text-[9px] uppercase tracking-[0.1em] text-background">
-          <Maximize2 size={12} /> View full size
-        </span>
-      </button>
-    );
-  }
-
-  return (
-    <div className={`media-placeholder relative flex aspect-[4/3] w-full flex-col justify-between overflow-hidden rounded-[3px] border border-dashed border-foreground/25 bg-background p-4 ${className}`} data-testid={`media-${item.id}`}>
-      <div className="media-placeholder-grid absolute inset-0 opacity-70" />
-      <div className="relative flex items-start justify-between">
-        <span className="font-mono text-[9px] uppercase tracking-[0.13em] text-foreground/45">Visual slot</span>
-        <span className="font-mono text-[9px] uppercase tracking-[0.13em] text-primary">Upload later</span>
-      </div>
-      <div className="relative">
-        <p className="max-w-[230px] text-lg leading-[1] tracking-[-0.03em] text-foreground/70">{item.label}</p>
-        <p className="mt-2 max-w-[300px] text-xs leading-[1.5] text-foreground/50">{item.caption}</p>
-      </div>
-    </div>
-  );
-}
-
-function linkTarget(url: string, fallback = '#contact') {
-  return url || fallback;
-}
-
-function ProjectAction({
-  label,
-  url,
-  className = '',
-}: {
-  label: string;
-  url?: string;
-  className?: string;
-}) {
-  const sharedClassName = `inline-flex items-center gap-2 border px-3 py-2 font-mono text-[10px] uppercase tracking-[0.11em] transition-colors ${className}`;
-
-  if (url) {
-    return (
-      <a
-        href={url}
-        target="_blank"
-        rel="noreferrer"
-        className={`${sharedClassName} border-foreground/20 hover:border-primary hover:bg-primary hover:text-primary-foreground`}
-        data-testid={`link-project-${label.toLowerCase().replaceAll(' ', '-')}`}
-      >
-        {label} <ArrowUpRight size={13} />
-      </a>
-    );
-  }
+  if (!item.src) return null;
 
   return (
     <button
       type="button"
-      disabled
-      title={`${label} link coming soon`}
-      aria-label={`${label} link coming soon`}
-      className={`${sharedClassName} cursor-not-allowed border-foreground/15 text-foreground/45`}
-      data-testid={`button-project-${label.toLowerCase().replaceAll(' ', '-')}-placeholder`}
+      className={`group relative block aspect-[4/3] w-full overflow-hidden rounded-[3px] border border-foreground/15 bg-card text-left ${className}`}
+      onClick={() => onOpen?.(item)}
+      data-testid={`media-${item.id}`}
+    >
+      <img src={item.src} alt={item.alt} className="h-full w-full object-contain transition-transform duration-500 group-hover:scale-[1.02]" />
+      <span className="absolute bottom-3 right-3 flex items-center gap-2 bg-foreground/85 px-2.5 py-1.5 font-mono text-[9px] uppercase tracking-[0.1em] text-background">
+        <Maximize2 size={12} /> View full size
+      </span>
+    </button>
+  );
+}
+
+const external = { target: '_blank', rel: 'noreferrer' } as const;
+
+function ProjectAction({
+  label,
+  url,
+  tone = 'paper',
+}: {
+  label: string;
+  url: string;
+  tone?: ProjectDetail['tone'];
+}) {
+  return (
+    <a
+      href={url}
+      {...external}
+      className={`inline-flex items-center gap-2 border px-3 py-2 font-mono text-[10px] uppercase tracking-[0.11em] transition-colors hover:border-primary hover:bg-primary hover:text-primary-foreground ${tone === 'ink' ? 'border-background/25' : 'border-foreground/20'}`}
+      data-testid={`link-project-${label.toLowerCase().replaceAll(' ', '-')}`}
     >
       {label} <ArrowUpRight size={13} />
-    </button>
+    </a>
   );
 }
 
@@ -325,7 +286,6 @@ function App() {
   const [copied, setCopied] = useState(false);
   const [activeProject, setActiveProject] = useState<ProjectDetail | null>(null);
   const [lightboxItem, setLightboxItem] = useState<MediaItem | null>(null);
-  const [showAchievements, setShowAchievements] = useState(false);
 
   useEffect(() => {
     const elements = document.querySelectorAll<HTMLElement>('.reveal');
@@ -359,11 +319,7 @@ function App() {
     };
   }, [activeProject, lightboxItem]);
 
-  const copyPlaceholder = async () => {
-    if (!links.email) {
-      document.querySelector('#contact')?.scrollIntoView({ behavior: 'smooth' });
-      return;
-    }
+  const copyEmail = async () => {
     await navigator.clipboard.writeText(links.email);
     setCopied(true);
     window.setTimeout(() => setCopied(false), 2200);
@@ -399,7 +355,8 @@ function App() {
           </div>
 
           <a
-            href={linkTarget(links.resume)}
+            href={links.resume}
+            {...external}
             className="hidden items-center gap-2 border border-foreground/20 px-4 py-2 font-mono text-[10px] uppercase tracking-[0.14em] transition-colors hover:border-primary hover:bg-primary hover:text-primary-foreground sm:flex"
             data-testid="link-nav-resume"
           >
@@ -431,7 +388,8 @@ function App() {
               </a>
             ))}
             <a
-              href={linkTarget(links.resume)}
+              href={links.resume}
+              {...external}
               onClick={() => setMenuOpen(false)}
               className="mt-4 flex items-center justify-between bg-foreground px-4 py-3 font-mono text-xs uppercase tracking-[0.14em] text-background"
               data-testid="link-mobile-resume"
@@ -454,7 +412,7 @@ function App() {
               <span className="font-display font-normal italic text-primary">intersection.</span>
             </h1>
             <p className="reveal reveal-delay-2 mt-10 max-w-[560px] text-lg leading-[1.55] text-foreground/70 md:text-xl">
-              Computer Information Systems student focused on Data Analytics and Application Development.
+              Computer Information Systems student focused on AI Analytics and Application Development.
               I&apos;m interested in how data can uncover patterns, explain behavior, and support better decisions.
             </p>
             <div className="reveal reveal-delay-3 mt-10 flex flex-wrap items-center gap-5">
@@ -469,7 +427,8 @@ function App() {
                 Read ViVu Notes
               </a>
               <a
-                href={linkTarget(links.linkedin)}
+                href={links.linkedin}
+                {...external}
                 className="font-mono text-[11px] uppercase tracking-[0.13em] text-foreground/60 transition-colors hover:text-primary"
                 data-testid="link-hero-linkedin"
               >
@@ -539,7 +498,7 @@ function App() {
           </div>
           <div className="reveal reveal-delay-1">
             <p className="max-w-[760px] text-2xl leading-[1.15] tracking-[-0.03em] md:text-[2.65rem] md:leading-[1.08]">
-              I&apos;m a sophomore at Georgia State University studying Computer Information Systems with concentrations in Data Analytics and Application Development.
+              I&apos;m a sophomore at Georgia State University studying Computer Information Systems with concentrations in Artificial Intelligence Analytics and Application Development.
             </p>
             <div className="mt-10 grid gap-8 border-t border-foreground/15 pt-7 sm:grid-cols-2">
               <p className="text-sm leading-[1.7] text-foreground/65">
@@ -561,7 +520,7 @@ function App() {
               <div className="border border-foreground/15 bg-card p-5">
                 <p className="font-mono text-[9px] uppercase tracking-[0.15em] text-primary">Academic milestone</p>
                 <p className="mt-3 text-lg tracking-[-0.02em]">President&apos;s List</p>
-                <p className="mt-2 text-sm text-foreground/55">3 semesters</p>
+                <p className="mt-2 text-sm text-foreground/55">3 semesters · GPA 4.05</p>
               </div>
             </div>
           </div>
@@ -604,7 +563,7 @@ function App() {
               <p className="font-mono text-[10px] uppercase tracking-[0.17em] text-primary">04 / selected work</p>
               <h2 className="mt-5 text-5xl leading-[.9] tracking-[-0.055em] md:text-8xl">Work in<br /><span className="font-display font-normal italic">progress.</span></h2>
             </div>
-            <p className="max-w-[290px] text-sm leading-[1.6] text-foreground/60 md:pb-2">Experiences that have helped me practice leadership, communication, coordination, and analytical thinking.</p>
+            <p className="max-w-[290px] text-sm leading-[1.6] text-foreground/60 md:pb-2">Products I&apos;ve built and experiences that taught me to lead, coordinate, and ship.</p>
           </div>
 
           <div className="mt-16 space-y-5">
@@ -624,7 +583,7 @@ function App() {
                   <MoveUpRight size={18} className="text-primary md:mt-10" />
                 </div>
                 <div>
-                  <MediaPlaceholder item={project.media[0]} className="mb-6" onOpen={setLightboxItem} />
+                  {project.media[0] && <MediaPlaceholder item={project.media[0]} className="mb-6" onOpen={setLightboxItem} />}
                   <p className={`font-mono text-[9px] uppercase tracking-[0.15em] ${project.tone === 'ink' ? 'text-background/55' : 'text-foreground/50'}`}>{project.role}</p>
                   <h3 className="mt-4 max-w-[420px] text-3xl leading-[.96] tracking-[-0.045em] md:text-5xl">{project.title}</h3>
                   {project.award && (
@@ -633,6 +592,7 @@ function App() {
                     </div>
                   )}
                   <p className={`mt-5 text-sm leading-[1.5] ${project.tone === 'ink' ? 'text-background/60' : 'text-foreground/60'}`}>{project.organization}</p>
+                  <p className={`mt-1 font-mono text-[9px] uppercase tracking-[0.12em] ${project.tone === 'ink' ? 'text-background/45' : 'text-foreground/45'}`}>{project.period}</p>
                 </div>
                 <div className="flex flex-col justify-between">
                   <p className={`text-sm leading-[1.7] ${project.tone === 'ink' ? 'text-background/70' : 'text-foreground/65'}`}>{project.description}</p>
@@ -641,10 +601,9 @@ function App() {
                       <span key={skill} className={`border px-2.5 py-1 font-mono text-[9px] uppercase tracking-[0.06em] ${project.tone === 'ink' ? 'border-background/20 text-background/65' : 'border-foreground/15 text-foreground/55'}`}>{skill}</span>
                     ))}
                   </div>
-                  {project.featured && (
+                  {project.links && project.links.length > 0 && (
                     <div className="mt-7 flex flex-wrap gap-2" data-testid="project-actions">
-                      <ProjectAction label="Live Demo" url={project.liveDemo} />
-                      <ProjectAction label="GitHub" url={project.github} />
+                      {project.links.map((link) => <ProjectAction key={link.label} label={link.label} url={link.url} tone={project.tone} />)}
                     </div>
                   )}
                   <button type="button" onClick={() => setActiveProject(project)} className="mt-7 inline-flex items-center gap-2 self-start font-mono text-[10px] uppercase tracking-[0.13em] text-primary" data-testid={`button-project-${project.number}`}>
@@ -657,20 +616,15 @@ function App() {
 
           <article className="reveal mt-5 grid gap-8 overflow-hidden border border-primary/35 bg-primary p-7 text-primary-foreground md:grid-cols-[.8fr_1.2fr] md:p-10" data-testid="card-project-vivu-notes">
             <div>
-              <p className="font-mono text-[9px] uppercase tracking-[0.15em] text-primary-foreground/65">04 / personal publication</p>
+              <p className="font-mono text-[9px] uppercase tracking-[0.15em] text-primary-foreground/65">06 / personal publication</p>
               <h3 className="mt-5 font-display text-5xl italic leading-[.9] md:text-7xl">ViVu Notes</h3>
               <p className="mt-4 font-mono text-[10px] uppercase tracking-[0.13em] text-primary-foreground/72">Notes on books, data, and becoming.</p>
-              <MediaPlaceholder
-                item={{ id: 'vivu-notes-cover', label: 'Publication cover', caption: 'Upload a Substack screenshot or article cover image.', alt: 'ViVu Notes cover placeholder' }}
-                className="mt-8 max-w-[360px]"
-                onOpen={setLightboxItem}
-              />
             </div>
             <div className="flex flex-col justify-between">
               <p className="max-w-[560px] text-xl leading-[1.2] tracking-[-0.02em]">
                 My personal publication where I write about books, lessons from studying abroad, personal growth, data, and ideas I&apos;m learning along the way.
               </p>
-              <a href={linkTarget(links.notes)} className="mt-8 inline-flex items-center gap-3 self-start border border-primary-foreground/35 px-4 py-3 font-mono text-[10px] uppercase tracking-[0.13em] transition-colors hover:bg-primary-foreground hover:text-primary" data-testid="link-vivu-notes-work">
+              <a href={links.notes} {...external} className="mt-8 inline-flex items-center gap-3 self-start border border-primary-foreground/35 px-4 py-3 font-mono text-[10px] uppercase tracking-[0.13em] transition-colors hover:bg-primary-foreground hover:text-primary" data-testid="link-vivu-notes-work">
                 Read ViVu Notes <ArrowUpRight size={14} />
               </a>
             </div>
@@ -678,41 +632,10 @@ function App() {
         </div>
       </section>
 
-      <section id="data-projects" className="border-y border-foreground/15 bg-secondary/20 scroll-mt-24">
-        <div className="mx-auto max-w-[1280px] px-5 py-28 md:px-10 md:py-36">
-          <div className="reveal max-w-[700px]">
-            <p className="font-mono text-[10px] uppercase tracking-[0.17em] text-primary">05 / data projects</p>
-            <h2 className="mt-5 text-5xl leading-[.9] tracking-[-0.055em] md:text-8xl">Questions worth<br /><span className="font-display font-normal italic">exploring.</span></h2>
-            <p className="mt-8 max-w-[620px] text-lg leading-[1.6] text-foreground/65">This is where I document projects that show how I approach questions, work with data, and communicate insights.</p>
-          </div>
-          <div className="mt-14 grid gap-4 md:grid-cols-3">
-            {dataProjects.map((project, index) => (
-              <article key={project.title} className={`reveal reveal-delay-${index + 1} flex min-h-[430px] flex-col justify-between border border-dashed border-foreground/25 bg-background p-5 md:p-6`} data-testid={`card-data-project-${index + 1}`}>
-                <div>
-                  <span className="font-mono text-[9px] uppercase tracking-[0.14em] text-primary">Future case study / 0{index + 1}</span>
-                  <MediaPlaceholder item={project.media[0]} className="mt-5" onOpen={setLightboxItem} />
-                  <h3 className="mt-8 text-2xl leading-[1] tracking-[-0.035em]">{project.title}</h3>
-                  <p className="mt-4 text-sm leading-[1.6] text-foreground/60">{project.description}</p>
-                </div>
-                <div className="mt-8">
-                  <div className="flex items-center justify-between border-t border-foreground/15 pt-4 font-mono text-[9px] uppercase tracking-[0.1em] text-foreground/45">
-                    <span>Problem · dataset · tools</span>
-                    <span>To be documented</span>
-                  </div>
-                  <button type="button" onClick={() => setActiveProject(project)} className="mt-5 inline-flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.13em] text-primary" data-testid={`button-data-project-${index + 1}`}>
-                    Open project <ArrowUpRight size={14} />
-                  </button>
-                </div>
-              </article>
-            ))}
-          </div>
-        </div>
-      </section>
-
       <section id="writing" className="mx-auto max-w-[1280px] scroll-mt-24 px-5 py-28 md:px-10 md:py-40">
         <div className="grid gap-14 lg:grid-cols-[.82fr_1.18fr] lg:gap-24">
           <div className="reveal">
-            <p className="font-mono text-[10px] uppercase tracking-[0.17em] text-primary">06 / writing & ideas</p>
+            <p className="font-mono text-[10px] uppercase tracking-[0.17em] text-primary">05 / writing & ideas</p>
             <h2 className="mt-5 text-5xl leading-[.9] tracking-[-0.055em] md:text-7xl">A place to<br /><span className="font-display font-normal italic">think out loud.</span></h2>
             <p className="mt-8 max-w-[430px] text-lg leading-[1.6] text-foreground/65">
               I started ViVu Notes as a place to document what I am learning through books, college, data, and life as an international student.
@@ -720,32 +643,25 @@ function App() {
             <p className="mt-5 max-w-[430px] text-sm leading-[1.7] text-foreground/60">
               Instead of simply reviewing what I read or experience, I want to understand what it teaches me and how I can apply those ideas to my own growth.
             </p>
-            <a href={linkTarget(links.notes)} className="mt-8 inline-flex items-center gap-3 bg-foreground px-5 py-3.5 font-mono text-[10px] uppercase tracking-[0.13em] text-background transition-colors hover:bg-primary" data-testid="link-writing-notes">
+            <a href={links.notes} {...external} className="mt-8 inline-flex items-center gap-3 bg-foreground px-5 py-3.5 font-mono text-[10px] uppercase tracking-[0.13em] text-background transition-colors hover:bg-primary" data-testid="link-writing-notes">
               Visit ViVu Notes <ArrowUpRight size={14} />
             </a>
           </div>
           <div className="reveal reveal-delay-1">
             <div className="mb-6 flex items-center justify-between border-b border-foreground/15 pb-4">
-              <span className="font-mono text-[10px] uppercase tracking-[0.16em] text-foreground/50">Recent notes</span>
+              <span className="font-mono text-[10px] uppercase tracking-[0.16em] text-foreground/50">On Substack</span>
               <BookOpen size={17} className="text-primary" />
             </div>
-            <div>
-              {articles.map((article, index) => (
-                <article key={article.title} className="group border-b border-foreground/15 py-7 first:pt-2" data-testid={`card-article-${index + 1}`}>
-                  <div className="flex items-start justify-between gap-6">
-                    <div>
-                      <p className="font-mono text-[9px] uppercase tracking-[0.13em] text-primary">{article.date}</p>
-                      <h3 className="mt-3 max-w-[450px] text-2xl leading-[1] tracking-[-0.035em] transition-colors group-hover:text-primary">{article.title}</h3>
-                      <p className="mt-3 max-w-[470px] text-sm leading-[1.6] text-foreground/60">{article.description}</p>
-                    </div>
-                    <ArrowUpRight size={18} className="mt-1 shrink-0 text-foreground/35 transition-transform group-hover:-translate-y-1 group-hover:translate-x-1 group-hover:text-primary" />
-                  </div>
-                  <a href={linkTarget(links.notes)} className="mt-5 inline-block font-mono text-[9px] uppercase tracking-[0.13em] text-foreground/50 transition-colors hover:text-primary" data-testid={`link-article-${index + 1}`}>
-                    Read article
-                  </a>
-                </article>
-              ))}
-            </div>
+            <a href={links.notes} {...external} className="group block border-b border-foreground/15 py-7 pt-2" data-testid="link-writing-substack">
+              <div className="flex items-start justify-between gap-6">
+                <div>
+                  <p className="font-mono text-[9px] uppercase tracking-[0.13em] text-primary">vivunote.substack.com</p>
+                  <h3 className="mt-3 max-w-[450px] text-2xl leading-[1] tracking-[-0.035em] transition-colors group-hover:text-primary">Books, college, data, and life as an international student.</h3>
+                  <p className="mt-3 max-w-[470px] text-sm leading-[1.6] text-foreground/60">Every note is published on Substack. Subscribe there to get new ones as they come out.</p>
+                </div>
+                <ArrowUpRight size={18} className="mt-1 shrink-0 text-foreground/35 transition-transform group-hover:-translate-y-1 group-hover:translate-x-1 group-hover:text-primary" />
+              </div>
+            </a>
           </div>
         </div>
       </section>
@@ -754,7 +670,7 @@ function App() {
         <div className="mx-auto max-w-[1280px] px-5 py-24 md:px-10 md:py-32">
           <div className="grid gap-12 lg:grid-cols-[.8fr_1.2fr] lg:gap-24">
             <div className="reveal">
-              <p className="font-mono text-[10px] uppercase tracking-[0.17em] text-primary">07 / a few milestones</p>
+              <p className="font-mono text-[10px] uppercase tracking-[0.17em] text-primary">06 / a few milestones</p>
               <h2 className="mt-5 text-5xl leading-[.9] tracking-[-0.055em] md:text-7xl">Early steps,<br /><span className="font-display font-normal italic">clear direction.</span></h2>
             </div>
             <div className="reveal reveal-delay-1">
@@ -767,13 +683,13 @@ function App() {
                 <div className="py-7 sm:pl-8">
                   <p className="font-mono text-[9px] uppercase tracking-[0.15em] text-primary">Academic recognition</p>
                   <p className="mt-5 text-2xl tracking-[-0.03em]">President&apos;s List</p>
-                  <p className="mt-2 text-sm text-background/60">3 semesters</p>
+                  <p className="mt-2 text-sm text-background/60">3 semesters · GPA 4.05</p>
                 </div>
               </div>
               <div className="border-b border-background/20 py-7">
                 <p className="font-mono text-[9px] uppercase tracking-[0.15em] text-primary">Concentrations</p>
                 <div className="mt-5 flex flex-wrap gap-3">
-                  {['Data Analytics', 'Application Development', 'Computer Information Systems'].map((item) => (
+                  {['Artificial Intelligence Analytics', 'Application Development', 'Computer Information Systems'].map((item) => (
                     <span key={item} className="border border-background/25 px-3 py-2 text-sm text-background/75">{item}</span>
                   ))}
                 </div>
@@ -783,13 +699,10 @@ function App() {
                   <FileText size={15} className="text-primary" /> Certificates and awards
                 </div>
                 <div className="mt-5 grid gap-3 sm:grid-cols-3">
-                  {certificates.slice(0, showAchievements ? certificates.length : 3).map((certificate) => (
+                  {certificates.map((certificate) => (
                     <MediaPlaceholder key={certificate.id} item={certificate} className="bg-background" onOpen={setLightboxItem} />
                   ))}
                 </div>
-                <button type="button" onClick={() => setShowAchievements((visible) => !visible)} className="mt-5 inline-flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.13em] text-primary transition-colors hover:text-background" data-testid="button-view-achievements">
-                  {showAchievements ? 'Show fewer achievements' : 'View achievements'} <ArrowDownRight size={14} />
-                </button>
               </div>
             </div>
           </div>
@@ -799,10 +712,10 @@ function App() {
       <section id="skills" className="mx-auto max-w-[1280px] scroll-mt-24 px-5 py-28 md:px-10 md:py-36">
         <div className="reveal flex flex-col justify-between gap-6 md:flex-row md:items-end">
           <div>
-            <p className="font-mono text-[10px] uppercase tracking-[0.17em] text-primary">08 / tools & skills</p>
+            <p className="font-mono text-[10px] uppercase tracking-[0.17em] text-primary">07 / tools & skills</p>
             <h2 className="mt-5 text-5xl leading-[.9] tracking-[-0.055em] md:text-8xl">Still<br /><span className="font-display font-normal italic">building.</span></h2>
           </div>
-          <p className="max-w-[300px] text-sm leading-[1.6] text-foreground/60 md:pb-2">These are skills I&apos;m actively developing through coursework, projects, leadership, and practice.</p>
+          <p className="max-w-[300px] text-sm leading-[1.6] text-foreground/60 md:pb-2">Tools I&apos;ve used in coursework, hackathons, and work, and keep sharpening.</p>
         </div>
         <div className="mt-14 grid border-t border-foreground/15 md:grid-cols-2">
           {skills.map((category, index) => (
@@ -819,15 +732,15 @@ function App() {
       <section className="border-y border-foreground/15 bg-secondary/20">
         <div className="mx-auto grid max-w-[1280px] gap-10 px-5 py-24 md:px-10 md:py-28 lg:grid-cols-[.75fr_1.25fr] lg:items-center">
           <div className="reveal">
-            <p className="font-mono text-[10px] uppercase tracking-[0.17em] text-primary">09 / currently</p>
+            <p className="font-mono text-[10px] uppercase tracking-[0.17em] text-primary">08 / currently</p>
             <h2 className="mt-5 text-5xl leading-[.9] tracking-[-0.055em] md:text-7xl">A living<br /><span className="font-display font-normal italic">list.</span></h2>
           </div>
           <div className="reveal reveal-delay-1 grid gap-0 border-t border-foreground/15 sm:grid-cols-2">
             {[
               ['Learning', 'SQL, Python, and data analysis'],
-              ['Building', 'My data portfolio and ViVu Notes'],
-              ['Exploring', 'Data analytics, market data, and business technology'],
-              ['Reading', 'Add current book here later'],
+              ['Building', 'AI-powered apps and ViVu Notes'],
+              ['Exploring', 'Business analytics and application development'],
+              ['Working toward', 'AI product engineering'],
             ].map(([label, value]) => (
               <div key={label} className="border-b border-foreground/15 py-5 sm:px-6 first:sm:pl-0 even:sm:border-l">
                 <p className="font-mono text-[9px] uppercase tracking-[0.14em] text-primary">{label}</p>
@@ -843,7 +756,7 @@ function App() {
           <div className="absolute -right-10 -top-24 h-80 w-80 rounded-full border border-primary/25 md:h-[480px] md:w-[480px]" />
           <div className="absolute -right-2 -top-16 h-64 w-64 rounded-full border border-primary/15 md:h-[380px] md:w-[380px]" />
           <div className="relative max-w-[760px]">
-            <p className="font-mono text-[10px] uppercase tracking-[0.17em] text-primary">10 / let&apos;s connect</p>
+            <p className="font-mono text-[10px] uppercase tracking-[0.17em] text-primary">09 / let&apos;s connect</p>
             <h2 className="mt-6 text-6xl leading-[.85] tracking-[-0.065em] md:text-8xl">Keep the<br /><span className="font-display font-normal italic">conversation going.</span></h2>
             <p className="mt-8 max-w-[590px] text-base leading-[1.65] text-foreground/65">
               I&apos;m always happy to connect with students, professionals, mentors, and people working across data, technology, and business.
@@ -852,20 +765,23 @@ function App() {
               I&apos;m currently interested in internship opportunities where I can continue learning, contribute to meaningful work, and gain hands-on experience.
             </p>
             <div className="mt-10 flex flex-wrap gap-3">
-              <a href={linkTarget(links.linkedin)} className="inline-flex items-center gap-2 border border-foreground/20 px-4 py-3 font-mono text-[10px] uppercase tracking-[0.12em] transition-colors hover:border-primary hover:bg-primary hover:text-primary-foreground" data-testid="link-contact-linkedin">
+              <a href={links.linkedin} {...external} className="inline-flex items-center gap-2 border border-foreground/20 px-4 py-3 font-mono text-[10px] uppercase tracking-[0.12em] transition-colors hover:border-primary hover:bg-primary hover:text-primary-foreground" data-testid="link-contact-linkedin">
                 <Linkedin size={14} /> LinkedIn
               </a>
-              <button type="button" onClick={copyPlaceholder} className="inline-flex items-center gap-2 border border-foreground/20 px-4 py-3 font-mono text-[10px] uppercase tracking-[0.12em] transition-colors hover:border-primary hover:bg-primary hover:text-primary-foreground" data-testid="button-contact-email">
-                {copied ? <Check size={14} /> : <Mail size={14} />} {copied ? 'Email copied' : 'Email'}
+              <a href={links.github} {...external} className="inline-flex items-center gap-2 border border-foreground/20 px-4 py-3 font-mono text-[10px] uppercase tracking-[0.12em] transition-colors hover:border-primary hover:bg-primary hover:text-primary-foreground" data-testid="link-contact-github">
+                <Github size={14} /> GitHub
+              </a>
+              <button type="button" onClick={copyEmail} className="inline-flex items-center gap-2 border border-foreground/20 px-4 py-3 font-mono text-[10px] uppercase tracking-[0.12em] transition-colors hover:border-primary hover:bg-primary hover:text-primary-foreground" data-testid="button-contact-email">
+                {copied ? <Check size={14} /> : <Mail size={14} />} {copied ? 'Email copied' : 'Copy email'}
               </button>
-              <a href={linkTarget(links.notes)} className="inline-flex items-center gap-2 border border-foreground/20 px-4 py-3 font-mono text-[10px] uppercase tracking-[0.12em] transition-colors hover:border-primary hover:bg-primary hover:text-primary-foreground" data-testid="link-contact-notes">
+              <a href={links.notes} {...external} className="inline-flex items-center gap-2 border border-foreground/20 px-4 py-3 font-mono text-[10px] uppercase tracking-[0.12em] transition-colors hover:border-primary hover:bg-primary hover:text-primary-foreground" data-testid="link-contact-notes">
                 <BookOpen size={14} /> ViVu Notes
               </a>
-              <a href={linkTarget(links.resume)} className="inline-flex items-center gap-2 border border-foreground/20 px-4 py-3 font-mono text-[10px] uppercase tracking-[0.12em] transition-colors hover:border-primary hover:bg-primary hover:text-primary-foreground" data-testid="link-contact-resume">
+              <a href={links.resume} {...external} className="inline-flex items-center gap-2 border border-foreground/20 px-4 py-3 font-mono text-[10px] uppercase tracking-[0.12em] transition-colors hover:border-primary hover:bg-primary hover:text-primary-foreground" data-testid="link-contact-resume">
                 <FileText size={14} /> Resume
               </a>
             </div>
-            <p className="mt-5 font-mono text-[9px] uppercase tracking-[0.12em] text-foreground/40">Links and contact details can be added when ready.</p>
+            <a href={`mailto:${links.email}`} className="mt-5 inline-block font-mono text-[10px] uppercase tracking-[0.12em] text-foreground/55 transition-colors hover:text-primary" data-testid="link-contact-mailto">{links.email}</a>
           </div>
         </div>
       </section>
@@ -893,7 +809,7 @@ function App() {
                 <div>
                   <p className="font-mono text-[9px] uppercase tracking-[0.16em] text-primary">Project detail / {activeProject.number}</p>
                   <h2 className="mt-4 max-w-[760px] text-4xl leading-[.92] tracking-[-0.05em] md:text-7xl">{activeProject.title}</h2>
-                  <p className="mt-4 text-sm text-foreground/55">{activeProject.organization}</p>
+                  <p className="mt-4 text-sm text-foreground/55">{activeProject.organization} · {activeProject.period}</p>
                    {activeProject.award && (
                      <div className="mt-5 inline-flex items-center gap-2 border border-primary/45 bg-primary/10 px-3 py-2 font-mono text-[9px] uppercase tracking-[0.1em] text-primary" data-testid="detail-project-award">
                        <Sparkles size={12} /> {activeProject.award}
@@ -905,16 +821,15 @@ function App() {
                 </button>
               </div>
 
-              <div className="mt-8 grid gap-8 lg:grid-cols-[.75fr_1.25fr]">
+              <div className={`mt-8 grid gap-8 ${activeProject.media.length > 0 ? 'lg:grid-cols-[.75fr_1.25fr]' : 'max-w-[760px]'}`}>
                 <div className="space-y-6">
                   <div>
                     <p className="font-mono text-[9px] uppercase tracking-[0.15em] text-primary">Overview</p>
                     <p className="mt-3 text-sm leading-[1.7] text-foreground/70">{activeProject.description}</p>
                   </div>
-                  {(activeProject.liveDemo !== undefined || activeProject.github !== undefined) && (
+                  {activeProject.links && activeProject.links.length > 0 && (
                     <div className="flex flex-wrap gap-2">
-                      <ProjectAction label="Live Demo" url={activeProject.liveDemo} />
-                      <ProjectAction label="GitHub" url={activeProject.github} />
+                      {activeProject.links.map((link) => <ProjectAction key={link.label} label={link.label} url={link.url} />)}
                     </div>
                   )}
                   <div className="grid gap-5 border-y border-foreground/15 py-5 sm:grid-cols-2 lg:grid-cols-1">
@@ -924,7 +839,14 @@ function App() {
                     </div>
                     <div>
                       <p className="font-mono text-[9px] uppercase tracking-[0.15em] text-foreground/45">What I did</p>
-                      <p className="mt-2 text-sm leading-[1.6] text-foreground/70">{activeProject.description}</p>
+                      <ul className="mt-2 space-y-2.5">
+                        {activeProject.highlights.map((highlight) => (
+                          <li key={highlight} className="flex gap-2.5 text-sm leading-[1.6] text-foreground/70">
+                            <span className="mt-[0.6em] h-1 w-1 shrink-0 bg-primary" />
+                            {highlight}
+                          </li>
+                        ))}
+                      </ul>
                     </div>
                     <div>
                       <p className="font-mono text-[9px] uppercase tracking-[0.15em] text-foreground/45">Tools</p>
@@ -941,15 +863,17 @@ function App() {
                   </div>
                 </div>
 
-                <div>
-                  <div className="mb-4 flex items-center justify-between">
-                    <p className="font-mono text-[9px] uppercase tracking-[0.15em] text-primary">Gallery</p>
-                    <p className="font-mono text-[9px] uppercase tracking-[0.13em] text-foreground/40">Contributions photos</p>
+                {activeProject.media.length > 0 && (
+                  <div>
+                    <div className="mb-4 flex items-center justify-between">
+                      <p className="font-mono text-[9px] uppercase tracking-[0.15em] text-primary">Gallery</p>
+                      <p className="font-mono text-[9px] uppercase tracking-[0.13em] text-foreground/40">{activeProject.media.length} {activeProject.media.length === 1 ? 'image' : 'images'}</p>
+                    </div>
+                    <div className="grid gap-4 sm:grid-cols-2">
+                      {activeProject.media.map((item) => <MediaPlaceholder key={item.id} item={item} onOpen={setLightboxItem} />)}
+                    </div>
                   </div>
-                  <div className="grid gap-4 sm:grid-cols-2">
-                    {activeProject.media.map((item) => <MediaPlaceholder key={item.id} item={item} onOpen={setLightboxItem} />)}
-                  </div>
-                </div>
+                )}
               </div>
             </div>
           </div>
