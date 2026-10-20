@@ -155,3 +155,6 @@ overrides:
   esbuild: "0.28.2"
   # orval pins js-yaml to an exact version older than the CVE fix (>=4.3.2)
   js-yaml: '4.3.2'
+
+# pnpm 11+ fails installs on blocked build scripts; esbuild ships its binary as an optional dependency, so its postinstall is not needed.
+strictDepBuilds: false

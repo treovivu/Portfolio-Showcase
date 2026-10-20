@@ -1,0 +1,7 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "framework": null,
+  "installCommand": "npx --yes pnpm@12.14.0 install --frozen-lockfile --filter \"@workspace/vy-vu-portfolio...\"",
+  "buildCommand": "PORT=3000 BASE_PATH=/ npx --yes pnpm@12.14.0 --filter @workspace/vy-vu-portfolio run build",
+  "outputDirectory": "artifacts/vy-vu-portfolio/dist/public"
+}
