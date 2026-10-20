@@ -575,11 +575,6 @@ function App() {
                 className={`reveal reveal-delay-${(index % 3) + 1} group relative grid gap-8 border p-6 transition-transform duration-500 hover:-translate-y-1 md:grid-cols-[100px_1fr_1.05fr] md:gap-10 md:p-9 ${project.tone === 'ink' ? 'border-foreground/15 bg-foreground text-background' : project.tone === 'blue' ? 'border-foreground/15 bg-[#d7e4eb]' : 'border-foreground/15 bg-card'} ${project.featured ? 'border-primary/60 shadow-[6px_6px_0_hsl(var(--primary)/.16)]' : ''}`}
                 data-testid={`card-project-${project.number}`}
               >
-                {project.featured && (
-                  <div className="absolute right-5 top-5 flex items-center gap-2 bg-primary px-2.5 py-1.5 font-mono text-[9px] uppercase tracking-[0.12em] text-primary-foreground md:right-9 md:top-9" data-testid="badge-featured-project">
-                    {project.award ? <><Trophy size={11} /> Award winner</> : <><Sparkles size={11} /> Featured project</>}
-                  </div>
-                )}
                 <div className="flex items-start justify-between md:block">
                   <span className={`font-mono text-[10px] ${project.tone === 'ink' ? 'text-primary' : 'text-primary'}`}>{project.number}</span>
                   <MoveUpRight size={18} className="text-primary md:mt-10" />
@@ -601,7 +596,14 @@ function App() {
                   <p className={`mt-1 font-mono text-[9px] uppercase tracking-[0.12em] ${project.tone === 'ink' ? 'text-background/45' : 'text-foreground/45'}`}>{project.period}</p>
                 </div>
                 <div className="flex flex-col justify-between">
-                  <p className={`text-sm leading-[1.7] ${project.tone === 'ink' ? 'text-background/70' : 'text-foreground/65'}`}>{project.description}</p>
+                  <div>
+                    {project.featured && (
+                      <div className="mb-5 inline-flex items-center gap-2 bg-primary px-2.5 py-1.5 font-mono text-[9px] uppercase tracking-[0.12em] text-primary-foreground" data-testid="badge-featured-project">
+                        {project.award ? <><Trophy size={11} /> Award winner</> : <><Sparkles size={11} /> Featured project</>}
+                      </div>
+                    )}
+                    <p className={`text-sm leading-[1.7] ${project.tone === 'ink' ? 'text-background/70' : 'text-foreground/65'}`}>{project.description}</p>
+                  </div>
                   <div className="mt-7 flex flex-wrap gap-2">
                     {project.skills.map((skill) => (
                       <span key={skill} className={`border px-2.5 py-1 font-mono text-[9px] uppercase tracking-[0.06em] ${project.tone === 'ink' ? 'border-background/20 text-background/65' : 'border-foreground/15 text-foreground/55'}`}>{skill}</span>
